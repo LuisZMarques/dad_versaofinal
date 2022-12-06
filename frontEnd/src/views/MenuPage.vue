@@ -12,7 +12,7 @@
 
 <script setup>
 import { onMounted } from "vue";
-import MenuCard from "../components/MenuCard.vue";
+import MenuCard from "@/components/menu/MenuCard.vue";
 import { useProductsStore } from "../stores/products";
 
 const productsStore = useProductsStore();
@@ -45,25 +45,12 @@ onMounted(() => {
   border-color: var(--dl-color-pimary-laranjavivo);
   border-width: 0.25rem;
   border-radius: 5rem;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr ;
 }
-.menu-list-root-class-name {
-  right: -165px;
-  width: 80%;
-  bottom: -77px;
-  position: static;
-  align-self: flex-end;
-}
+
 @media (max-width: 991px) {
   .menu-list-gallery {
     grid-template-columns: 1fr 1fr;
-  }
-  .menu-list-root-class-name {
-    top: -57px;
-    left: -26px;
-    width: 100%;
-    height: auto;
-    align-self: center;
   }
 }
 @media (max-width: 767px) {

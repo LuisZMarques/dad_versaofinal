@@ -17,8 +17,8 @@
 </template>
 
 <script setup>
-import UserDetail from "./UserDetail.vue";
-import { useUsersStore } from "../../stores/users";
+import UserDetail from "@/components/users/UserDetail.vue";
+import { useUsersStore } from "../stores/users";
 import { onMounted } from "vue";
 
 const usersStore = useUsersStore();

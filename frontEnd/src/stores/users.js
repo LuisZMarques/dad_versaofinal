@@ -1,5 +1,6 @@
-import { ref, inject } from "vue";
+import { ref, computed, inject } from "vue";
 import { defineStore } from "pinia";
+import avatarNoneUrl from '@/assets/avatar-none.png'
 
 export const useUsersStore = defineStore("users", () => {
   const axios = inject("axios");
@@ -25,5 +26,12 @@ export const useUsersStore = defineStore("users", () => {
     }
   }
 
-  return { users, loadUsers };
+  const userPhotoUrl = computed(() => {
+    if (!users.value?.photo_url) {
+      return avatarNoneUrl
+    }
+    return serverBaseUrl + '/storage/fotos/' + users.value.photo_url
+  })
+
+  return { users, userPhotoUrl, loadUsers };
 });

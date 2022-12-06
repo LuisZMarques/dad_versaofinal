@@ -11,7 +11,7 @@ import './assets/app.css'
 
 const app = createApp(App)
 
-const serverBaseUrl = 'http://fasttuga-website.test/fast_tuga_laravel_backend/public'
+const serverBaseUrl = 'http://localhost/dad/public'
 app.provide('axios', axios.create({
     baseURL: serverBaseUrl + '/api',
     headers: {

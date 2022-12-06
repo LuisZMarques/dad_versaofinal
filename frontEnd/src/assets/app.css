@@ -293,6 +293,7 @@
     height: 80%;
     align-items: center;
     justify-content: center;
+    background-color: rebeccapurple;
   }
   .botoes-troca-cor-efeito-hover-sidebar {
     color: var(--dl-color-gray-white);
@@ -365,6 +366,7 @@
     background: rebeccapurple;
     flex-direction: row;
   }
+/*
   .Content {
     font-size: 1.12rem;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen","Ubuntu", "Cantarell", "Fira Sans","Droid Sans", "Helvetica Neue", sans-serif;
@@ -380,7 +382,7 @@
     line-height: 1.25;
     text-transform: none;
     text-decoration: none;
-  }
+  }*/
   
   .sidebar-open{
     width: 20%;

@@ -3,7 +3,7 @@
       <div class="container-listas">
         <div class="container-listas-info item-user-container-email">
           <span class="item-user-email-user-dinamico texto">
-            {{ user.name }}
+            {{ user.email }}
           </span>
           <button class="item-user-botao-copiar-email button">
             <svg viewBox="0 0 1024 1024" class="item-user-icon">
@@ -16,7 +16,7 @@
         <div class="container-listas-info">
           <img
             :alt="user.name"
-            :src="user.photo_url"
+            :src="useUsersStore.userPhotoUrl"
             class="item-user-foto-user-dinamica"
           />
         </div>
@@ -51,6 +51,8 @@
   </template>
   
   <script setup>
+import { useUsersStore } from '../../stores/users';
+
   const props = defineProps({
     user:{
         type:Object,

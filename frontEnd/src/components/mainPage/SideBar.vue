@@ -57,7 +57,7 @@
           <span class="texto sidebar-text03">Menu</span>
         </router-link>
         <router-link
-          to="/gestao-pedidos"
+          to="/orders"
           class="sidebar-navlink02 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
         >
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
@@ -70,7 +70,7 @@
       </div>
       <div class="sidebar-container-permissoes-utlizadores">
         <router-link
-          to="/gestao-pedidos"
+          to="/orders"
           class="sidebar-navlink03 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
         >
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
@@ -81,7 +81,7 @@
           <span class="texto sidebar-text05">Cozinha</span>
         </router-link>
         <router-link
-          to="/gestao-pedidos"
+          to="/orders"
           class="sidebar-navlink04 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
         >
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
@@ -94,7 +94,7 @@
       </div>
       <div class="sidebar-container-manager">
         <router-link
-          to="/gestao-pedidos"
+          to="/orders"
           class="sidebar-navlink05 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
         >
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
@@ -105,7 +105,7 @@
           <span class="texto sidebar-text07">Gestão de Pedidos</span>
         </router-link>
         <router-link
-          to="/gestao-utilizadores"
+          to="/users"
           class="sidebar-navlink06 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
         >
           <svg viewBox="0 0 1097.142857142857 1024" class="icons-sidebar-nav">
@@ -116,7 +116,7 @@
           <span class="texto sidebar-text08">Gestão de Utilizadores</span>
         </router-link>
         <router-link
-          to="/estatisticas"
+          to="/"
           class="sidebar-navlink07 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
         >
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
@@ -142,7 +142,7 @@
           <span class="texto sidebar-text10">Menu</span>
         </router-link>
         <router-link
-          to="/gestao-pedidos"
+          to="/orders"
           class="sidebar-navlink09 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
         >
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
@@ -155,7 +155,7 @@
       </div>
       <div class="sidebar-container-permissoes-utlizadores1">
         <router-link
-          to="/gestao-pedidos"
+          to="/orders"
           class="sidebar-navlink10 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
         >
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
@@ -166,7 +166,7 @@
           <span class="texto sidebar-text12">Cozinha</span>
         </router-link>
         <router-link
-          to="/gestao-pedidos"
+          to="/orders"
           class="sidebar-navlink11 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
         >
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
@@ -179,7 +179,7 @@
       </div>
       <div class="sidebar-container-manager1">
         <router-link
-          to="/gestao-pedidos"
+          to="/orders"
           class="sidebar-navlink12 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
         >
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
@@ -190,7 +190,7 @@
           <span class="texto sidebar-text14">Gestão de Pedidos</span>
         </router-link>
         <router-link
-          to="/gestao-utilizadores"
+          to="/users"
           class="sidebar-navlink13 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
         >
           <svg viewBox="0 0 1097.142857142857 1024" class="icons-sidebar-nav">
@@ -201,7 +201,7 @@
           <span class="texto sidebar-text15">Gestão de Utilizadores</span>
         </router-link>
         <router-link
-          to="/estatisticas"
+          to="/"
           class="sidebar-navlink14 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
         >
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
