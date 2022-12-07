@@ -4,7 +4,7 @@
       class="header-simples-header"
     >
       <div class="header-simples-container-botao-sidebar">
-        <button class="botoes-header botoes-com-border button" @click.prevent="$emit('sidebar-toggle')">
+        <button class="botoes-header botoes-com-border button" @click="sideBarOpen = !sideBarOpen">
           <svg viewBox="0 0 1024 1024" class="icons-botoes-header">
             <path
               d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"
@@ -30,9 +30,9 @@
   </template>
   
   <script>
-  export default {
-    name: 'header-simples',
-  };
+  import { ref } from 'vue';
+
+  const sideBarOpen = ref(open);
   </script>
   
   <style scoped>

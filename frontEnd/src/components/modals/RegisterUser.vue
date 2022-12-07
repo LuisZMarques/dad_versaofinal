@@ -18,7 +18,7 @@
         type="text"
         placeholder="inserir o nome"
         class="input inputs-modals"
-        v-model="user.nome"
+        v-model="user.nome_registo"
       />
     </div>
     <div class="containers-modals-inputs">
@@ -27,7 +27,7 @@
         type="text"
         placeholder="inserir o mail"
         class="input inputs-modals"
-        v-model="user.email"
+        v-model="user.email_registo"
       />
     </div>
     <div class="containers-modals-inputs">
@@ -36,7 +36,7 @@
         type="text"
         placeholder="inserir password"
         class="input inputs-modals"
-        v-model="user.password"
+        v-model="user.password_registo"
       />
     </div>
     <div class="containers-modals-botoes">
@@ -65,9 +65,9 @@
 import { ref } from "vue";
 
 let user = ref({
-  nome: null,
-  email: null,
-  password: null,
+  nome_registo: null,
+  email_registo: null,
+  password_registo: null,
 });
 </script>
 
