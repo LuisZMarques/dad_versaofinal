@@ -11,7 +11,7 @@ import './assets/app.css'
 
 const app = createApp(App)
 
-const serverBaseUrl = 'http://localhost/dad/public'
+const serverBaseUrl = 'http://127.0.0.1:8000'
 app.provide('axios', axios.create({
     baseURL: serverBaseUrl + '/api',
     headers: {

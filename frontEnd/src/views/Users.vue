@@ -27,6 +27,9 @@ onMounted(() => {
     usersStore.loadUsers()
 })
 </script>
+
+
+
 <style scoped>
 .lista-users-titulo-estatico {
   color: var(--dl-color-gray-white);

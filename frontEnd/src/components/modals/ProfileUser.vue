@@ -1,66 +1,54 @@
 <template>
-    <div class="modals">
-      <div class="header-modals">
-        <div class="perfil-modal-container1">
-          <span class="texto-logo">
-            <span>FasTuga</span>
-            <br />
-          </span>
-        </div>
-        <span class="perfil-modal-login">
-          <span>Perfil</span>
+  <div class="modals">
+    <div class="header-modals">
+      <div class="perfil-modal-container1">
+        <span class="texto-logo">
+          <span>FasTuga</span>
           <br />
         </span>
       </div>
-      <div class="containers-modals-inputs">
-        <label class="labels-modals">Nome:</label>
-        <input
-          type="text"
-          :placeholder="user.nome"
-          class="input inputs-modals"
-        />
-      </div>
-      <div class="containers-modals-inputs">
-        <label class="labels-modals">Email:</label>
-        <input
-          type="text"
-          :placeholder="user.email"
-          class="input inputs-modals"
-        />
-      </div>
-      <div class="containers-modals-inputs">
-        <label class="labels-modals">Password:</label>
-        <input
-          type="text"
-          :placeholder="user.password"
-          class="input inputs-modals"
-        />
-      </div>
-      <div class="containers-modals-botoes">
-        <button class="botoes-modals button botoes-modals-cancelar">
-          <span class="perfil-modal-text05 texto containers-modals-botoes-texto">
-            <span>Cancelar</span>
-            <br />
-          </span>
-        </button>
-        <button class="botoes-modals botoes-modals-confirmar button">
-          <span class="perfil-modal-text08 texto containers-modals-botoes-texto">
-            <span>Confirmar</span>
-            <br />
-          </span>
-        </button>
-      </div>
+      <span class="perfil-modal-login">
+        <span>Perfil</span>
+        <br />
+      </span>
     </div>
-  </template>
+    <div class="containers-modals-inputs">
+      <label class="labels-modals">Nome:</label>
+      <input type="text" placeholder="user.nome" class="input inputs-modals" v-model="props.user.name" />
+    </div>
+    <div class="containers-modals-inputs">
+      <label class="labels-modals">Email:</label>
+      <input type="text" placeholder="user.email" class="input inputs-modals" v-model="props.user.email"/>
+    </div>
+    <div class="containers-modals-inputs">
+      <label class="labels-modals">Password:</label>
+      <input type="text" placeholder="user.password" class="input inputs-modals"/>
+    </div>
+    <div class="containers-modals-botoes">
+      <button class="botoes-modals button botoes-modals-cancelar">
+        <span class="perfil-modal-text05 texto containers-modals-botoes-texto">
+          <span>Cancelar</span>
+          <br />
+        </span>
+      </button>
+      <button class="botoes-modals botoes-modals-confirmar button">
+        <span class="perfil-modal-text08 texto containers-modals-botoes-texto">
+          <span>Confirmar</span>
+          <br />
+        </span>
+      </button>
+    </div>
+  </div>
+</template>
 
 <script setup>
-import { ref } from "vue";
 
-let user = ref({
-  nome: null,
-  email: null,
-  password: null,
-});
+let props = defineProps({
+  user:{
+    type:Object,
+    required:true
+  }
+})
 </script>
 
 <style scoped>
@@ -71,16 +59,20 @@ let user = ref({
   display: flex;
   align-items: flex-start;
 }
+
 .perfil-modal-login {
   color: var(--dl-color-pimary-900);
   align-self: center;
 }
+
 .perfil-modal-text05 {
   color: var(--dl-color-gray-white);
 }
+
 .perfil-modal-text08 {
   color: var(--dl-color-gray-white);
 }
+
 @media(max-width: 767px) {
   .perfil-modal-text08 {
     width: auto;

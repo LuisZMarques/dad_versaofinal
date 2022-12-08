@@ -14,6 +14,8 @@
 </template>
 
 <script setup>
+
+
 import HeaderPage from "@/components/mainPage/Header.vue"
 import SideBar from "@/components/mainPage/SideBar.vue"
 import LoginModal from "@/components/modals/Login.vue"

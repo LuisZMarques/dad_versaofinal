@@ -1,5 +1,5 @@
 <template>
-    <div class="home-container">
+  <div class="home-container">
     <div class="home-hero">
       <div class="home-container1">
         <div class="home-container2">
@@ -10,10 +10,9 @@
             </span>
             <br />
           </span>
-          <router-link to="/menu" class="home-navlink button">
+          <router-link :to="{ name: 'menu' }" class="home-navlink button">
             <span class="home-text4">
-              <span>Menu</span>
-              <br />
+              Menu
             </span>
           </router-link>
         </div>
@@ -23,6 +22,20 @@
 </template>
 
 <script setup>
+
+let selectFile = (event) => {
+  createBase64Image(event.target.files[0])
+}
+
+let createBase64Image = (fileObject) => {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    let image = e.target.result;
+    console.log(image)
+  };
+  reader.readAsDataURL(fileObject);
+}
+
 </script>
 
 <style scoped>
@@ -34,6 +47,7 @@
   align-items: flex-start;
   flex-direction: column;
 }
+
 .home-hero {
   flex: 1 1 auto;
   width: 100%;
@@ -45,6 +59,7 @@
   background-size: cover;
   background-image: url("src/assets/images/homeImage.jpg");
 }
+
 .home-container1 {
   left: 0px;
   width: 100%;
@@ -56,6 +71,7 @@
   flex-direction: column;
   justify-content: center;
 }
+
 .home-container2 {
   width: 40%;
   height: 40%;
@@ -73,10 +89,12 @@
   border-bottom-left-radius: var(--dl-radius-radius-round);
   border-bottom-right-radius: var(--dl-radius-radius-round);
 }
+
 .home-text {
   color: var(--dl-color-gray-white);
   text-align: center;
 }
+
 .home-text1 {
   color: rgb(255, 255, 255);
   max-width: 600px;
@@ -85,6 +103,7 @@
   padding-top: var(--dl-space-space-triplequarter);
   padding-bottom: var(--dl-space-space-triplequarter);
 }
+
 .home-navlink {
   color: #ffffff;
   width: 35%;
@@ -99,6 +118,7 @@
   text-decoration: none;
   background-color: #e92b2b;
 }
+
 .home-text4 {
   left: 0px;
   right: 0px;
@@ -110,24 +130,30 @@
   font-weight: 700;
   line-height: -2;
 }
+
 @media(max-width: 767px) {
   .home-container2 {
     width: 55%;
   }
+
   .home-navlink {
     width: 50%;
   }
 }
+
 @media(max-width: 479px) {
   .home-container2 {
     width: 70%;
   }
+
   .home-text1 {
     display: none;
   }
+
   .home-text2 {
     display: none;
   }
+
   .home-navlink {
     width: 50%;
   }

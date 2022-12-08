@@ -20,7 +20,6 @@ class ProductResource extends JsonResource
             'type'=>$this->type,
             'photo_url'=>$this->photo_url,
             'description'=>$this->description,
-            'photo_url'=>$this->photo_url,
             'price'=>$this->price,
             'custom'=>$this->custom,
             'orders'=>OrderResource::collection($this->whenLoaded('orders'))

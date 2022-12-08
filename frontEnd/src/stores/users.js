@@ -7,6 +7,7 @@ export const useUsersStore = defineStore("users", () => {
   const toast = inject("toast");
 
   const users = ref([]);
+  const user = ref();
 
   function clearUsers() {
     projects.value = [];
@@ -26,6 +27,20 @@ export const useUsersStore = defineStore("users", () => {
     }
   }
 
+  async function getUser() {
+    try {
+      const response = await axios.get("users/1");
+      user.value = response.data.data;
+      toast.success(
+        `Utilizadores carregados com successo.`
+      );
+      return user.value;
+    } catch (error) {
+      user.value = null;
+      throw error;
+    }
+  }
+
   const userPhotoUrl = computed(() => {
     if (!users.value?.photo_url) {
       return avatarNoneUrl
@@ -33,5 +48,5 @@ export const useUsersStore = defineStore("users", () => {
     return serverBaseUrl + '/storage/fotos/' + users.value.photo_url
   })
 
-  return { users, userPhotoUrl, loadUsers };
+  return { users, userPhotoUrl, loadUsers, user, getUser };
 });

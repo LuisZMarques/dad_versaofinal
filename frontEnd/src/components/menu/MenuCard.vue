@@ -1,10 +1,9 @@
 <template>
   <div class="menu-card-gallery-card">
-    <img
-      :alt="product.type"
-      src="`../assets/images/${imageName}.jpg`"
-      class="menu-card-imagem-item-dinamica"
-    />
+    {{ product.photo_url }}
+    <img :src="`data:image/png;base64,PbD6tFygHYuZs7Ui`" />
+    <img :src="`http://127.0.0.1:8000/storage/products_photos/PbD6tFygHYuZs7Ui.jpg`" />
+    <img :alt="product.type" src="`../assets/images/${imageName}.jpg`" class="menu-card-imagem-item-dinamica" />
     <div class="menu-card-container-iterativo-item">
       <div class="menu-card-container-descricoes">
         <h2 class="menu-card-nome-item-dinamico texto texto-menu-card">
@@ -17,26 +16,20 @@
       <div class="menu-card-container-compra">
         <div class="menu-card-container-gerir-quantidade-item">
           <button class="menu-card-botao-menos-quantidade button">
-            <svg
-              viewBox="0 0 804.5714285714286 1024"
-              class="icons-botoes-menuCard"
-            >
+            <svg viewBox="0 0 804.5714285714286 1024" class="icons-botoes-menuCard">
               <path
-                d="M804.571 420.571v109.714c0 30.286-24.571 54.857-54.857 54.857h-694.857c-30.286 0-54.857-24.571-54.857-54.857v-109.714c0-30.286 24.571-54.857 54.857-54.857h694.857c30.286 0 54.857 24.571 54.857 54.857z"
-              ></path>
+                d="M804.571 420.571v109.714c0 30.286-24.571 54.857-54.857 54.857h-694.857c-30.286 0-54.857-24.571-54.857-54.857v-109.714c0-30.286 24.571-54.857 54.857-54.857h694.857c30.286 0 54.857 24.571 54.857 54.857z">
+              </path>
             </svg>
           </button>
           <span class="menu-card-quantidade-item texto">
             quantidade
           </span>
           <button class="menu-card-botao-mais-quantidadee button">
-            <svg
-              viewBox="0 0 804.5714285714286 1024"
-              class="icons-botoes-menuCard"
-            >
+            <svg viewBox="0 0 804.5714285714286 1024" class="icons-botoes-menuCard">
               <path
-                d="M804.571 420.571v109.714c0 30.286-24.571 54.857-54.857 54.857h-237.714v237.714c0 30.286-24.571 54.857-54.857 54.857h-109.714c-30.286 0-54.857-24.571-54.857-54.857v-237.714h-237.714c-30.286 0-54.857-24.571-54.857-54.857v-109.714c0-30.286 24.571-54.857 54.857-54.857h237.714v-237.714c0-30.286 24.571-54.857 54.857-54.857h109.714c30.286 0 54.857 24.571 54.857 54.857v237.714h237.714c30.286 0 54.857 24.571 54.857 54.857z"
-              ></path>
+                d="M804.571 420.571v109.714c0 30.286-24.571 54.857-54.857 54.857h-237.714v237.714c0 30.286-24.571 54.857-54.857 54.857h-109.714c-30.286 0-54.857-24.571-54.857-54.857v-237.714h-237.714c-30.286 0-54.857-24.571-54.857-54.857v-109.714c0-30.286 24.571-54.857 54.857-54.857h237.714v-237.714c0-30.286 24.571-54.857 54.857-54.857h109.714c30.286 0 54.857 24.571 54.857 54.857v237.714h237.714c30.286 0 54.857 24.571 54.857 54.857z">
+              </path>
             </svg>
           </button>
         </div>
@@ -46,14 +39,20 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
+
 const props = defineProps({
-  product:{
-    type:Object, 
-    required:true
+  product: {
+    type: Object,
+    required: true
   }
 });
 
-const image_alt =  null;
+const image_alt = null;
+
+let image = computed(() => {
+
+})
 </script>
 
 <style scoped>
@@ -68,18 +67,21 @@ const image_alt =  null;
   justify-content: center;
   background-color: white;
 }
+
 .menu-card-imagem-item-dinamica {
   width: 100%;
   height: 100%;
   object-fit: cover;
   background-color: white;
 }
+
 .menu-card-container-iterativo-item {
   flex: 0 0 auto;
   width: 100%;
   display: flex;
   align-items: flex-start;
 }
+
 .menu-card-container-descricoes {
   flex: 0 0 auto;
   width: 50%;
@@ -89,13 +91,16 @@ const image_alt =  null;
   align-items: flex-start;
   flex-direction: column;
 }
+
 .menu-card-nome-item-dinamico {
   font-size: 1.5rem;
   align-self: center;
 }
+
 .menu-card-descricao-item-dinamico {
   margin-left: 15%;
 }
+
 .menu-card-container-compra {
   flex: 0 0 auto;
   width: 50%;
@@ -106,6 +111,7 @@ const image_alt =  null;
   justify-content: center;
   background-color: white;
 }
+
 .menu-card-container-gerir-quantidade-item {
   flex: 0 0 auto;
   width: 100%;
@@ -116,15 +122,18 @@ const image_alt =  null;
   padding-right: var(--dl-space-space-unit);
   justify-content: space-around;
 }
+
 .menu-card-botao-menos-quantidade {
   display: flex;
   flex-direction: row;
 }
+
 .menu-card-quantidade-item {
   color: black;
   font-size: 1.5rem;
   font-weight: 700;
 }
+
 .menu-card-botao-mais-quantidadee {
   display: flex;
   flex-direction: row;
@@ -135,13 +144,16 @@ const image_alt =  null;
     border-radius: var(--dl-radius-radius-radius50);
   }
 }
+
 @media (max-width: 767px) {
   .menu-card-gallery-card {
     flex-direction: column;
   }
+
   .menu-card-container-gerir-quantidade-item {
     padding: 0px;
   }
+
   .menu-card-quantidade-item {
     font-size: 1rem;
   }
