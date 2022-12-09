@@ -244,6 +244,7 @@ const imagemUserDinamica_alt =  null;
   background: rebeccapurple;
   flex-direction: column;
   top: 4rem;
+  z-index: 1;
 }
 .sidebar-perfil {
   width: 100%;
