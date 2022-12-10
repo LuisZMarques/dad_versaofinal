@@ -8,6 +8,7 @@
         <order-payment v-if="pagamentoModalState"/>
         <register-user v-if="registarModalState"/>
         <profile-user v-if="perfilModalState"/>
+        <router-view/>
     </div>
   </div>
 </template>
@@ -22,9 +23,10 @@ import RegisterUser from "@/components/modals/RegisterUser.vue"
 import ProfileUser from "@/components/modals/ProfileUser.vue"
 import OrderPayment from "@/components/modals/OrderPayment.vue"
 
+
 import { ref } from "vue";
 
-const sidebarstate = ref(true)
+const sidebarstate = ref(false)
 
 const loginModalState = ref(false)
 

@@ -249,6 +249,7 @@
   .botoes-sidebar-perfil {
     width: 33%;
     justify-content: center;
+    background-color: rebeccapurple;
   }
   .botoes-modals {
     border-radius: 0.75rem;

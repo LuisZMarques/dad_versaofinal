@@ -14,11 +14,11 @@
     </div>
     <div class="containers-modals-inputs">
       <label class="labels-modals">Nome:</label>
-      <input type="text" placeholder="user.nome" class="input inputs-modals" v-model="props.user.name" />
+      <input type="text" placeholder="user.nome" class="input inputs-modals" /> <!-- v-model="props.user.name" -->
     </div>
     <div class="containers-modals-inputs">
       <label class="labels-modals">Email:</label>
-      <input type="text" placeholder="user.email" class="input inputs-modals" v-model="props.user.email"/>
+      <input type="text" placeholder="user.email" class="input inputs-modals" /> <!-- v-model="props.user.email" -->
     </div>
     <div class="containers-modals-inputs">
       <label class="labels-modals">Password:</label>
@@ -43,12 +43,13 @@
 
 <script setup>
 
-let props = defineProps({
+/* let props = defineProps({
   user:{
     type:Object,
     required:true
   }
 })
+  */
 </script>
 
 <style scoped>

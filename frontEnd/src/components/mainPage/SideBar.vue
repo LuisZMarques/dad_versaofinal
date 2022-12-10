@@ -8,17 +8,16 @@
       />
       <span class="sidebar-nome-user-dinamico">{{ nomeUserDinamico }}</span>
       <div class="sidebar-container-acesso-login">
-        <router-link
-          to="/"
-          class="sidebar-navlink botoes-com-border button botoes-sidebar-perfil"
-        >
+        <button 
+          class="botoes-com-border button botoes-sidebar-perfil"
+          href="/"> 
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-perfil">
             <path
               d="M768 640v-128h-320v-128h320v-128l192 192zM704 576v256h-320v192l-384-192v-832h704v320h-64v-256h-512l256 128v576h256v-192z"
             ></path>
           </svg>
           <span class="texto-botoes-perfil-sidebar">Logout</span>
-        </router-link>
+        </button>
         <button
           class="botoes-com-border button botoes-sidebar-perfil"
           @click.prevent="$emit('perfil-toggle')"
@@ -244,7 +243,6 @@ const imagemUserDinamica_alt =  null;
   background: rebeccapurple;
   flex-direction: column;
   top: 4rem;
-  z-index: 1;
 }
 .sidebar-perfil {
   width: 100%;
@@ -276,9 +274,7 @@ const imagemUserDinamica_alt =  null;
   flex-direction: row;
   justify-content: center;
 }
-.sidebar-navlink {
-  text-decoration: none;
-}
+
 .sidebar-navegacao {
   width: 100%;
   height: 75%;

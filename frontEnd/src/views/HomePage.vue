@@ -8,7 +8,6 @@
             <span class="home-text2">
               Visite o nosso menu faça a sua compra online !
             </span>
-            <br />
           </span>
           <router-link :to="{ name: 'menu' }" class="home-navlink button">
             <span class="home-text4">
@@ -23,7 +22,7 @@
 
 <script setup>
 
-let selectFile = (event) => {
+/* let selectFile = (event) => {
   createBase64Image(event.target.files[0])
 }
 
@@ -35,7 +34,7 @@ let createBase64Image = (fileObject) => {
   };
   reader.readAsDataURL(fileObject);
 }
-
+ */
 </script>
 
 <style scoped>
@@ -51,7 +50,7 @@ let createBase64Image = (fileObject) => {
 .home-hero {
   flex: 1 1 auto;
   width: 100%;
-  height: 80vh;
+  height: 75vh;
   display: flex;
   position: relative;
   align-items: center;
