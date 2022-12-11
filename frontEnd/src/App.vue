@@ -23,12 +23,12 @@ import RegisterUser from "@/components/modals/RegisterUser.vue"
 import ProfileUser from "@/components/modals/ProfileUser.vue"
 import OrderPayment from "@/components/modals/OrderPayment.vue"
 
-
 import { useUsersStore } from './stores/users.js'
 
 import { ref } from "vue"
 
-const sidebarstate = ref(true)
+const usersStore = useUsersStore()
+
 
 const sidebarstate = ref(false)
 
