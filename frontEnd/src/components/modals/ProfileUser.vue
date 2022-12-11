@@ -41,7 +41,7 @@ import { useUsersStore } from '@/stores/users.js'
 
 const usersStore = useUsersStore()
 
-let props = defineProps({
+/* let props = defineProps({
   user:{
     type:Object,
     required:false
@@ -49,6 +49,7 @@ let props = defineProps({
 
 
 })
+  */
 </script>
 
 <style scoped>

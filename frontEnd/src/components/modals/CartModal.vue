@@ -1,7 +1,8 @@
 <template>
-    <div class="carrinho-modal-container modals">
+  <div class="modals">
+    <div class="carrinho-modal-container">
       <div class="carrinho-modal-container-item">
-        <cart-card></cart-card>
+        <cart-card />
       </div>
       <div class="carrinho-modal-container-descontos-e-total">
         <div class="carrinho-modal-container-pontos-acumulados">
@@ -36,7 +37,7 @@
             <br />
           </span>
         </button>
-        <button class="botoes-modals botoes-modals-confirmar button">
+        <button class="botoes-modals botoes-modals-confirmar button" @click="$emit('pagamento-toggle')">
           <span class="carrinho-modal-text07 texto containers-modals-botoes-texto">
             <span>Confirmar</span>
             <br />
@@ -44,14 +45,15 @@
         </button>
       </div>
     </div>
-  </template>
+  </div>
+</template>
   
-  <script>
+  <script setup>
     import CartCard from '@/components/modals/CartCard.vue'
     import { ref } from 'vue'
 
-    let totalConta = ref(null)
-    let pontosAcumulados = ref(null)
+    let totalConta = ref(0)
+    let pontosAcumulados = ref(0)
 
   </script>
   

@@ -1,5 +1,6 @@
 <template>
-    <div class="modals metodo-pagamento-modal-container">
+  <div class="modals">
+    <div class="metodo-pagamento-modal-container">
       <div class="header-modals">
         <span class="texto-logo">
           <span>FasTuga</span>
@@ -81,7 +82,8 @@
         </div>
       </div>
     </div>
-  </template>
+  </div>
+</template>
   
   <script setup>
     import { ref } from "vue";
