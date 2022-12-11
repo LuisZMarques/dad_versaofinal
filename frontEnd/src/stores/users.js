@@ -56,7 +56,6 @@ export const useUsersStore = defineStore("users", () => {
       );
       axios.defaults.headers.common.Authorization =
         "Bearer " + response.data.access_token;
-        console.log(response.data)
     } catch (error) {
       delete axios.defaults.headers.common.Authorization;
       credentials.value.password = "";
