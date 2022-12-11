@@ -4,8 +4,12 @@
       <span>Menu</span>
       <br />
     </span>
-    <div class="menu-list-gallery">
-      <menu-card v-for="product in productsStore.products" :product="product"></menu-card>
+    <div>
+      <div class="row m-3">
+        <div class="col-12 col-md-4 mb-4" v-for="product in productsStore.products">
+          <menu-card :product="product" class=""/>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -34,18 +38,19 @@ onMounted(() => {
   flex-direction: column;
   background-color: rebeccapurple;
 }
+
 .menu-list-gallery {
   width: 100%;
   display: grid;
   padding: var(--dl-space-space-fiveunits);
   grid-gap: var(--dl-space-space-unit);
   position: relative;
-  max-width: 1400px;
+  max-width: 1200px;
   align-self: center;
   border-color: var(--dl-color-pimary-laranjavivo);
   border-width: 0.25rem;
   border-radius: 5rem;
-  grid-template-columns: 1fr 1fr ;
+  grid-template-columns: 1fr 1fr;
 }
 
 @media (max-width: 991px) {
@@ -53,6 +58,7 @@ onMounted(() => {
     grid-template-columns: 1fr 1fr;
   }
 }
+
 @media (max-width: 767px) {
   .menu-list-gallery {
     padding-left: 32px;
@@ -60,6 +66,7 @@ onMounted(() => {
     grid-template-columns: 1fr;
   }
 }
+
 @media (max-width: 479px) {
   .menu-list-gallery {
     padding-top: 32px;

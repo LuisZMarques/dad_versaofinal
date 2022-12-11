@@ -1,6 +1,6 @@
 import { ref, computed, inject } from "vue";
 import { defineStore } from "pinia";
-import avatarNoneUrl from '@/assets/avatar-none.png'
+import avatarNoneUrl from "@/assets/avatar-none.png";
 
 export const useUsersStore = defineStore("users", () => {
   const axios = inject("axios");
@@ -9,17 +9,26 @@ export const useUsersStore = defineStore("users", () => {
   const users = ref([]);
   const user = ref();
 
+  const credentials = ref({
+    username: "",
+    password: "",
+  });
+
+  let loginModalState = ref(true);
+  let perfilModalState = ref(false);
+
   function clearUsers() {
     projects.value = [];
   }
 
+  function clearUser() {
+    user.value = null;
+  }
   async function loadUsers() {
     try {
       const response = await axios.get("users");
       users.value = response.data.data;
-      toast.success(
-        `Utilizadores carregados com successo.`
-      );
+      toast.success(`Utilizadores carregados com successo.`);
       return users.value;
     } catch (error) {
       clearUsers();
@@ -27,13 +36,11 @@ export const useUsersStore = defineStore("users", () => {
     }
   }
 
-  async function getUser() {
+  async function loadUser() {
     try {
       const response = await axios.get("users/1");
       user.value = response.data.data;
-      toast.success(
-        `Utilizadores carregados com successo.`
-      );
+      toast.success(`Utilizadores carregados com successo.`);
       return user.value;
     } catch (error) {
       user.value = null;
@@ -41,12 +48,55 @@ export const useUsersStore = defineStore("users", () => {
     }
   }
 
-  const userPhotoUrl = computed(() => {
-    if (!users.value?.photo_url) {
-      return avatarNoneUrl
+  async function login() {
+    try {
+      const response = await axios.post("login", credentials.value);
+      toast.success(
+        "User " + credentials.value.username + " has entered the application."
+      );
+      axios.defaults.headers.common.Authorization =
+        "Bearer " + response.data.access_token;
+        console.log(response.data)
+    } catch (error) {
+      delete axios.defaults.headers.common.Authorization;
+      credentials.value.password = "";
+      toast.error("User credentials are invalid!");
     }
-    return serverBaseUrl + '/storage/fotos/' + users.value.photo_url
-  })
+  }
 
-  return { users, userPhotoUrl, loadUsers, user, getUser };
+  async function logout() {
+    try {
+      await axios.post("logout");
+      clearUser();
+      toast.success("User has logged out of the application.");
+      delete axios.defaults.headers.common.Authorization;
+      router.push({ name: "login" });
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  async function restoreToken() {
+    let storedToken = sessionStorage.getItem("token");
+    if (storedToken) {
+      axios.defaults.headers.common.Authorization = "Bearer " + storedToken;
+      await loadUser();
+      return true;
+    }
+    clearUser();
+    return false;
+  }
+
+  return {
+    users,
+    loadUsers,
+    user,
+    loginModalState,
+    perfilModalState,
+    login,
+    loadUser,
+    logout,
+    credentials,
+  };
 });

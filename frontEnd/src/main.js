@@ -7,11 +7,14 @@ import router from './router'
 
 import Toaster from "@meforma/vue-toaster";
 
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './assets/app.css'
+
 
 const app = createApp(App)
 
 const serverBaseUrl = 'http://127.0.0.1:8000'
+
 app.provide('axios', axios.create({
     baseURL: serverBaseUrl + '/api',
     headers: {
@@ -26,6 +29,7 @@ app.use(Toaster, {
     timeout: 3000,
     pauseOnHover: true
 })
+
 
 app.provide('toast', app.config.globalProperties.$toast);
 

@@ -1,100 +1,46 @@
 <template>
-  <div class="modals">
-    <div class="header-modals">
-      <div class="login-modal-container1">
-        <span class="login-modal-logo LogoFastuga texto-logo">
-          <span>FasTuga</span>
-          <br />
-        </span>
+  <modal v-slot="{ closeModal }">
+    <div class="row justify-content-center">
+      <div class="col-4">
+        <div class="card text-white" style="background-color: rebeccapurple;">
+          <div class="card-body">
+            <h4 class="fw-bold mb-2">FasTuga</h4>
+            <p class="mb-1 fst-italic small">Por favor colocar email e password para se autenticar..</p>
+            <div class="mb-3">
+              <label for="email" class="form-label fw-bold">Email:</label>
+              <input type="email" class="form-control" id="email" placeholder="name@example.com"
+                v-model="usersStore.credentials.username">
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label fw-bold">Password:</label>
+              <input type="password" class="form-control" id="password" placeholder="*******"
+                v-model="usersStore.credentials.password">
+            </div>
+            <p class="small"><a class="text-primary" href="#">Esqueceu-se da password?</a></p>
+            <div class="d-grid">
+              <div class="btn-group">
+                <button class="btn btrn-sm btn-outline-dark" type="button" @click="closeModal">Cancel</button>
+                <button class="btn btrn-sm btn-outline-primary" type="button" @click="usersStore.login">Entrar</button>
+              </div>
+            </div>
+            <div class="text-center fst-italic small">
+              <p class="mb-0">Sem conta?<a href="#" class="text-white fw-bold"> Autenticar</a>
+              </p>
+            </div>
+          </div>
+          <!--  -->
+        </div>
       </div>
-      <span class="login-modal-login-estatico">
-        <span>Login</span>
-        <br />
-      </span>
     </div>
-    <div class="containers-modals-inputs">
-      <label class="labels-modals">Email:</label>
-      <input
-        type="text"
-        placeholder="email"
-        class="input inputs-modals"
-        v-model="email"
-      />
-    </div>
-    <div class="containers-modals-inputs">
-      <label class="labels-modals">Password:</label>
-      <input
-        type="text"
-        placeholder="insert password"
-        class="input inputs-modals"
-        v-model="password"
-      />
-    </div>
-    <button class="login-modal-botao-recuperar-password button">
-      <span class="login-modal-text05 texto">Esqueceu-se da password?</span>
-    </button>
-    <button class="login-modal-botao-recuperar-password button">
-      <span class="login-modal-text05 texto">Registo</span>
-    </button>
-    <div class="containers-modals-botoes">
-      <button class="botoes-modals button botoes-modals-cancelar">
-        <span class="login-modal-text06 texto containers-modals-botoes-texto">
-          <span>Cancelar</span>
-          <br />
-        </span>
-      </button>
-      <button class="botoes-modals botoes-modals-confirmar button">
-        <span class="login-modal-text09 texto containers-modals-botoes-texto">
-          <span>Confirmar</span>
-          <br />
-        </span>
-      </button>
-    </div>
-  </div>
+  </modal>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import Modal from '@/components/global/modal.vue'
+import { useUsersStore } from '@/stores/users.js'
 
-let email = ref(null);
-let password = ref(null);
+defineEmits(['modal-toggle'])
+
+const usersStore = useUsersStore()
+
 </script>
-
-<style scoped>
-.login-modal-container1 {
-  flex: 0 0 auto;
-  width: 100%;
-  height: 75%;
-  display: flex;
-  align-items: flex-start;
-}
-.login-modal-logo {
-  color: var(--dl-color-pimary-900);
-  width: 100%;
-  align-self: stretch;
-  font-style: normal;
-  text-align: center;
-}
-.login-modal-login-estatico {
-  color: var(--dl-color-pimary-900);
-  align-self: center;
-}
-.login-modal-botao-recuperar-password {
-  display: flex;
-  flex-direction: row;
-}
-.login-modal-text05 {
-  font-size: 1rem;
-}
-.login-modal-text06 {
-  color: var(--dl-color-gray-white);
-}
-.login-modal-text09 {
-  color: var(--dl-color-gray-white);
-}
-@media (max-width: 767px) {
-  .login-modal-text09 {
-    width: auto;
-  }
-}
-</style>

@@ -1,39 +1,15 @@
 <template>
-  <div class="menu-card-gallery-card">
-    {{ product.photo_url }}
-    <img :src="`data:image/png;base64,PbD6tFygHYuZs7Ui`" />
-    <img :src="`http://127.0.0.1:8000/storage/products_photos/PbD6tFygHYuZs7Ui.jpg`" />
-    <img :alt="product.type" src="`../assets/images/${imageName}.jpg`" class="menu-card-imagem-item-dinamica" />
-    <div class="menu-card-container-iterativo-item">
-      <div class="menu-card-container-descricoes">
-        <h2 class="menu-card-nome-item-dinamico texto texto-menu-card">
-          {{ product.name }}
-        </h2>
-        <span class="menu-card-descricao-item-dinamico texto texto-menu-card">
-          {{ product.description }}
-        </span>
-      </div>
-      <div class="menu-card-container-compra">
-        <div class="menu-card-container-gerir-quantidade-item">
-          <button class="menu-card-botao-menos-quantidade button">
-            <svg viewBox="0 0 804.5714285714286 1024" class="icons-botoes-menuCard">
-              <path
-                d="M804.571 420.571v109.714c0 30.286-24.571 54.857-54.857 54.857h-694.857c-30.286 0-54.857-24.571-54.857-54.857v-109.714c0-30.286 24.571-54.857 54.857-54.857h694.857c30.286 0 54.857 24.571 54.857 54.857z">
-              </path>
-            </svg>
-          </button>
-          <span class="menu-card-quantidade-item texto">
-            quantidade
-          </span>
-          <button class="menu-card-botao-mais-quantidadee button">
-            <svg viewBox="0 0 804.5714285714286 1024" class="icons-botoes-menuCard">
-              <path
-                d="M804.571 420.571v109.714c0 30.286-24.571 54.857-54.857 54.857h-237.714v237.714c0 30.286-24.571 54.857-54.857 54.857h-109.714c-30.286 0-54.857-24.571-54.857-54.857v-237.714h-237.714c-30.286 0-54.857-24.571-54.857-54.857v-109.714c0-30.286 24.571-54.857 54.857-54.857h237.714v-237.714c0-30.286 24.571-54.857 54.857-54.857h109.714c30.286 0 54.857 24.571 54.857 54.857v237.714h237.714c30.286 0 54.857 24.571 54.857 54.857z">
-              </path>
-            </svg>
-          </button>
-        </div>
-      </div>
+  <div class="card text-center">
+    <img src="https://a.storyblok.com/f/108717/960x640/7fd6d1bd50/7-tipps-fur-gute-food-fotografie1.jpg" class="mx-auto" 
+      alt="https://a.storyblok.com/f/108717/960x640/7fd6d1bd50/7-tipps-fur-gute-food-fotografie1.jpg" height="150" width="150">
+    <div class="card-body">
+      <h5 class="card-title">{{ product.name }}</h5>
+      <p class="card-text text-start">{{ product.description }}</p>
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-sm btn-outline-primary">-</button>
+      quantidade
+      <button class="btn btn-sm btn-outline-primary">+</button>
     </div>
   </div>
 </template>
@@ -54,108 +30,3 @@ let image = computed(() => {
 
 })
 </script>
-
-<style scoped>
-.menu-card-gallery-card {
-  width: 100%;
-  height: auto;
-  display: flex;
-  position: relative;
-  align-items: center;
-  border-color: var(--dl-color-pimary-laranjavivo);
-  flex-direction: column;
-  justify-content: center;
-  background-color: white;
-}
-
-.menu-card-imagem-item-dinamica {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  background-color: white;
-}
-
-.menu-card-container-iterativo-item {
-  flex: 0 0 auto;
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-}
-
-.menu-card-container-descricoes {
-  flex: 0 0 auto;
-  width: 50%;
-  height: auto;
-  display: flex;
-  align-self: flex-start;
-  align-items: flex-start;
-  flex-direction: column;
-}
-
-.menu-card-nome-item-dinamico {
-  font-size: 1.5rem;
-  align-self: center;
-}
-
-.menu-card-descricao-item-dinamico {
-  margin-left: 15%;
-}
-
-.menu-card-container-compra {
-  flex: 0 0 auto;
-  width: 50%;
-  height: 100%;
-  display: flex;
-  align-self: center;
-  flex-direction: column;
-  justify-content: center;
-  background-color: white;
-}
-
-.menu-card-container-gerir-quantidade-item {
-  flex: 0 0 auto;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  padding: 0px;
-  padding-left: var(--dl-space-space-unit);
-  padding-right: var(--dl-space-space-unit);
-  justify-content: space-around;
-}
-
-.menu-card-botao-menos-quantidade {
-  display: flex;
-  flex-direction: row;
-}
-
-.menu-card-quantidade-item {
-  color: black;
-  font-size: 1.5rem;
-  font-weight: 700;
-}
-
-.menu-card-botao-mais-quantidadee {
-  display: flex;
-  flex-direction: row;
-}
-
-@media (max-width: 991px) {
-  .menu-card-gallery-card {
-    border-radius: var(--dl-radius-radius-radius50);
-  }
-}
-
-@media (max-width: 767px) {
-  .menu-card-gallery-card {
-    flex-direction: column;
-  }
-
-  .menu-card-container-gerir-quantidade-item {
-    padding: 0px;
-  }
-
-  .menu-card-quantidade-item {
-    font-size: 1rem;
-  }
-}
-</style>

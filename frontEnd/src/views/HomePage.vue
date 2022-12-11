@@ -20,7 +20,6 @@
     </div>
   </div>
 </template>
-
 <script setup>
 
 let selectFile = (event) => {

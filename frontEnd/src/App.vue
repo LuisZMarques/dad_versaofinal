@@ -1,14 +1,16 @@
 <template>
   <div class="flex flex-column">
-    <header-page @sidebar-toggle="sideToggle" @cart-toggle="cartModalToggle"/>
+    <header-page @sidebar-toggle="sideToggle" @cart-toggle="cartModalToggle" />
     <div class="flex">
-        <SideBar v-if="sidebarstate" @login-toggle="loginModalToggle" @perfil-toggle="perfilModalToggle"/>
-        <cart-modal v-if="cartModalState" @pagamento-toggle="pagamentoModalToggle"/>
-        <login-modal v-if="loginModalState" @registar-toggle="registarModalToggle"/>
-        <order-payment v-if="pagamentoModalState"/>
-        <register-user v-if="registarModalState"/>
-        <profile-user v-if="perfilModalState"/>
+      <SideBar v-if="sidebarstate" @login-toggle="loginModalToggle" @perfil-toggle="perfilModalToggle" />
+      <cart-modal v-if="cartModalState" @pagamento-toggle="pagamentoModalToggle" />
+
+      <order-payment v-if="pagamentoModalState" />
+      <register-user v-if="registarModalState" />
+      <profile-user v-if="usersStore.perfilModalState" />
+
     </div>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -16,23 +18,22 @@
 
 import HeaderPage from "@/components/mainPage/Header.vue"
 import SideBar from "@/components/mainPage/SideBar.vue"
-import LoginModal from "@/components/modals/Login.vue"
-import CartModal from  "@/components/modals/CartModal.vue"
+import CartModal from "@/components/modals/CartModal.vue"
 import RegisterUser from "@/components/modals/RegisterUser.vue"
 import ProfileUser from "@/components/modals/ProfileUser.vue"
 import OrderPayment from "@/components/modals/OrderPayment.vue"
 
-import { ref } from "vue";
+import { useUsersStore } from './stores/users.js'
 
-const sidebarstate = ref(true)
+import { ref } from "vue"
 
-const loginModalState = ref(false)
+const usersStore = useUsersStore()
+
+const sidebarstate = ref(false)
 
 const cartModalState = ref(false)
 
 const registarModalState = ref(false)
-
-const perfilModalState = ref(false)
 
 const pagamentoModalState = ref(false)
 
@@ -55,6 +56,4 @@ const perfilModalToggle = () => {
 const pagamentoModalToggle = () => {
   pagamentoModalState.value = !pagamentoModalState.value
 }
-
-
 </script>

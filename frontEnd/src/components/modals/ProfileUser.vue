@@ -1,31 +1,25 @@
 <template>
   <div class="modals">
     <div class="header-modals">
-      <div class="perfil-modal-container1">
-        <span class="texto-logo">
-          <span>FasTuga</span>
-          <br />
-        </span>
-      </div>
       <span class="perfil-modal-login">
-        <span>Perfil</span>
+        <span><h2>Perfil</h2></span>
         <br />
       </span>
     </div>
     <div class="containers-modals-inputs">
       <label class="labels-modals">Nome:</label>
-      <input type="text" placeholder="user.nome" class="input inputs-modals" v-model="props.user.name" />
+      <input type="text" placeholder="user.nome" class="input inputs-modals"  />
     </div>
     <div class="containers-modals-inputs">
       <label class="labels-modals">Email:</label>
-      <input type="text" placeholder="user.email" class="input inputs-modals" v-model="props.user.email"/>
+      <input type="text" placeholder="user.email" class="input inputs-modals" />
     </div>
     <div class="containers-modals-inputs">
       <label class="labels-modals">Password:</label>
       <input type="text" placeholder="user.password" class="input inputs-modals"/>
     </div>
     <div class="containers-modals-botoes">
-      <button class="botoes-modals button botoes-modals-cancelar">
+      <button class="botoes-modals button botoes-modals-cancelar" @click="usersStore.perfilModalState = false">
         <span class="perfil-modal-text05 texto containers-modals-botoes-texto">
           <span>Cancelar</span>
           <br />
@@ -43,11 +37,17 @@
 
 <script setup>
 
+import { useUsersStore } from '@/stores/users.js'
+
+const usersStore = useUsersStore()
+
 let props = defineProps({
   user:{
     type:Object,
-    required:true
+    required:false
   }
+
+
 })
 </script>
 
