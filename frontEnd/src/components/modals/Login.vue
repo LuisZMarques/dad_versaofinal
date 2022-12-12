@@ -4,7 +4,8 @@
       <div class="col-4">
         <div class="card text-white" style="background-color: rebeccapurple;">
           <div class="card-body">
-            <h4 class="fw-bold mb-2 text-center">FasTuga</h4>
+            <h2 class="fw-bold mb-2 text-center">FasTuga</h2>
+            <h5 class="fw-bold mb-2 text-center">Login</h5>
             <p class="mb-1 fst-italic small ">Por favor colocar email e password para se autenticar..</p>
             <div class="mb-3">
               <p class="text-center"><label for="email" class="form-label fw-bold">Email:</label></p>
@@ -50,6 +51,7 @@ defineEmits(['close'])
 
 const props = defineProps(['show'])
 const registerModal = ref(false)
+
 const usersStore = useUsersStore()
 
 </script>
