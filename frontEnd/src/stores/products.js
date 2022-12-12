@@ -15,9 +15,7 @@ export const useProductsStore = defineStore("products", () => {
     try {
       const response = await axios.get("products");
       products.value = response.data.data;
-      toast.success(
-        `Produtos loaded com successo`
-      );
+      toast.success(`Produtos loaded com successo`);
       return products.value;
     } catch (error) {
       clearProducts();
@@ -25,5 +23,19 @@ export const useProductsStore = defineStore("products", () => {
     }
   }
 
-  return { products, loadProducts };
+  async function updateProduct(updateProduct) {
+    try {
+      const response = await axios.put(
+        "products/" + updateProduct.id,
+        updateProduct        
+      );
+      toast.success(`Produto atualizado com sucesso com successo`);
+      return 1;
+    } catch (error) {}
+
+    //updateProjectOnArray(response.data.data)
+    //return response.data.data
+  }
+
+  return { products, loadProducts, updateProduct };
 });

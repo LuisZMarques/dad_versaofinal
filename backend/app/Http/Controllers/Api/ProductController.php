@@ -32,7 +32,7 @@ class ProductController extends Controller
 
     public function update(UpdateProductRequest $request, Product $product)
     {
-        $this->authorize('update', Product::class);
+        //$this->authorize('update', Product::class);
 
         $product->update($request->all());
         
