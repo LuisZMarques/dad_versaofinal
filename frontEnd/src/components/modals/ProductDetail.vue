@@ -30,7 +30,7 @@ const photoFullUrl = computed(() => {
 })
 
 let atualizar = () => {
-    if(productsStore.updateProduct(editingProduct.value))
+    if (productsStore.updateProduct(editingProduct.value))
         emit('close')
 }
 
@@ -73,15 +73,13 @@ let atualizar = () => {
                             <div class="col-12 col-md-4">
                                 <label for="photo_do_producto" class="fw-bold">Foto de producto:</label>
                                 <input class="form-control form-control-sm" id="photo_url" type="file"
-                                    @change="productsStore.handlerFileUpload($event)">
+                                    @change="productsStore.uploadImage($event)">
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="descricao_do_product" class="fw-bold float-left">Descrição:</label>
                             <textarea class="form-control" placeholder="Descrição do producto" id="descricao_do_product"
                                 v-model="editingProduct.description" style="height: 100px"></textarea>
-
-
                         </div>
                         <div class="d-grid">
                             <div class="d-flex justify-content-between">
