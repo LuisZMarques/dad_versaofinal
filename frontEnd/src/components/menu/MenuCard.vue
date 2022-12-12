@@ -8,10 +8,13 @@
       <p class="card-text text-start">{{ product.description }}</p>
     </div>
     <div class="card-footer">
-      <button class="btn btn-sm btn-outline-primary" @click="cart.value.push(product)">Adicionar</button>
-      <button class="btn btn-info" @click="toogleProductDetail">Edit product</button>
+      <div class="d-flex justify-content-between">
+        <button class="btn btn-sm btn-outline-info" @click="toogleProductDetail">Edit product</button>
+        <button class="btn btn-sm btn-outline-primary" @click="cart.value.push(product)">Adicionar</button>
+      </div>
+
     </div>
-    <product-detail :product="product" :showProduct="showProduct" @close="toogleProductDetail"/>
+    <product-detail :product="product" :showProduct="showProduct" @close="toogleProductDetail" />
   </div>
 </template>
 

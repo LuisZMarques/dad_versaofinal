@@ -12,10 +12,12 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 import './assets/app.css'
 
+import { io } from "socket.io-client"
 
 const app = createApp(App)
 
 const serverBaseUrl = 'http://127.0.0.1:8000'
+app.provide('socket', io("http://localhost:8080"))
 
 app.provide('axios', axios.create({
     baseURL: serverBaseUrl + '/api/',
