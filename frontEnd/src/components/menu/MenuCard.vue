@@ -12,17 +12,17 @@
       <p class="card-text text-start">{{ product.description }}</p>
     </div>
     <div class="card-footer">
-      <button class="btn btn-sm btn-outline-primary">-</button>
-      quantidade
-      <button class="btn btn-sm btn-outline-primary">+</button>
+      <button class="btn btn-sm btn-outline-primary" @click="cart.value.push(product)">Adicionar</button>
     </div>
   </div>
 </template>
 
 <script setup>
 import { computed, inject } from "vue";
+import { useCartStore } from '@/stores/cart.js'
 
 const serverBaseUrl = inject("serverBaseUrl");
+const cart = useCartStore();
 
 const props = defineProps({
   product: {
