@@ -1,0 +1,31 @@
+					--ORDERS--
+
+-compose order (logica do cart)
+	-logica de cancelar order
+
+					--ORDER ITEMS--
+
+-pergunta prof (design): cartCard precisa de quantidades ou items iguais aparecem por cada unidade que ha na order?
+
+-logica de pedidos (hot dishes encaminhados para chef ficam em estado 'waiting',
+ 			chef precisa de aceitar, resto dos items vao para 'Preparing')
+
+
+					--PAYMENTS--
+
+-logica (teste de chamada do 'external payment gateway service')
+
+					--ADMINISTRATION--
+
+-design e logica
+ Faltam botoes para o Admin:
+ 	('editing the menu (products of the menu)' - Fazer modal ou show de inputs ao clickar no botao?)
+	('managing users accounts')- modal e botao(UserDetail) para editar info do cliente
+	('employees are created by the managers')- modal e botao para criar empregado (Users)
+
+					--NOTIFICATIONS AND REAL TIME DATA--
+
+- Fazer component de Toast para notificaçoes, com: titulo, texto e link para a pagina referente à notificaçao?
+
+					--STATS--
+-TODO
