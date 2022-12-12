@@ -15,10 +15,10 @@ import './assets/app.css'
 
 const app = createApp(App)
 
-const serverBaseUrl = 'http://127.0.0.1:8000'
+const serverBaseUrl = 'http://127.0.0.1'
 
 app.provide('axios', axios.create({
-    baseURL: serverBaseUrl + '/api',
+    baseURL: serverBaseUrl + '/dad/public/api/',
     headers: {
       'Content-type': 'application/json',
     },
