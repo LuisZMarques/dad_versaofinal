@@ -1,43 +1,42 @@
 <template>
-  <div class="modals">
-    <div class="header-modals">
-      <span class="perfil-modal-login">
-        <span><h2>Perfil</h2></span>
-        <br />
-      </span>
-    </div>
-    <div class="containers-modals-inputs">
-      <label class="labels-modals">Nome:</label>
-      <input type="text" placeholder="user.nome" class="input inputs-modals"  />
-    </div>
-    <div class="containers-modals-inputs">
-      <label class="labels-modals">Email:</label>
-      <input type="text" placeholder="user.email" class="input inputs-modals" />
-    </div>
-    <div class="containers-modals-inputs">
-      <label class="labels-modals">Password:</label>
-      <input type="text" placeholder="user.password" class="input inputs-modals"/>
-    </div>
-    <div class="containers-modals-botoes">
-      <button class="botoes-modals button botoes-modals-cancelar" @click="usersStore.perfilModalState = false">
-        <span class="perfil-modal-text05 texto containers-modals-botoes-texto">
-          <span>Cancelar</span>
+  <modal :show="props.show">
+    <div class="modals">
+      <div class="header-modals">
+        <span class="perfil-modal-login">
+          <span>
+            <h2>Perfil</h2>
+          </span>
           <br />
         </span>
-      </button>
-      <button class="botoes-modals botoes-modals-confirmar button">
-        <span class="perfil-modal-text08 texto containers-modals-botoes-texto">
-          <span>Confirmar</span>
-          <br />
-        </span>
-      </button>
+      </div>
+      <div class="containers-modals-inputs">
+        <label class="labels-modals">Nome:</label>
+        <input type="text" placeholder="user.nome" class="input inputs-modals" />
+      </div>
+      <div class="containers-modals-inputs">
+        <label class="labels-modals">Email:</label>
+        <input type="text" placeholder="user.email" class="input inputs-modals" />
+      </div>
+      <div class="containers-modals-inputs">
+        <label class="labels-modals">Password:</label>
+        <input type="text" placeholder="user.password" class="input inputs-modals" />
+      </div>
+      <div class="d-grid">
+        <div class="btn-group" style="margin-bottom : 0.5rem">
+          <button class="btn btrn-sm btn-outline-danger" type="button" @click="$emit('close')">Cancel</button>
+          <button class="btn btrn-sm btn-outline-success" type="button" @click="usersStore.login">Confirmar</button>
+        </div>
+      </div>
     </div>
-  </div>
+  </modal>
 </template>
 
 <script setup>
-
 import { useUsersStore } from '@/stores/users.js'
+import Modal from '@/components/global/modal.vue'
+
+defineEmits(['close'])
+const props = defineProps(['show'])
 
 const usersStore = useUsersStore()
 

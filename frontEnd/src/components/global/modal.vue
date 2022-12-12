@@ -1,14 +1,9 @@
 <template>
     <div>
-        <div>
-            <button class="botoes-header botoes-com-border button" id="show-modal" @click="showModal = true">
-                <span class="small">Login</span>
-            </button>
-        </div>
         <transition name="bounce">
-            <div class="modal-mask" v-if="showModal" @close="showModal = false">
+            <div class="modal-mask" v-if="props.show" @close="closeModal">
                 <div class=" modal-wrapper">
-                    <slot :closeModal="closeModal"></slot>
+                    <slot></slot>
                 </div>
             </div>
         </transition>
@@ -16,17 +11,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+const props = defineProps(['show'])
 
-let showModal = ref(false)
-
-let closeModal = () => {
-    showModal.value = false
+const closeModal = () => {
+    props.show = false
 }
 
-let close = () => {
-    alert('asdasd')
-}
 </script>
 
 <style scoped>

@@ -8,6 +8,8 @@ import router from './router'
 import Toaster from "@meforma/vue-toaster";
 
 import 'bootstrap/dist/css/bootstrap.min.css'
+
+
 import './assets/app.css'
 
 

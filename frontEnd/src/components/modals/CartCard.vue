@@ -1,37 +1,39 @@
 <template>
-    <div class="carrinho-card-container">
-      <div class="carrinho-card-item-carrinho">
-        <h2 class="carrinho-card-titulo-item-carrinho">Lorem ipsum</h2>
-        <img
-          alt="image"
-          src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1500"
-          class="carrinho-card-imagem-item-carrinho"
-        />
-        <div class="carrinho-card-container-gerir-quantidade-item">
-          <button class="carrinho-card-botao-menos-quantidade button">
-            <svg viewBox="0 0 804.5714285714286 1024" class="carrinho-card-icon">
-              <path
-                d="M804.571 420.571v109.714c0 30.286-24.571 54.857-54.857 54.857h-694.857c-30.286 0-54.857-24.571-54.857-54.857v-109.714c0-30.286 24.571-54.857 54.857-54.857h694.857c30.286 0 54.857 24.571 54.857 54.857z"
-              ></path>
-            </svg>
-          </button>
-          <span class="texto">{{ quantidadeItem }}</span>
-          <button class="carrinho-card-botao-mais-quantidadee button">
-            <svg viewBox="0 0 804.5714285714286 1024" class="carrinho-card-icon2">
-              <path
-                d="M804.571 420.571v109.714c0 30.286-24.571 54.857-54.857 54.857h-237.714v237.714c0 30.286-24.571 54.857-54.857 54.857h-109.714c-30.286 0-54.857-24.571-54.857-54.857v-237.714h-237.714c-30.286 0-54.857-24.571-54.857-54.857v-109.714c0-30.286 24.571-54.857 54.857-54.857h237.714v-237.714c0-30.286 24.571-54.857 54.857-54.857h109.714c30.286 0 54.857 24.571 54.857 54.857v237.714h237.714c30.286 0 54.857 24.571 54.857 54.857z"
-              ></path>
-            </svg>
-          </button>
-        </div>
-      </div>
+  <div class="carrinho-card-item-carrinho">
+    <h2 class="carrinho-card-titulo-item-carrinho">{{ nomeItem }}</h2>
+    <img
+      alt="image"
+      src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1500"
+      class="carrinho-card-imagem-item-carrinho"
+    />
+    <div class="carrinho-card-container-gerir-quantidade-item">
+      <button class="carrinho-card-botao-menos-quantidade button">
+        <svg viewBox="0 0 804.5714285714286 1024" class="carrinho-card-icon">
+          <path
+            d="M804.571 420.571v109.714c0 30.286-24.571 54.857-54.857 54.857h-694.857c-30.286 0-54.857-24.571-54.857-54.857v-109.714c0-30.286 24.571-54.857 54.857-54.857h694.857c30.286 0 54.857 24.571 54.857 54.857z"
+          ></path>
+        </svg>
+      </button>
+      <span class="texto">{{ quantidadeItem }}</span>
+      <button class="carrinho-card-botao-mais-quantidadee button">
+        <svg viewBox="0 0 804.5714285714286 1024" class="carrinho-card-icon2">
+          <path
+            d="M804.571 420.571v109.714c0 30.286-24.571 54.857-54.857 54.857h-237.714v237.714c0 30.286-24.571 54.857-54.857 54.857h-109.714c-30.286 0-54.857-24.571-54.857-54.857v-237.714h-237.714c-30.286 0-54.857-24.571-54.857-54.857v-109.714c0-30.286 24.571-54.857 54.857-54.857h237.714v-237.714c0-30.286 24.571-54.857 54.857-54.857h109.714c30.286 0 54.857 24.571 54.857 54.857v237.714h237.714c30.286 0 54.857 24.571 54.857 54.857z"
+          ></path>
+        </svg>
+      </button>
     </div>
-  </template>
+  </div>
+</template>
   
   <script setup>
     import { ref } from 'vue';
+    import { useUsersStore } from '@/stores/users.js'
 
+    const usersStore = useUsersStore()
     let quantidadeItem = ref(0);
+    let nomeItem = ref('teste')
+
 
   </script>
   

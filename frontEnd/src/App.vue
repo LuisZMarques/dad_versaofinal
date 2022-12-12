@@ -1,16 +1,10 @@
 <template>
   <div class="flex flex-column">
-    <header-page @sidebar-toggle="sideToggle" @cart-toggle="cartModalToggle" />
+    <header-page @sidebar-toggle="sideToggle"/>
     <div class="flex">
-      <SideBar v-if="sidebarstate" @login-toggle="loginModalToggle" @perfil-toggle="perfilModalToggle" />
-      <cart-modal v-if="cartModalState" @pagamento-toggle="pagamentoModalToggle" />
-
-      <order-payment v-if="pagamentoModalState" />
-      <register-user v-if="registarModalState" />
-      <profile-user v-if="usersStore.perfilModalState" />
-
+      <SideBar v-if="sidebarstate"/>
+      <router-view/>
     </div>
-    <router-view></router-view>
   </div>
 </template>
 
@@ -28,33 +22,10 @@ import { useUsersStore } from './stores/users.js'
 import { ref } from "vue"
 
 const usersStore = useUsersStore()
-
-
 const sidebarstate = ref(false)
-
-const cartModalState = ref(false)
-
-const registarModalState = ref(false)
-
-const pagamentoModalState = ref(false)
 
 const sideToggle = () => {
   sidebarstate.value = !sidebarstate.value
-  console.log(sidebarstate.value)
 }
-const cartModalToggle = () => {
-  cartModalState.value = !cartModalState.value
-}
-const loginModalToggle = () => {
-  loginModalState.value = !loginModalState.value
-}
-const registarModalToggle = () => {
-  registarModalState.value = !registarModalState.value
-}
-const perfilModalToggle = () => {
-  perfilModalState.value = !perfilModalState.value
-}
-const pagamentoModalToggle = () => {
-  pagamentoModalState.value = !pagamentoModalState.value
-}
+
 </script>

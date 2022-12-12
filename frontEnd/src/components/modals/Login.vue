@@ -1,46 +1,55 @@
 <template>
-  <modal v-slot="{ closeModal }">
+  <modal :show="props.show">
     <div class="row justify-content-center">
       <div class="col-4">
         <div class="card text-white" style="background-color: rebeccapurple;">
           <div class="card-body">
-            <h4 class="fw-bold mb-2">FasTuga</h4>
-            <p class="mb-1 fst-italic small">Por favor colocar email e password para se autenticar..</p>
+            <h4 class="fw-bold mb-2 text-center">FasTuga</h4>
+            <p class="mb-1 fst-italic small ">Por favor colocar email e password para se autenticar..</p>
             <div class="mb-3">
-              <label for="email" class="form-label fw-bold">Email:</label>
+              <p class="text-center"><label for="email" class="form-label fw-bold">Email:</label></p>
               <input type="email" class="form-control" id="email" placeholder="name@example.com"
                 v-model="usersStore.credentials.username">
             </div>
             <div class="mb-3">
-              <label for="password" class="form-label fw-bold">Password:</label>
+              <p class="text-center">
+                <label for="password" class="form-label fw-bold">Password:</label>
+              </p>
               <input type="password" class="form-control" id="password" placeholder="*******"
                 v-model="usersStore.credentials.password">
             </div>
-            <p class="small"><a class="text-primary" href="#">Esqueceu-se da password?</a></p>
+            <p class="small text-center">
+              <a class="text-bg-primary" href="#">Esqueceu-se da password?</a>
+            </p>
             <div class="d-grid">
-              <div class="btn-group">
-                <button class="btn btrn-sm btn-outline-dark" type="button" @click="closeModal">Cancel</button>
-                <button class="btn btrn-sm btn-outline-primary" type="button" @click="usersStore.login">Entrar</button>
+              <div class="btn-group" style="margin-bottom : 0.5rem">
+                <button class="btn btrn-sm btn-outline-danger" type="button" @click="$emit('close')">Cancel</button>
+                <button class="btn btrn-sm btn-outline-success" type="button" @click="usersStore.login">Entrar</button>
               </div>
             </div>
             <div class="text-center fst-italic small">
-              <p class="mb-0">Sem conta?<a href="#" class="text-white fw-bold"> Autenticar</a>
+              <p class="mb-0 text-center">Sem conta?<a type="button" class="text-white fw-bold" @click="registerModal = true"> Registar</a>
               </p>
             </div>
           </div>
           <!--  -->
         </div>
       </div>
+      <register-modal :show="registerModal" @close="registerModal = false"/>
     </div>
   </modal>
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import Modal from '@/components/global/modal.vue'
+import RegisterModal from "@/components/modals/RegisterUser.vue"
 import { useUsersStore } from '@/stores/users.js'
 
-defineEmits(['modal-toggle'])
+defineEmits(['close'])
 
+const props = defineProps(['show'])
+const registerModal = ref(false)
 const usersStore = useUsersStore()
 
 </script>
