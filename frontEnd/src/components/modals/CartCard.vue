@@ -1,30 +1,43 @@
 <template>
-    <tr>
-      <th scope="row"> <img alt="image"
-          src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1500"
-          class="img-fluid img-thumbnail" style="width: 30px;height: 30px;"/></th>
-      <td class="texto"> {{ item.name }} </td>
-      <td class="texto"> {{ item.price }} </td>
-      <td>
-        <button> Nota </button>
-        <button @click="cartStore.removeFromCart(item)">  </button>
-      </td>
-    </tr>
+  <tr>
+    <td scope="row">
+      <img
+        alt="image"
+        :src="photoFullUrl"
+        class="img-fluid img-thumbnail"
+        style="width: 30px; height: 30px"
+      />
+    </td>
+    <td class="texto">{{ item.name }}</td>
+    <td class="texto">{{ item.price }}</td>
+    <td>
+      <input class="form-control form-control-sm" type="text" placeholder="input some notes" v-model="item.notes">
+    </td>
+    <td>
+      <button  type="button" class="btn btn-light btn-sm" @click="cartStore.removeFromCart(item)">remover</button>
+    </td>
+  </tr>
 </template>
 
 <script setup>
-import { useCartStore } from '@/stores/cart.js'
+import { useCartStore } from "@/stores/cart.js";
+import { computed, inject } from "vue";
 
-
-const cartStore = useCartStore()
+const serverBaseUrl = inject("serverBaseUrl");
+const cartStore = useCartStore();
 
 let props = defineProps({
   item: {
     type: Object,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 
+const photoFullUrl = computed(() => {
+  return props.item.photo_url
+    ? serverBaseUrl + "/storage/products/" + props.item.photo_url
+    : null;
+});
 </script>
 
 <style scoped>
@@ -100,7 +113,7 @@ let props = defineProps({
   height: 24px;
 }
 
-@media(max-width: 991px) {
+@media (max-width: 991px) {
   .carrinho-card-titulo-item-carrinho {
     align-self: center;
   }
@@ -111,7 +124,7 @@ let props = defineProps({
   }
 }
 
-@media(max-width: 767px) {
+@media (max-width: 767px) {
   .carrinho-card-titulo-item-carrinho {
     align-self: center;
   }
