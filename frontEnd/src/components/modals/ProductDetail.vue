@@ -1,38 +1,38 @@
 
 <script setup>
-import Modal from '@/components/global/modal.vue'
-import { ref, computed, inject } from 'vue';
+    import Modal from '@/components/global/modal.vue'
+    import { ref, computed, inject } from 'vue';
 
-import { useProductsStore } from '../../stores/products.js'
+    import { useProductsStore } from '../../stores/products.js'
 
-const serverBaseUrl = inject("serverBaseUrl");
+    const serverBaseUrl = inject("serverBaseUrl");
 
-const productsStore = useProductsStore();
+    const productsStore = useProductsStore();
 
-const emit = defineEmits(['close'])
+    const emit = defineEmits(['close'])
 
-let props = defineProps({
-    product: {
-        type: Object,
-        required: true
-    },
-    showProduct: {
-        type: Boolean
+    let props = defineProps({
+        product: {
+            type: Object,
+            required: true
+        },
+        showProduct: {
+            type: Boolean
+        }
+    })
+
+    let editingProduct = ref(props.product)
+
+    const photoFullUrl = computed(() => {
+        return props.product.photo_url
+            ? serverBaseUrl + "/storage/products/" + props.product.photo_url
+            : null
+    })
+
+    let atualizar = () => {
+        if (productsStore.updateProduct(editingProduct.value))
+            emit('close')
     }
-})
-
-let editingProduct = ref(props.product)
-
-const photoFullUrl = computed(() => {
-    return props.product.photo_url
-        ? serverBaseUrl + "/storage/products/" + props.product.photo_url
-        : null
-})
-
-let atualizar = () => {
-    if (productsStore.updateProduct(editingProduct.value))
-        emit('close')
-}
 
 
 </script>
@@ -41,7 +41,7 @@ let atualizar = () => {
     <modal :show="showProduct">
         <div class="row justify-content-center">
             <div class="col-6">
-                <div class="card text-white" style="background-color: rebeccapurple;">
+                <div class="card text-white" style="background-color: rebeccapurple;max-width: 80%;padding: 1rem;">
                     <img :src="photoFullUrl" class="mx-auto"
                         alt="https://a.storyblok.com/f/108717/960x640/7fd6d1bd50/7-tipps-fur-gute-food-fotografie1.jpg"
                         height="150" width="150" />

@@ -305,8 +305,8 @@
     background-color: rebeccapurple;
   }
   .modals {
-    width: 25rem;
-    height: auto;
+    width: 80%;
+    height: 80%;
     display: flex;
     position: absolute;
     float: left;

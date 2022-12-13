@@ -10,7 +10,7 @@
     <div class="card-footer">
       <div class="d-flex justify-content-between">
         <button class="btn btn-sm btn-outline-info" @click="toogleProductDetail">Edit product</button>
-        <button class="btn btn-sm btn-outline-primary" @click="cart.value.push(product)">Adicionar</button>
+        <button class="btn btn-sm btn-outline-primary" @click="cartStore.addToCart(product)">Adicionar</button>
       </div>
 
     </div>
@@ -25,7 +25,7 @@ import { useCartStore } from '@/stores/cart.js'
 import ProductDetail from '@/components/modals/ProductDetail.vue';
 
 const serverBaseUrl = inject("serverBaseUrl");
-const cart = useCartStore();
+const cartStore = useCartStore();
 
 const props = defineProps({
   product: {

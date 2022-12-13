@@ -2,7 +2,7 @@
   <modal :show="props.show">
     <div class="row justify-content-center">
       <div class="col-4">
-        <div class="card text-white" style="background-color: rebeccapurple;">
+        <div class="card text-white" style="background-color: rebeccapurple;max-width: 80%;padding: 1rem;">
           <div class="card-body">
             <h2 class="fw-bold mb-2 text-center">FasTuga</h2>
             <h5 class="fw-bold mb-2 text-center">Perfil</h5>
