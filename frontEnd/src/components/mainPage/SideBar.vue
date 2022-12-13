@@ -56,7 +56,7 @@
           <span class="texto sidebar-text03">Menu</span>
         </router-link>
         <router-link
-          to="/orders"
+          to="/orders/current"
           class="sidebar-navlink02 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
         >
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
@@ -64,12 +64,12 @@
               d="M918 490l64 64-298 300-194-192 64-64 130 128zM86 682v-84h340v84h-340zM598 256v86h-512v-86h512zM598 426v86h-512v-86h512z"
             ></path>
           </svg>
-          <span class="texto sidebar-text04">Pedidos Prontos</span>
+          <span class="texto sidebar-text04">Pedidos</span>
         </router-link>
       </div>
       <div class="sidebar-container-permissoes-utlizadores">
         <router-link
-          to="/orders"
+          to="/orders/current"
           class="sidebar-navlink03 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
         >
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
@@ -80,7 +80,7 @@
           <span class="texto sidebar-text05">Cozinha</span>
         </router-link>
         <router-link
-          to="/orders"
+          to="/orders/current"
           class="sidebar-navlink04 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
         >
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
@@ -93,7 +93,7 @@
       </div>
       <div class="sidebar-container-manager">
         <router-link
-          to="/orders"
+          to="/orders/current"
           class="sidebar-navlink05 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
         >
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
@@ -115,6 +115,17 @@
           <span class="texto sidebar-text08">Gestão de Utilizadores</span>
         </router-link>
         <router-link
+          to="/orders"
+          class="sidebar-navlink07 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
+        >
+          <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
+            <path
+              d="M128 896h896v128h-1024v-1024h128zM288 832c-53.020 0-96-42.98-96-96s42.98-96 96-96c2.828 0 5.622 0.148 8.388 0.386l103.192-171.986c-9.84-15.070-15.58-33.062-15.58-52.402 0-53.020 42.98-96 96-96s96 42.98 96 96c0 19.342-5.74 37.332-15.58 52.402l103.192 171.986c2.766-0.238 5.56-0.386 8.388-0.386 2.136 0 4.248 0.094 6.35 0.23l170.356-298.122c-10.536-15.408-16.706-34.036-16.706-54.11 0-53.020 42.98-96 96-96s96 42.98 96 96c0 53.020-42.98 96-96 96-2.14 0-4.248-0.094-6.35-0.232l-170.356 298.124c10.536 15.406 16.706 34.036 16.706 54.11 0 53.020-42.98 96-96 96s-96-42.98-96-96c0-19.34 5.74-37.332 15.578-52.402l-103.19-171.984c-2.766 0.238-5.56 0.386-8.388 0.386s-5.622-0.146-8.388-0.386l-103.192 171.986c9.84 15.068 15.58 33.060 15.58 52.4 0 53.020-42.98 96-96 96z"
+            ></path>
+          </svg>
+          <span class="texto sidebar-text09">Histórico de Pedidos</span>
+        </router-link>
+        <router-link
           to="/"
           class="sidebar-navlink07 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
         >
@@ -124,91 +135,6 @@
             ></path>
           </svg>
           <span class="texto sidebar-text09">Estatisticas</span>
-        </router-link>
-      </div>
-    </nav>
-    <nav class="sidebar-navegacao1">
-      <div class="sidebar-container-utilizadores1">
-        <router-link
-          to="/menu"
-          class="sidebar-navlink08 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
-        >
-          <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
-            <path
-              d="M224 0c-106.040 0-192 100.288-192 224 0 105.924 63.022 194.666 147.706 217.998l-31.788 518.124c-2.154 35.132 24.882 63.878 60.082 63.878h32c35.2 0 62.236-28.746 60.082-63.878l-31.788-518.124c84.684-23.332 147.706-112.074 147.706-217.998 0-123.712-85.96-224-192-224zM869.334 0l-53.334 320h-40l-26.666-320h-26.668l-26.666 320h-40l-53.334-320h-26.666v416c0 17.672 14.326 32 32 32h83.338l-31.42 512.122c-2.154 35.132 24.882 63.878 60.082 63.878h32c35.2 0 62.236-28.746 60.082-63.878l-31.42-512.122h83.338c17.674 0 32-14.328 32-32v-416h-26.666z"
-            ></path>
-          </svg>
-          <span class="texto sidebar-text10">Menu</span>
-        </router-link>
-        <router-link
-          to="/orders"
-          class="sidebar-navlink09 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
-        >
-          <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
-            <path
-              d="M918 490l64 64-298 300-194-192 64-64 130 128zM86 682v-84h340v84h-340zM598 256v86h-512v-86h512zM598 426v86h-512v-86h512z"
-            ></path>
-          </svg>
-          <span class="texto sidebar-text11">Pedidos Prontos</span>
-        </router-link>
-      </div>
-      <div class="sidebar-container-permissoes-utlizadores1">
-        <router-link
-          to="/orders"
-          class="sidebar-navlink10 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
-        >
-          <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
-            <path
-              d="M634 492l-62 62 294 294-60 60-294-294-294 294-60-60 416-416q-24-48-7-112t67-114q62-62 138-71t122 37 37 123-71 139q-50 50-114 66t-112-8zM346 570l-180-180q-50-50-50-120t50-120l300 298z"
-            ></path>
-          </svg>
-          <span class="texto sidebar-text12">Cozinha</span>
-        </router-link>
-        <router-link
-          to="/orders"
-          class="sidebar-navlink11 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
-        >
-          <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
-            <path
-              d="M810 726q18 0 31-13t13-31-13-30-31-12-30 12-12 30 12 31 30 13zM810 554q52 0 90 38t38 90-38 90-90 38-90-38-38-90 38-90 90-38zM214 256h212v86h-212v-86zM298 726q18 0 31-13t13-31h-86q0 18 12 31t30 13zM810 298v144l-192 240h-192q0 52-38 90t-90 38-90-38-38-90h-84v-128q0-70 50-120t120-50h170v214h150l150-186v-114h-128v-84h128q34 0 59 25t25 59z"
-            ></path>
-          </svg>
-          <span class="texto sidebar-text13">Entrega</span>
-        </router-link>
-      </div>
-      <div class="sidebar-container-manager1">
-        <router-link
-          to="/orders"
-          class="sidebar-navlink12 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
-        >
-          <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
-            <path
-              d="M585.143 804.571h365.714v-73.143h-365.714v73.143zM365.714 512h585.143v-73.143h-585.143v73.143zM731.429 219.429h219.429v-73.143h-219.429v73.143zM1024 694.857v146.286c0 20-16.571 36.571-36.571 36.571h-950.857c-20 0-36.571-16.571-36.571-36.571v-146.286c0-20 16.571-36.571 36.571-36.571h950.857c20 0 36.571 16.571 36.571 36.571zM1024 402.286v146.286c0 20-16.571 36.571-36.571 36.571h-950.857c-20 0-36.571-16.571-36.571-36.571v-146.286c0-20 16.571-36.571 36.571-36.571h950.857c20 0 36.571 16.571 36.571 36.571zM1024 109.714v146.286c0 20-16.571 36.571-36.571 36.571h-950.857c-20 0-36.571-16.571-36.571-36.571v-146.286c0-20 16.571-36.571 36.571-36.571h950.857c20 0 36.571 16.571 36.571 36.571z"
-            ></path>
-          </svg>
-          <span class="texto sidebar-text14">Gestão de Pedidos</span>
-        </router-link>
-        <router-link
-          to="/users"
-          class="sidebar-navlink13 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
-        >
-          <svg viewBox="0 0 1097.142857142857 1024" class="icons-sidebar-nav">
-            <path
-              d="M338.857 512c-59.429 1.714-113.143 27.429-151.429 73.143h-76.571c-57.143 0-110.857-27.429-110.857-90.857 0-46.286-1.714-201.714 70.857-201.714 12 0 71.429 48.571 148.571 48.571 26.286 0 51.429-4.571 76-13.143-1.714 12.571-2.857 25.143-2.857 37.714 0 52 16.571 103.429 46.286 146.286zM950.857 876c0 92.571-61.143 148-152.571 148h-499.429c-91.429 0-152.571-55.429-152.571-148 0-129.143 30.286-327.429 197.714-327.429 19.429 0 90.286 79.429 204.571 79.429s185.143-79.429 204.571-79.429c167.429 0 197.714 198.286 197.714 327.429zM365.714 146.286c0 80.571-65.714 146.286-146.286 146.286s-146.286-65.714-146.286-146.286 65.714-146.286 146.286-146.286 146.286 65.714 146.286 146.286zM768 365.714c0 121.143-98.286 219.429-219.429 219.429s-219.429-98.286-219.429-219.429 98.286-219.429 219.429-219.429 219.429 98.286 219.429 219.429zM1097.143 494.286c0 63.429-53.714 90.857-110.857 90.857h-76.571c-38.286-45.714-92-71.429-151.429-73.143 29.714-42.857 46.286-94.286 46.286-146.286 0-12.571-1.143-25.143-2.857-37.714 24.571 8.571 49.714 13.143 76 13.143 77.143 0 136.571-48.571 148.571-48.571 72.571 0 70.857 155.429 70.857 201.714zM1024 146.286c0 80.571-65.714 146.286-146.286 146.286s-146.286-65.714-146.286-146.286 65.714-146.286 146.286-146.286 146.286 65.714 146.286 146.286z"
-            ></path>
-          </svg>
-          <span class="texto">Gestão de Utilizadores</span>
-        </router-link>
-        <router-link
-          to="/"
-          class="sidebar-navlink14 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
-        >
-          <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
-            <path
-              d="M128 896h896v128h-1024v-1024h128zM288 832c-53.020 0-96-42.98-96-96s42.98-96 96-96c2.828 0 5.622 0.148 8.388 0.386l103.192-171.986c-9.84-15.070-15.58-33.062-15.58-52.402 0-53.020 42.98-96 96-96s96 42.98 96 96c0 19.342-5.74 37.332-15.58 52.402l103.192 171.986c2.766-0.238 5.56-0.386 8.388-0.386 2.136 0 4.248 0.094 6.35 0.23l170.356-298.122c-10.536-15.408-16.706-34.036-16.706-54.11 0-53.020 42.98-96 96-96s96 42.98 96 96c0 53.020-42.98 96-96 96-2.14 0-4.248-0.094-6.35-0.232l-170.356 298.124c10.536 15.406 16.706 34.036 16.706 54.11 0 53.020-42.98 96-96 96s-96-42.98-96-96c0-19.34 5.74-37.332 15.578-52.402l-103.19-171.984c-2.766 0.238-5.56 0.386-8.388 0.386s-5.622-0.146-8.388-0.386l-103.192 171.986c9.84 15.068 15.58 33.060 15.58 52.4 0 53.020-42.98 96-96 96z"
-            ></path>
-          </svg>
-          <span class="texto ">Estatisticas</span>
         </router-link>
       </div>
     </nav>

@@ -25,7 +25,13 @@ const router = createRouter({
     {
       path: '/orders',
       name: 'orders',
-      component: Orders
+      component: Orders,
+    },
+    {
+      path: '/orders/current',
+      name: 'CurrentOrders',
+      component: Orders,
+      props: { onlyCurrentOrders: true, orderTitle: 'Pedidos em Curso'}
     }
   ]
 })

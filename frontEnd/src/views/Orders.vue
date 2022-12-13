@@ -1,36 +1,57 @@
 <template>
-    <div class="componentes-litas" >
-      <h1 class="lista-pedidos-titulo-estatico">Lista Pedidos:</h1>
-      <div class="lista-pedidos-container1 container-listas-info">
-        <div class="container-listas-info">
-          <span class="texto">Nº Pedido:</span>
-        </div>
-        <div class="container-listas-info">
-          <span class="texto">Estado Pedido:</span>
-        </div>
-        <div class="lista-pedidos-container-acoes container-listas-info">
-          <span class="texto">Acções:</span>
-        </div>
+  <div class="componentes-litas" >
+    <h1 class="lista-pedidos-titulo-estatico">{{ orderTitle }}</h1>
+    <div class="lista-pedidos-container1 container-listas-info">
+      <div class="container-listas-info">
+        <span class="texto">Nº Pedido:</span>
       </div>
-      <ul class="lista-pedidos-ul list">
-        <li class="list-item" v-for="order in ordersStore.orders">
-            <order-detail :order="order"></order-detail>
-        </li>
-      </ul>
+      <div class="container-listas-info">
+        <span class="texto">Estado Pedido:</span>
+      </div>
+      <div class="lista-pedidos-container-acoes container-listas-info" v-show="$route.name == 'orders/current'">
+        <span class="texto">Acções:</span>
+      </div>
     </div>
-  </template>
+    <ul class="lista-pedidos-ul list">
+      <li class="list-item" v-for="order in ordersStore.orders">
+        <div v-if="onlyCurrentOrders">
+          <order-detail v-if="order.status!='D'" :order="order"></order-detail>
+        </div>
+        <div v-if="!onlyCurrentOrders">
+          <order-detail v-if="order.status='D'" :order="order"></order-detail>
+        </div>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script setup>
+  import OrderDetail from "@/components/orders/OrderDetail.vue";
+  import { useOrdersStore } from "../stores/orders";
+  import { onMounted } from "vue";
+  import { useRouter } from "vue-router";
+
+  const router = useRouter();
+
+  const ordersStore = useOrdersStore();
   
-  <script setup>
-import OrderDetail from "@/components/orders/OrderDetail.vue";
-import { useOrdersStore } from "../stores/orders";
-import { onMounted } from "vue";
-
-const ordersStore = useOrdersStore();
-
-onMounted(() => {
-    ordersStore.loadOrders()
+  const props = defineProps({
+  orderTitle: {
+    type: String,
+    default: 'Historico de Pedidos'
+  },
+  onlyCurrentOrders: {
+    type: Boolean,
+    default: false
+  }
 })
-  </script>
+
+  onMounted(() => {
+      ordersStore.loadOrders()
+  })
+
+</script>
+
   
   <style scoped>
   .lista-pedidos-titulo-estatico {
