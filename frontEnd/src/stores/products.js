@@ -1,4 +1,4 @@
-import { ref, inject } from "vue";
+import { ref, inject, computed } from "vue";
 import { defineStore } from "pinia";
 
 export const useProductsStore = defineStore("products", () => {
@@ -8,8 +8,14 @@ export const useProductsStore = defineStore("products", () => {
 
   const products = ref([]);
 
+  let searchProduct = ref("");
+
   const base64 = ref();
 
+  let productsList = computed(()=>{
+    return products.value.filter(proct => proct.name.toLowerCase().includes(searchProduct.value))
+  })
+  
   function clearProducts() {
     projects.value = [];
   }
@@ -25,6 +31,7 @@ export const useProductsStore = defineStore("products", () => {
       throw error;
     }
   }
+
 
   async function updateProduct(updateProduct) {
     try {
@@ -69,5 +76,5 @@ export const useProductsStore = defineStore("products", () => {
     toast.success(`O producto ${product.name} foi atualizado com sucesso.`);
   });
 
-  return { products, loadProducts, updateProduct, uploadImage, base64 };
+  return { products, loadProducts, updateProduct, uploadImage, productsList, searchProduct };
 });

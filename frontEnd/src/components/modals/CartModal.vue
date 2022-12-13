@@ -1,75 +1,97 @@
 <template>
-  <modal :show="props.show">
+  <modal :show="show">
     <div class="row justify-content-center">
-      <div class="card text-center" style="background-color: rebeccapurple;max-width: 80%;padding: 1rem;">
-        <h2 style="color: white;">Carrinho</h2>
-        <table class="table table-bordered" style="background-color: #e92b2bff;border-color: rebeccapurple;">
+      <div
+        class="card text-center"
+        style="background-color: rebeccapurple; max-width: 80%; padding: 1rem"
+      >
+        <h2 style="color: white">Carrinho</h2>
+        <table
+          class="table table-bordered"
+          style="background-color: #e92b2bff; border-color: rebeccapurple"
+        >
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Item</th>
+              <th>Price</th>
+              <th>Nota</th>
+              <th></th>
+            </tr>
+          </thead>
           <tbody>
-            <cart-card v-for="(item, index) in cartStore.cart" :key="index" :item="item" />
+            <cart-card
+              v-for="(item, index) in cartStore.cart"
+              :key="index"
+              :item="item"
+            />
           </tbody>
         </table>
-        <table class="table table-bordered" style="background-color: #e92b2bff;border-color: rebeccapurple;">
+        <table
+          class="table table-bordered"
+          style="background-color: #e92b2bff; border-color: rebeccapurple"
+        >
           <tbody>
             <tr>
-              <td class="texto"> Pontos Acumulados: </td>
-              <td class="texto"> {{ pointsCart }} </td>
+              <td class="texto">Pontos Acumulados:</td>
+              <td class="texto">{{ pointsCart }}</td>
             </tr>
             <tr>
-              <td class="texto"> Desconto 5$: </td>
-              <td class="texto"> <input type="checkbox" checked="true" class="carrinho-modal-checkbox-desconto" /> </td>
+              <td class="texto">Desconto 5$:</td>
+              <td class="texto">
+                <input
+                  type="checkbox"
+                  checked="true"
+                  class="carrinho-modal-checkbox-desconto"
+                />
+              </td>
             </tr>
             <tr>
-              <td class="texto"> Total: </td>
-              <td class="texto"> {{ totalCart }} </td>
+              <td class="texto">Total:</td>
+              <td class="texto">{{ cartStore.totalCart }}</td>
             </tr>
           </tbody>
         </table>
         <div class="d-grid">
-          <div class="btn-group" style="margin-bottom : 0.5rem">
-            <button class="btn btrn-sm btn-outline-danger" type="button" @click="$emit('close')">Cancel</button>
-            <button class="btn btrn-sm btn-outline-success" type="button"
-              @click="paymentModal = true">Confirmar</button>
+          <div class="btn-group" style="margin-bottom: 0.5rem">
+            <button
+              class="btn btrn-sm btn-outline-danger"
+              type="button"
+              @click="$emit('close')"
+            >
+              Cancel
+            </button>
+            <button
+              class="btn btrn-sm btn-outline-success"
+              type="button"
+              @click="paymentModal = true"
+            >
+              Confirmar
+            </button>
           </div>
         </div>
       </div>
     </div>
     <payment-modal :show="paymentModal" @close="paymentModal = false" />
-
   </modal>
 </template>
-  
+
 <script setup>
-  import { ref, computed} from 'vue'
-  import CartCard from '@/components/modals/CartCard.vue'
-  import Modal from '@/components/global/modal.vue'
-  import PaymentModal from "@/components/modals/OrderPayment.vue"
-  import { useCartStore } from '@/stores/cart.js'
+import { ref, computed, watch } from "vue";
+import CartCard from "@/components/modals/CartCard.vue";
+import Modal from "@/components/global/modal.vue";
+import PaymentModal from "@/components/modals/OrderPayment.vue";
+import { useCartStore } from "@/stores/cart.js";
 
-  defineEmits(['close'])
+defineEmits(["close"]);
 
-  const cartStore = useCartStore()
-  const paymentModal = ref(false)
-  const props = defineProps(['show'])
+defineProps(["show"]);
 
-/*   let totalConta = ref(0)
-  let totalPontos = ref(0)
+const cartStore = useCartStore();
 
-  const totalCart = computed(() => {
-    cartStore.cart.value.forEach(item => {
-      totalConta.value =+ item.price;
-    });
-    return totalConta.value 
-  })
+const paymentModal = ref(false);
 
-  const pointsCart = computed(() => {
-    cartStore.cart.value.forEach(item => {
-      totalPontos.value =+ item.price;
-    });
-    return totalPontos.value 
-  }) */
+
+let pointsCart = ref(0);
 
 </script>
-  
-<style scoped>
-</style>
-  
