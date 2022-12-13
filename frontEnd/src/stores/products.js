@@ -35,7 +35,7 @@ export const useProductsStore = defineStore("products", () => {
       );
       updateProductOnArray(response.data.data);
       socket.emit("updateProduct", response.data.data);
-      toast.success(`Produto atualizado com sucesso com successo`);
+      toast.success(`Produto atualizado com sucesso`);
       base64.value = null;
 
       return products.value;

@@ -2,7 +2,7 @@
     <div>
         <transition name="bounce">
             <div class="modal-mask" v-if="props.show" @close="closeModal">
-                <div class=" modal-wrapper">
+                <div class=" modal-wrapper" >
                     <slot></slot>
                 </div>
             </div>
