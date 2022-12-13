@@ -1,0 +1,13 @@
+// Iniciar repositorio
+     
+     git init
+
+//download de repositorio para o PC
+
+    git pull https://github.com/pjclara/DAD.git
+
+//upload repositorio local para o remote
+
+    git add .
+    git commit -m 'TODO'
+    git push https://github.com/pjclara/DAD.git
