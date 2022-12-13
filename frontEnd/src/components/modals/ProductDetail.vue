@@ -41,7 +41,7 @@
     <modal :show="showProduct">
         <div class="row justify-content-center">
             <div class="col-6">
-                <div class="card text-white" style="background-color: rebeccapurple;">
+                <div class="card text-white" style="background-color: rebeccapurple;max-width: 80%;padding: 1rem;">
                     <img :src="photoFullUrl" class="mx-auto"
                         alt="https://a.storyblok.com/f/108717/960x640/7fd6d1bd50/7-tipps-fur-gute-food-fotografie1.jpg"
                         height="150" width="150" />

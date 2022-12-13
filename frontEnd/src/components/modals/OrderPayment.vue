@@ -1,14 +1,9 @@
 <template>
   <modal :show="props.show">
-    <div class="modals">
-      <div class="metodo-pagamento-modal-container">
-        <div class="header-modals">
-          <span class="texto-logo">
-            <span>FasTuga</span>
-            <br />
-          </span>
-          <span class="metodo-pagamento-modal-login">Portal Pagamento</span>
-        </div>
+    <div class="row justify-content-center">
+      <div class="card text-center" style="background-color: rebeccapurple;max-width: 80%;padding: 1rem;">
+        <h2 style="color: white;">Portal de Pagamento</h2>
+
         <div class="metodo-pagamento-modal-container-metodos-pagamento">
           <button class="metodo-pagamento-modal-button button">
             <img :alt="visacard_image" src="https://seeklogo.com/images/V/visa-logo-6F4057663D-seeklogo.com.png"
@@ -26,12 +21,8 @@
           </button>
         </div>
         <div class="metodo-pagamento-modal-container-inputs-metodos-pagamento">
-          <span class="metodo-pagamento-modal-text03 texto">
-            <span>Selecione o método de pagamento.</span>
-            <br />
-            <span>De seguida introduza a informação pedida.</span>
-            <br />
-          </span>
+          <a style="color: white;">Selecione o método de pagamento.</a>
+          <a style="color: white;">De seguida introduza a informação pedida.</a>
           <div class="containers-modals-inputs">
             <label class="labels-modals">Nº Cartão VISA:</label>
             <input type="text" v-model="visa" class="input inputs-modals" />
