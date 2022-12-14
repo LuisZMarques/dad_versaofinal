@@ -6,14 +6,19 @@ export const useCartStore = defineStore("cart", () => {
 
   let cart = ref([]);
   let totalCart = ref(0);
+  let cartModalShow = ref(false);
 
   let clearCart = () => {
     cart.value = [];
   };
 
   let addToCart = (item) => {
+/*     let item = {
+      price : item.price, 
+      product_id :item.id, 
+    } */
     cart.value.push(item);
-    totalCart.value += parseFloat(item.price)
+    totalCart.value += parseFloat(item.price);
     toast.success("Item adicionado ao carrinho!");
   };
 
@@ -22,8 +27,10 @@ export const useCartStore = defineStore("cart", () => {
     if (idx >= 0) {
       cart.value.splice(idx, 1);
     }
-    totalCart.value -= parseFloat(item.price)
+    totalCart.value -= parseFloat(item.price);
     toast.success("Item removido do carrinho!");
+
+    if (totalCartProducts.value == 0) cartModalShow.value == false;
   };
 
   let totalCartProducts = computed(() => {
@@ -37,5 +44,6 @@ export const useCartStore = defineStore("cart", () => {
     totalCartProducts,
     removeFromCart,
     totalCart,
+    cartModalShow,
   };
 });

@@ -1,9 +1,13 @@
 import { ref, inject, computed } from "vue";
 import { defineStore } from "pinia";
 
+import {useUsersStore} from "../stores/users.js"
+
 export const useOrdersStore = defineStore("orders", () => {
   const axios = inject("axios");
   const toast = inject("toast");
+
+  const usersStore = useUsersStore();
 
   const orders = ref([]);
   const hotDishs = ref([]);
@@ -64,6 +68,7 @@ export const useOrdersStore = defineStore("orders", () => {
     let orderIdx = orders.value.findIndex((t) => t.id == orderId);
     let updatedOrder = orders.value[orderIdx];
     updatedOrder.status = "D";
+    updatedOrder.delivered_by = useUsersStore.user.id
     try {
       const response = await axios.patch(
         "orders/" + orderId + "/updateEstadoDaOrder/",
