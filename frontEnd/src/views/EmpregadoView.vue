@@ -6,7 +6,7 @@ const ordersStore = useOrdersStore()
 const serverBaseUrl = inject("serverBaseUrl");
 
 onMounted(() => {
-    if (ordersStore.orders.lenght == 0)
+    if (ordersStore.orders.length == 0)
         ordersStore.getOrders()
 })
 
@@ -15,7 +15,7 @@ onMounted(() => {
 <template>
     <div class="m-3">
         <div class="row">
-            <div class="col-12 ">Posto de entrega - Lista de pedidos </div>
+            <div class="col-12 ">Posto de entrega - {{ordersStore.ordersReady.length}} pedidos para entregar</div>
         </div>
         <div class="row">
             <div class="col-12 table-responsive ">
@@ -32,7 +32,7 @@ onMounted(() => {
                                 </ul>
                             </td>
                             <td>
-                                <button class="btn btn-sm btn-outline-primary" @click="ordersStore.orderDelivery(order.id)">Entregar</button>
+                                <button class="btn btn-sm btn-outline-primary" @click="ordersStore.orderReadyToDelivery(order.id)">Entregar</button>
                             </td>
                         </tr>
 

@@ -9,7 +9,6 @@ export const useOrdersStore = defineStore("orders", () => {
   const hotDishs = ref([]);
   let isLoading = ref(false);
 
-
   function clearOrders() {
     orders.value = [];
   }
@@ -61,9 +60,32 @@ export const useOrdersStore = defineStore("orders", () => {
     orders.value[orderIdx].products[productIdx].pivot.status = "R";
   };
 
-  let orderDelivery = (orderId) => {
+  let orderReadyToDelivery = async (orderId) => {
     let orderIdx = orders.value.findIndex((t) => t.id == orderId);
-    orders.value[orderIdx].status = "D";
+    let updatedOrder = orders.value[orderIdx];
+    updatedOrder.status = "D";
+    try {
+      const response = await axios.patch(
+        "orders/" + orderId + "/updateEstadoDaOrder/",
+        updatedOrder
+      );
+      console.log(response.data);
+      return response.data.data;
+    } catch (error) {}
+  };
+
+  let orderPreparedToReady = async (orderId) => {
+    let orderIdx = orders.value.findIndex((t) => t.id == orderId);
+    let updatedOrder = orders.value[orderIdx];
+    updatedOrder.status = "R";
+    try {
+      const response = await axios.patch(
+        "orders/" + orderId + "/updateEstadoDaOrder/",
+        updatedOrder
+      );
+      console.log(response.data);
+      return response.data.data;
+    } catch (error) {}
   };
 
   return {
@@ -74,7 +96,8 @@ export const useOrdersStore = defineStore("orders", () => {
     ordersReady,
     productReady,
     productPreparing,
-    orderDelivery,
+    orderReadyToDelivery,
+    orderPreparedToReady,
     hotDishs,
     getHotDishs,
   };

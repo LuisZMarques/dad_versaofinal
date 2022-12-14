@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateOrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Product;
 use App\Services\OrderService;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -41,11 +42,20 @@ class OrderController extends Controller
         return new OrderResource($order);
     }
 
-    public function update(UpdateOrderRequest $request, Order $order)
+    public function update(Request $request, Order $order)
     {
-        $order = $this->orderService->update($request->validated(), $order);
+        //$order = $this->orderService->update($request->validated(), $order);
 
-        return new OrderResource($order);
+        return $request->all();
+    }
+
+    public function updateEstadoDaOrder(Request $request, Order $order)
+    {
+        $order->status = $request->status;
+
+        $order->save();
+
+        return $order;
     }
 
     public function destroy(Order $order)

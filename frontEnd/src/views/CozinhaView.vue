@@ -6,15 +6,15 @@ const ordersStore = useOrdersStore()
 const serverBaseUrl = inject("serverBaseUrl");
 
 onMounted(() => {
-    ordersStore.getOrders()
+    if (ordersStore.orders.length == 0)
+        ordersStore.getOrders()
 })
-
 </script>
 
 <template>
     <div class="m-3">
         <div class="row">
-            <div class="col-12 ">Cozinha - Lista de pedidos </div>
+            <div class="col-12 ">Cozinha - {{ordersStore.getHotDishs.length}} pratos para cozinhar </div>
         </div>
         <div class="row">
             <div class="col-12 table-responsive ">

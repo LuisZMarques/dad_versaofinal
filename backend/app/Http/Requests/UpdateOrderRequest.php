@@ -29,7 +29,7 @@ class UpdateOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'ticket_number' => ['required|numeric|between:1,99|' . Rule::unique('orders')
+            /* 'ticket_number' => ['required|numeric|between:1,99|' . Rule::unique('orders')
                 ->where('ticket_number', $this->ticket_number)
                 ->whereIn('status', ['P', 'R'])],
             'status' => ['required|' . new Enum(OrderStatusEnum::class)],
@@ -51,7 +51,7 @@ class UpdateOrderRequest extends FormRequest
             'products.*.price' => ['required|numeric|between:0,999999.99'],
             'products.*.preparation_by' => ['required_if:products.*.status,' . ProductStatusEnum::HotDish . '|exists:users,id'],
             'products.*.notes' => ['nullable'],
-            'products.*.custom' => ['nullable|json']
+            'products.*.custom' => ['nullable|json'] */
         ];
     }
 }
