@@ -21,8 +21,8 @@
               <a class="text-bg-primary" href="#">Esqueceu-se da password?</a>
             </p>
             <div class="d-grid">
-              <div class="btn-group" style="margin-bottom : 0.5rem">
-                <button class="btn btrn-sm btn-outline-danger" type="button" @click="$emit('close')">Cancel</button>
+              <div class="d-flex justify-content-between">
+                <button class="btn btrn-sm btn-outline-danger" type="button" @click="usersStore.loginModal = false">Cancel</button>
                 <button class="btn btrn-sm btn-outline-success" type="button" @click="usersStore.login">Entrar</button>
               </div>
             </div>
@@ -31,7 +31,6 @@
               </p>
             </div>
           </div>
-          <!--  -->
         </div>
       
       <register-modal :show="registerModal" @close="registerModal = false"/>
