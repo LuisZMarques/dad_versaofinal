@@ -1,9 +1,15 @@
 <template>
   <modal :show="show">
     <div class="row justify-content-center">
-      <div class="card text-center" style="background-color: rebeccapurple; max-width: 80%; padding: 1rem">
+      <div
+        class="card text-center"
+        style="background-color: rebeccapurple; max-width: 80%; padding: 1rem"
+      >
         <h2 style="color: white">Carrinho</h2>
-        <table class="table table-bordered" style="background-color: #e92b2bff; border-color: rebeccapurple">
+        <table
+          class="table table-bordered"
+          style="background-color: #e92b2bff; border-color: rebeccapurple"
+        >
           <thead>
             <tr>
               <th>#</th>
@@ -14,10 +20,17 @@
             </tr>
           </thead>
           <tbody>
-            <cart-card v-for="(item, index) in cartStore.cart" :key="index" :item="item" />
+            <cart-card
+              v-for="(item, index) in cartStore.cart"
+              :key="index"
+              :item="item"
+            />
           </tbody>
         </table>
-        <table class="table table-bordered" style="background-color: #e92b2bff; border-color: rebeccapurple">
+        <table
+          class="table table-bordered"
+          style="background-color: #e92b2bff; border-color: rebeccapurple"
+        >
           <tbody>
             <tr>
               <td class="texto">Pontos Acumulados:</td>
@@ -26,7 +39,11 @@
             <tr>
               <td class="texto">Desconto 5$:</td>
               <td class="texto">
-                <input type="checkbox" checked="true" class="carrinho-modal-checkbox-desconto" />
+                <input
+                  type="checkbox"
+                  checked="true"
+                  class="carrinho-modal-checkbox-desconto"
+                />
               </td>
             </tr>
             <tr>
@@ -37,10 +54,18 @@
         </table>
         <div class="d-grid">
           <div class="btn-group" style="margin-bottom: 0.5rem">
-            <button class="btn btrn-sm btn-outline-danger" type="button" @click="$emit('close')">
+            <button
+              class="btn btrn-sm btn-outline-danger"
+              type="button"
+              @click="cartStore.cartModalShow = false"
+            >
               Cancel
             </button>
-            <button class="btn btrn-sm btn-outline-success" type="button" @click="paymentModal = true">
+            <button
+              class="btn btrn-sm btn-outline-success"
+              type="button"
+              @click="updateUser()"
+            >
               Confirmar
             </button>
           </div>
@@ -52,7 +77,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue";
+import { ref, inject, watch } from "vue";
 import CartCard from "@/components/modals/CartCard.vue";
 import Modal from "@/components/global/modal.vue";
 import PaymentModal from "@/components/modals/OrderPayment.vue";
@@ -65,28 +90,48 @@ defineProps(["show"]);
 
 const cartStore = useCartStore();
 
-const usersStore = useUsersStore()
+const usersStore = useUsersStore();
+
+const axios = inject("axios");
+
 
 const newOrder = () => {
   return {
     id: null,
-    ticket_number: null,
-    status: 'P',
-    customer_id: usersStore.user?.id,
-    total_price: null,
+    ticket_number: 99,
+    status: "P",
+    customer_id: null,
+    total_price: cartStore.totalCart,
     total_paid: cartStore.totalCart,
     total_paid_with_points: null,
     points_gained: null,
     points_used_to_pay: null,
     payment_type: null,
     payment_reference: null,
-    products: cartStore.cart
+    products: cartStore.cart,
+  };
+};
+
+let dataToSend = ref(newOrder())
+
+async function updateUser() {
+  try {
+    const response = await axios.post("orders/", dataToSend);
+
+    //updateProductOnArray(response.data.data);
+    //socket.emit("updateProduct", response.data.data);
+    console.log(response.data);
+    toast.success(`Produto atualizado com sucesso`);
+  } catch (error) {
+    console.log(error);
   }
+
+  //updateProjectOnArray(response.data.data)
+  //return response.data.data
 }
-console.log(newOrder())
+
 
 const paymentModal = ref(false);
 
 let pointsCart = ref(0);
-
 </script>
