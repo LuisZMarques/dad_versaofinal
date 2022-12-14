@@ -7,19 +7,12 @@
     <div>
       <div>
         <div class="row m-3">
-          <input
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="procurar de produto"
-            v-model="productsStore.searchProduct"
-          />
+          <input class="form-control mr-sm-2" type="search" placeholder="procurar de produto"
+            v-model="productsStore.searchProduct" />
         </div>
       </div>
       <div class="row m-3">
-        <div
-          class="col-12 col-md-4 mb-4"
-          v-for="product in productsStore.productsList"
-        >
+        <div class="col-12 col-md-4 mb-4" v-for="product in productsStore.productsList">
           <menu-card :product="product" class="" />
         </div>
       </div>
@@ -35,7 +28,8 @@ import { useProductsStore } from "../stores/products";
 const productsStore = useProductsStore();
 
 onMounted(() => {
-  productsStore.loadProducts();
+  if (productsStore.productsList.length == 0)
+    productsStore.loadProducts();
 });
 </script>
 

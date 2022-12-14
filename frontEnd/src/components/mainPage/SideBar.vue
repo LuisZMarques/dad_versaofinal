@@ -2,7 +2,7 @@
   <div class="sidebar-container">
     <div class="sidebar-perfil">
       <img :src="photoFullUrl" class="mx-auto rounded-circle"
-        alt="https://a.storyblok.com/f/108717/960x640/7fd6d1bd50/7-tipps-fur-gute-food-fotografie1.jpg" height="100"
+        alt="foto_user" height="100"
         :width="100" width="150" />
 
       <span class="sidebar-nome-user-dinamico">{{ usersStore.user?.name ?? "anónimo" }}</span>
