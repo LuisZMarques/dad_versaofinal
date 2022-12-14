@@ -22,11 +22,13 @@
         </div>
       </li>
     </ul>
+
   </div>
 </template>
 
 <script setup>
   import OrderDetail from "@/components/orders/OrderDetail.vue";
+  import { useUsersStore } from "@/stores/users.js";
   import { useOrdersStore } from "../stores/orders";
   import { onMounted } from "vue";
   import { useRouter } from "vue-router";
@@ -34,6 +36,11 @@
   const router = useRouter();
 
   const ordersStore = useOrdersStore();
+  const userStore = useUsersStore();
+  
+  onMounted(() => {
+        userStore.loadUser();
+    })
   
   const props = defineProps({
   orderTitle: {

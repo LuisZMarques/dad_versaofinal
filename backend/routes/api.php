@@ -11,7 +11,10 @@ use App\Http\Controllers\Api\UserController;
 Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
 
-Route::apiResource('users', UserController::class, ['names'=>'users']);
-Route::apiResource('products', ProductController::class, ['names'=>'products']);
-Route::apiResource('orders', OrderController::class, ['names'=>'orders']);
-Route::apiResource('customers', CustomerController::class, ['names'=>'customers']);
+Route::apiResource('users', UserController::class, ['names' => 'users']);
+Route::apiResource('products', ProductController::class, ['names' => 'products']);
+
+Route::apiResource('customers', CustomerController::class, ['names' => 'customers']);
+
+Route::get("orders/preparingOrReady", [OrderController::class, "getOrdersPreparingOrReady"]);
+Route::apiResource('orders', OrderController::class, ['names' => 'orders']);
