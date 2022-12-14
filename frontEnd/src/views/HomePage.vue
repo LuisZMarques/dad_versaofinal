@@ -14,27 +14,20 @@
               Menu
             </span>
           </router-link>
+          
         </div>
+        <OrdersPublicBoardVue></OrdersPublicBoardVue>
       </div>
+
     </div>
   </div>
 </template>
 
 <script setup>
 
-/* let selectFile = (event) => {
-  createBase64Image(event.target.files[0])
-}
+import OrdersPublicBoardVue from '../components/modals/OrdersPublicBoard.vue';
 
-let createBase64Image = (fileObject) => {
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    let image = e.target.result;
-    console.log(image)
-  };
-  reader.readAsDataURL(fileObject);
-}
- */
+
 </script>
 
 <style scoped>

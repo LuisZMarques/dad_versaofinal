@@ -49,7 +49,6 @@
         </button>
       </div>
     </div>
-    {{ userStore.user }}
   </div>
   
 </template>
@@ -69,9 +68,6 @@
     }
   })
 
-  onMounted(() => {
-        userStore.loadUser();
-    })
 </script>
   
   <style scoped>

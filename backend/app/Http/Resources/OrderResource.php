@@ -15,6 +15,7 @@ class OrderResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id'=>$this->id,
             'ticket_number' => $this->ticket_number,
             'status' => $this->status,
             'customer_id' => $this->customer_id,
@@ -27,7 +28,8 @@ class OrderResource extends JsonResource
             'payment_reference' => $this->payment_reference,
             'date' => $this->date,
             'custom' => $this->custom,
-            'products' => ProductResource::collection($this->whenLoaded('produts'))
+            'products' => $this->products,
+
         ];
     }
 }

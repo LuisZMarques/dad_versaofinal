@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Http\Resources\OrderResource;
+use App\Models\Product;
 use App\Services\OrderService;
 
 class OrderController extends Controller
@@ -20,6 +21,12 @@ class OrderController extends Controller
     {
         return OrderResource::collection(Order::all());
     }
+
+    public function getOrdersPreparingOrReady()
+    {
+        return OrderResource::collection(Order::with("products")->whereNotIn("status",["D","C"])->get());
+    }
+
 
     public function store(StoreOrderRequest $request)
     {

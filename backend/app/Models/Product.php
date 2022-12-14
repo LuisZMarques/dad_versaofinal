@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Product extends Model{
-    use HasApiTokens, HasFactory, Notifiable , SoftDeletes;
+class Product extends Model
+{
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -31,7 +32,6 @@ class Product extends Model{
 
     public function orders()
     {
-        return $this->belongsToMany(Order::class , 'order_items');
+        return $this->belongsToMany(Order::class, "order_items");
     }
-
 }

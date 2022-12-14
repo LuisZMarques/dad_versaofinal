@@ -36,11 +36,9 @@ class Order extends Model
         'created_at', 'updated_at', 'deleted_at'
     ];
 
-    
-
     public function products()
     {
-        $this->belongsToMany(Product::class, 'order_items')->withTrashed();
+        return $this->belongsToMany(Product::class, "order_items")->withPivot("id","order_local_number", "status", "notes" );
     }
 
     public function customer()
@@ -57,5 +55,4 @@ class Order extends Model
     {
         $this->belongsTo(User::class)->withTrashed();
     }
-
 }
