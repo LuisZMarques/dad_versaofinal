@@ -20,7 +20,7 @@ import { ref, inject } from "vue"
 const toast = inject("toast");
 const socket = inject("socket");
 
-const sidebarstate = ref(false)
+const sidebarstate = ref(true)
 
 const sideToggle = () => {
   sidebarstate.value = !sidebarstate.value
