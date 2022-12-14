@@ -2,11 +2,13 @@
   <div class="sidebar-container">
     <div class="sidebar-perfil">
       <img :src="photoFullUrl" class="mx-auto rounded-circle"
-        alt="https://a.storyblok.com/f/108717/960x640/7fd6d1bd50/7-tipps-fur-gute-food-fotografie1.jpg" height="100" :width="100"
-        width="150" />
-      <span class="sidebar-nome-user-dinamico">{{ nomeUserDinamico ?? "anónimo" }}</span>
+        alt="https://a.storyblok.com/f/108717/960x640/7fd6d1bd50/7-tipps-fur-gute-food-fotografie1.jpg" height="100"
+        :width="100" width="150" />
+
+      <span class="sidebar-nome-user-dinamico">{{ usersStore.user?.name ?? "anónimo" }}</span>
       <div class="sidebar-container-acesso-login">
-        <button class="botoes-com-border button botoes-sidebar-perfil" href="/">
+        <button class="botoes-com-border button botoes-sidebar-perfil" v-if="usersStore.user"
+          @click="usersStore.logout">
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-perfil">
             <path
               d="M768 640v-128h-320v-128h320v-128l192 192zM704 576v256h-320v192l-384-192v-832h704v320h-64v-256h-512l256 128v576h256v-192z">
@@ -14,7 +16,8 @@
           </svg>
           <span class="texto-botoes-perfil-sidebar">Logout</span>
         </button>
-        <button class="botoes-com-border button botoes-sidebar-perfil" @click="perfilModal = true">
+        <button class="botoes-com-border button botoes-sidebar-perfil" @click="perfilModal = true"
+          v-if="usersStore.user">
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-perfil">
             <path
               d="M512 0c282.857 0 512 229.143 512 512 0 281.143-228 512-512 512-283.429 0-512-230.286-512-512 0-282.857 229.143-512 512-512zM865.714 772c53.143-73.143 85.143-162.857 85.143-260 0-241.714-197.143-438.857-438.857-438.857s-438.857 197.143-438.857 438.857c0 97.143 32 186.857 85.143 260 20.571-102.286 70.286-186.857 174.857-186.857 46.286 45.143 109.143 73.143 178.857 73.143s132.571-28 178.857-73.143c104.571 0 154.286 84.571 174.857 186.857zM731.429 402.286c0-121.143-98.286-219.429-219.429-219.429s-219.429 98.286-219.429 219.429 98.286 219.429 219.429 219.429 219.429-98.286 219.429-219.429z">
@@ -22,7 +25,8 @@
           </svg>
           <span class="texto-botoes-perfil-sidebar">Perfil</span>
         </button>
-        <button class="botoes-com-border button botoes-sidebar-perfil" @click="loginModal = true">
+        <button class="botoes-com-border button botoes-sidebar-perfil" @click="usersStore.loginModal = true"
+          v-if="!usersStore.user">
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-perfil">
             <path
               d="M470 682v-128h-428v-84h428v-128l170 170zM896 128q36 0 61 25t25 61v598q0 34-26 59t-60 25h-768q-34 0-60-25t-26-59v-172h86v172h768v-600h-768v172h-86v-170q0-34 26-60t60-26h768z">
@@ -91,8 +95,9 @@
           </svg>
           <span class="texto sidebar-text08">Gestão de Utilizadores</span>
         </router-link>
-        <router-link to="/orders"
-          class="sidebar-navlink07 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar">
+        <router-link :to="{ name: 'user-orders-history' }"
+          class="sidebar-navlink07 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
+          v-if="usersStore.user">
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
             <path
               d="M128 896h896v128h-1024v-1024h128zM288 832c-53.020 0-96-42.98-96-96s42.98-96 96-96c2.828 0 5.622 0.148 8.388 0.386l103.192-171.986c-9.84-15.070-15.58-33.062-15.58-52.402 0-53.020 42.98-96 96-96s96 42.98 96 96c0 19.342-5.74 37.332-15.58 52.402l103.192 171.986c2.766-0.238 5.56-0.386 8.388-0.386 2.136 0 4.248 0.094 6.35 0.23l170.356-298.122c-10.536-15.408-16.706-34.036-16.706-54.11 0-53.020 42.98-96 96-96s96 42.98 96 96c0 53.020-42.98 96-96 96-2.14 0-4.248-0.094-6.35-0.232l-170.356 298.124c10.536 15.406 16.706 34.036 16.706 54.11 0 53.020-42.98 96-96 96s-96-42.98-96-96c0-19.34 5.74-37.332 15.578-52.402l-103.19-171.984c-2.766 0.238-5.56 0.386-8.388 0.386s-5.622-0.146-8.388-0.386l-103.192 171.986c9.84 15.068 15.58 33.060 15.58 52.4 0 53.020-42.98 96-96 96z">
@@ -110,10 +115,9 @@
         </router-link>
       </div>
     </nav>
-    {{usersStore.user}}
   </div>
-  <login-modal :show="loginModal" @close="loginModal = false" />
-  <profile-modal :show="perfilModal" @close="perfilModal = false" />
+  <login-modal :show="usersStore.loginModal" />
+  <profile-modal :show="perfilModal" @close="perfilModal = false" :id="usersStore.user?.id" />
 </template>
 
 <script setup>
@@ -126,16 +130,15 @@ const serverBaseUrl = inject("serverBaseUrl");
 
 const usersStore = useUsersStore()
 
-let loginModal = ref(false)
 let perfilModal = ref(false)
 
 
-let photoFullUrl = computed(() => {
-  if(!usersStore.user)
-  return  "https://a.storyblok.com/f/108717/960x640/7fd6d1bd50/7-tipps-fur-gute-food-fotografie1.jpg"
-})
+const photoFullUrl = computed(() => {
+  return usersStore.user?.photo_url
+    ? serverBaseUrl + "/storage/fotos/" + usersStore.user.photo_url
+    : serverBaseUrl + "/storage/fotos/anonyms.png";
+});
 
-let imagemUserDinamica_alt = null;
 
 
 </script>

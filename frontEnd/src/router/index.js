@@ -6,6 +6,7 @@ import Orders from '../views/Orders.vue'
 import CozinhaView from '../views/CozinhaView.vue'
 import EmpregadoView from '../views/EmpregadoView.vue'
 import PedidosStatusView from '../views/PedidosStatusView.vue'
+import UserOrdersHistoty from '../views/UserOrdersHistoty.vue'
 
 
 const router = createRouter({
@@ -40,6 +41,11 @@ const router = createRouter({
       path: '/pronto-a-entregar',
       name: 'pronto-a-entregar',
       component: EmpregadoView,
+    },
+    {
+      path: '/os-meus-pedidos',
+      name: 'user-orders-history',
+      component: UserOrdersHistoty,
     },
     {
       path: '/pedidos-em-curso',

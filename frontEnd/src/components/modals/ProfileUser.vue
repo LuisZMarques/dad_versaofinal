@@ -7,30 +7,32 @@
             <h2 class="fw-bold mb-2 text-center">FasTuga</h2>
             <h5 class="fw-bold mb-2 text-center">Perfil</h5>
             <div class="text-center">
-              <img :src="(imagemUserDinamica_src)" class="rounded img-thumbnail" alt="...">
+              <img :src="photoFullUrl" class="rounded img-thumbnail" alt="...">
             </div>
             <div class="mb-3">
-              <p class="text-center"><label for="email" class="form-label fw-bold">Nome:</label></p>
-              <input type="text" class="form-control" id="name" placeholder="name"
-                v-model="usersStore.name">
+              <label for="email" class=" form-label fw-bold">Nome:</label>
+              <input type="text" class="form-control" id="name" placeholder="name" v-model="userEdit.name">
             </div>
             <div class=" mb-3">
-              <p class="text-center"><label for="email" class="form-label fw-bold">Email:</label></p>
+              <label for="email" class="form-label fw-bold ">Email:</label>
               <input type="email" class="form-control" id="email" placeholder="name@example.com"
-                v-model="usersStore.credentials.username">
+                v-model="userEdit.email">
+            </div>
+            <div class=" mb-3">
+              <label for="photo_do_producto" class="form-label fw-bold ">Atualizar foto perfil:</label>
+              <input class="form-control form-control-sm" id="photo_url" type="file"
+                @change="usersStore.uploadImage($event)">
             </div>
             <div class="mb-3">
-              <p class="text-center">
-                <label for="password" class="form-label fw-bold">Password:</label>
-              </p>
+              <label for="password" class="form-label fw-bold">Password:</label>
               <input type="password" class="form-control" id="password" placeholder="*******"
-                v-model="usersStore.credentials.password">
+                v-model="userEdit.password">
             </div>
             <div class="d-grid">
               <div class="btn-group" style="margin-bottom : 0.5rem">
                 <button class="btn btrn-sm btn-outline-danger" type="button" @click="$emit('close')">Cancel</button>
                 <button class="btn btrn-sm btn-outline-success" type="button"
-                  @click="usersStore.login">Modificar</button>
+                  @click="usersStore.updateUser(userEdit)">Modificar</button>
               </div>
             </div>
           </div>
@@ -41,24 +43,47 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+
 import { useUsersStore } from '@/stores/users.js'
+import { ref, inject, computed, watch } from 'vue';
 import Modal from '@/components/global/modal.vue'
 
-defineEmits(['close'])
-const props = defineProps(['show'])
+const serverBaseUrl = inject("serverBaseUrl");
+const axios = inject('axios')
+
+const props = defineProps(['show',"id"])
 
 const usersStore = useUsersStore()
 
-const imagemUserDinamica_src = ref('https://www.w3schools.com/howto/img_avatar.png')
+let userEdit = ref()
 
-/* let props = defineProps({
-  user:{
-    type:Object,
-    required:false
-  }
+let errors = ref()
+
+let loadUser = (id) => {
+  errors.value = null
+  axios.get('users/' + id)
+    .then((response) => {
+      userEdit.value = response.data.data
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
+
+watch(
+  () => props.id,
+  (newValue) => {
+      loadUser(newValue)
+  },
+)
 
 
-})
-  */
+
+const photoFullUrl = computed(() => {
+  return usersStore.user?.photo_url
+    ? serverBaseUrl + "/storage/fotos/" + usersStore.user.photo_url
+    : serverBaseUrl + "/storage/fotos/anonyms.png";
+});
+
+
 </script>
