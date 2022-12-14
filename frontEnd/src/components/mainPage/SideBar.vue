@@ -1,8 +1,10 @@
 <template>
   <div class="sidebar-container">
     <div class="sidebar-perfil">
-      <img :alt="imagemUserDinamica_alt" :src="(imagemUserDinamica_src)" class="sidebar-imagem-user-dinamica" />
-      <span class="sidebar-nome-user-dinamico">{{ nomeUserDinamico }}</span>
+      <img :src="photoFullUrl" class="mx-auto rounded-circle"
+        alt="https://a.storyblok.com/f/108717/960x640/7fd6d1bd50/7-tipps-fur-gute-food-fotografie1.jpg" height="100" :width="100"
+        width="150" />
+      <span class="sidebar-nome-user-dinamico">{{ nomeUserDinamico ?? "anónimo" }}</span>
       <div class="sidebar-container-acesso-login">
         <button class="botoes-com-border button botoes-sidebar-perfil" href="/">
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-perfil">
@@ -41,7 +43,7 @@
           </svg>
           <span class="texto sidebar-text03">Menu</span>
         </router-link>
-        <router-link :to="{name:'pedidos-em-curso'}"
+        <router-link :to="{ name: 'pedidos-em-curso' }"
           class="sidebar-navlink02 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar">
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
             <path
@@ -61,7 +63,7 @@
           </svg>
           <span class="texto sidebar-text05">Cozinha</span>
         </router-link>
-        <router-link :to="{name:'pronto-a-entregar'}"
+        <router-link :to="{ name: 'pronto-a-entregar' }"
           class="sidebar-navlink04 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar">
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
             <path
@@ -72,8 +74,7 @@
         </router-link>
       </div>
       <div class="sidebar-container-manager">
-        <router-link to="/"
-          class="sidebar-navlink05 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar">
+        <router-link to="/" class="sidebar-navlink05 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar">
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
             <path
               d="M585.143 804.571h365.714v-73.143h-365.714v73.143zM365.714 512h585.143v-73.143h-585.143v73.143zM731.429 219.429h219.429v-73.143h-219.429v73.143zM1024 694.857v146.286c0 20-16.571 36.571-36.571 36.571h-950.857c-20 0-36.571-16.571-36.571-36.571v-146.286c0-20 16.571-36.571 36.571-36.571h950.857c20 0 36.571 16.571 36.571 36.571zM1024 402.286v146.286c0 20-16.571 36.571-36.571 36.571h-950.857c-20 0-36.571-16.571-36.571-36.571v-146.286c0-20 16.571-36.571 36.571-36.571h950.857c20 0 36.571 16.571 36.571 36.571zM1024 109.714v146.286c0 20-16.571 36.571-36.571 36.571h-950.857c-20 0-36.571-16.571-36.571-36.571v-146.286c0-20 16.571-36.571 36.571-36.571h950.857c20 0 36.571 16.571 36.571 36.571z">
@@ -109,35 +110,32 @@
         </router-link>
       </div>
     </nav>
+    {{usersStore.user}}
   </div>
   <login-modal :show="loginModal" @close="loginModal = false" />
   <profile-modal :show="perfilModal" @close="perfilModal = false" />
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, inject, computed } from 'vue';
 import LoginModal from '@/components/modals/Login.vue'
 import ProfileModal from "@/components/modals/ProfileUser.vue"
 import { useUsersStore } from '@/stores/users.js'
 
+const serverBaseUrl = inject("serverBaseUrl");
+
 const usersStore = useUsersStore()
-const loginModal = ref(false)
-const perfilModal = ref(false)
 
-const props = defineProps({
-  imagemUserDinamica_src: {
-    type: String,
-    required: false,
-    default: null,
-  },
-  nomeUserDinamico: {
-    type: String,
-    required: false,
-    default: null,
-  },
-});
+let loginModal = ref(false)
+let perfilModal = ref(false)
 
-const imagemUserDinamica_alt = null;
+
+let photoFullUrl = computed(() => {
+  if(!usersStore.user)
+  return  "https://a.storyblok.com/f/108717/960x640/7fd6d1bd50/7-tipps-fur-gute-food-fotografie1.jpg"
+})
+
+let imagemUserDinamica_alt = null;
 
 
 </script>

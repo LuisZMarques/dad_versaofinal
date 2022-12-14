@@ -51,15 +51,31 @@ export const useUsersStore = defineStore("users", () => {
   async function login() {
     try {
       const response = await axios.post("login", credentials.value);
-      toast.success(
-        "User " + credentials.value.username + " has entered the application."
-      );
       axios.defaults.headers.common.Authorization =
         "Bearer " + response.data.access_token;
+      sessionStorage.setItem("token", response.data.access_token);
+      await loadUser();
+      //socket.emit('loggedIn', user.value)
+      return true;
     } catch (error) {
-      delete axios.defaults.headers.common.Authorization;
-      credentials.value.password = "";
-      toast.error("User credentials are invalid!");
+      clearUser();
+      return false;
+    }
+  }
+
+  function clearUser() {
+    delete axios.defaults.headers.common.Authorization;
+    sessionStorage.removeItem("token");
+    user.value = null;
+  }
+
+  async function loadUser() {
+    try {
+      const response = await axios.get("users/me");
+      user.value = response.data.data;
+    } catch (error) {
+      clearUser();
+      throw error;
     }
   }
 
