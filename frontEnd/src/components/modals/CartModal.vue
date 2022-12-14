@@ -57,6 +57,7 @@ import CartCard from "@/components/modals/CartCard.vue";
 import Modal from "@/components/global/modal.vue";
 import PaymentModal from "@/components/modals/OrderPayment.vue";
 import { useCartStore } from "@/stores/cart.js";
+import { useUsersStore } from "@/stores/users.js";
 
 defineEmits(["close"]);
 
@@ -64,8 +65,27 @@ defineProps(["show"]);
 
 const cartStore = useCartStore();
 
-const paymentModal = ref(false);
+const usersStore = useUsersStore()
 
+const newOrder = () => {
+  return {
+    id: null,
+    ticket_number: null,
+    status: 'P',
+    customer_id: usersStore.user?.id,
+    total_price: null,
+    total_paid: cartStore.totalCart,
+    total_paid_with_points: null,
+    points_gained: null,
+    points_used_to_pay: null,
+    payment_type: null,
+    payment_reference: null,
+    products: cartStore.cart
+  }
+}
+console.log(newOrder())
+
+const paymentModal = ref(false);
 
 let pointsCart = ref(0);
 
