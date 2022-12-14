@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <td scope="row">
+    <td>
       <img
         alt="image"
         :src="photoFullUrl"
@@ -8,9 +8,9 @@
         style="width: 30px; height: 30px"
       />
     </td>
-    <td class="texto">{{ item.name }}</td>
+    <td class="texto" >{{ item.name }}</td>
     <td class="texto">{{ item.price }}</td>
-    <td>
+    <td >
       <input class="form-control form-control-sm" type="text" placeholder="input some notes" v-model="item.notes">
     </td>
     <td>

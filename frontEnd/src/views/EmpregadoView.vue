@@ -35,7 +35,6 @@ onMounted(() => {
                                 <button class="btn btn-sm btn-outline-primary" @click="ordersStore.orderReadyToDelivery(order.id)">Entregar</button>
                             </td>
                         </tr>
-
                     </tbody>
                 </table>
             </div>
