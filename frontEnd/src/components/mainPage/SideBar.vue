@@ -41,7 +41,7 @@
           </svg>
           <span class="texto sidebar-text03">Menu</span>
         </router-link>
-        <router-link to="/orders/current"
+        <router-link :to="{name:'pedidos-em-curso'}"
           class="sidebar-navlink02 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar">
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
             <path
@@ -61,7 +61,7 @@
           </svg>
           <span class="texto sidebar-text05">Cozinha</span>
         </router-link>
-        <router-link to="/orders/current"
+        <router-link :to="{name:'pronto-a-entregar'}"
           class="sidebar-navlink04 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar">
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
             <path
@@ -72,7 +72,7 @@
         </router-link>
       </div>
       <div class="sidebar-container-manager">
-        <router-link to="/orders/current"
+        <router-link to="/"
           class="sidebar-navlink05 button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar">
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
             <path

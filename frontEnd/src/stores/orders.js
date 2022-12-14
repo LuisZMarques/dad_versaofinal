@@ -9,6 +9,7 @@ export const useOrdersStore = defineStore("orders", () => {
   const hotDishs = ref([]);
   let isLoading = ref(false);
 
+
   function clearOrders() {
     orders.value = [];
   }
@@ -24,13 +25,15 @@ export const useOrdersStore = defineStore("orders", () => {
       throw error;
     }
   }
-
+  let ordersReady = computed(() => {
+    return orders.value.filter((order) => order.status == "R");
+  });
   let ordersPreparing = computed(() => {
     return orders.value.filter((order) => order.status == "P");
   });
 
   let getHotDishs = computed(() => {
-    hotDishs.value = []
+    hotDishs.value = [];
     orders.value.forEach((order) => {
       if (order.status == "P") {
         order.products.forEach((product) => {
@@ -42,23 +45,26 @@ export const useOrdersStore = defineStore("orders", () => {
     return hotDishs.value;
   });
 
-  let ordersReady = computed(() => {
-    return orders.value.filter((order) => order.status == "R");
-  });
-
   let productPreparing = (orderId, id) => {
     let orderIdx = orders.value.findIndex((t) => t.id == orderId);
-    let productIdx = orders.value[orderIdx].products.findIndex((p) => p.id == id);
-    orders.value[orderIdx].products[productIdx].pivot.status = "P"
+    let productIdx = orders.value[orderIdx].products.findIndex(
+      (p) => p.id == id
+    );
+    orders.value[orderIdx].products[productIdx].pivot.status = "P";
   };
 
   let productReady = (orderId, id) => {
     let orderIdx = orders.value.findIndex((t) => t.id == orderId);
-    let productIdx = orders.value[orderIdx].products.findIndex((p) => p.id == id);
-    orders.value[orderIdx].products[productIdx].pivot.status = "R"
+    let productIdx = orders.value[orderIdx].products.findIndex(
+      (p) => p.id == id
+    );
+    orders.value[orderIdx].products[productIdx].pivot.status = "R";
   };
 
-
+  let orderDelivery = (orderId) => {
+    let orderIdx = orders.value.findIndex((t) => t.id == orderId);
+    orders.value[orderIdx].status = "D";
+  };
 
   return {
     isLoading,
@@ -68,6 +74,7 @@ export const useOrdersStore = defineStore("orders", () => {
     ordersReady,
     productReady,
     productPreparing,
+    orderDelivery,
     hotDishs,
     getHotDishs,
   };

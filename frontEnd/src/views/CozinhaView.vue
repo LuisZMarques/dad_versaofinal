@@ -19,8 +19,8 @@ onMounted(() => {
         <div class="row">
             <div class="col-12 table-responsive ">
                 <table class="table table-primary">
-                    <tbody>
-                        <tr v-for="product, index in ordersStore.getHotDishs">
+                    <tbody v-for="product, index in ordersStore.getHotDishs">
+                        <tr>
                             <td>{{ index }}</td>
                             <td>{{ product.name }}</td>
                             <td>{{ product }}</td>
@@ -28,14 +28,13 @@ onMounted(() => {
                             <td>{{ product.pivot.order_id }}</td>
                             <td>
                                 <button class="btn btn-sm btn-primary" v-if="product.pivot.status == 'W'"
-                                    @click="ordersStore.productPreparing(product.pivot.order_id, product.id)">A prepara</button>
+                                    @click="ordersStore.productPreparing(product.pivot.order_id, product.id)">A
+                                    prepara</button>
 
                                 <button class="btn btn-sm btn-primary" v-if="product.pivot.status == 'P'"
                                     @click="ordersStore.productReady(product.pivot.order_id, product.id)">Pronto</button>
                             </td>
                         </tr>
-
-
                     </tbody>
                 </table>
             </div>
