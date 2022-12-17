@@ -16,6 +16,10 @@
             type: Object,
             required: true
         },
+        operationType:{
+            type: String,
+            default: "Inserir novo"
+        },
         showProduct: {
             type: Boolean
         }
@@ -26,27 +30,27 @@
     const photoFullUrl = computed(() => {
         return props.product.photo_url
             ? serverBaseUrl + "/storage/products/" + props.product.photo_url
-            : null
+            : "https://a.storyblok.com/f/108717/960x640/7fd6d1bd50/7-tipps-fur-gute-food-fotografie1.jpg"
     })
 
-    let atualizar = () => {
-        if (productsStore.updateProduct(editingProduct.value))
+    let save = () => {
+        if (productsStore.saveProduct(editingProduct.value))
             emit('close')
     }
+
 
 
 </script>
 
 <template>
     <modal :show="showProduct">
-        <div class="row justify-content-center">
-            <div class="col-6">
+        <div class="row justify-content-center">           
+            <div class="col-10">
                 <div class="card text-white" style="background-color: rebeccapurple;max-width: 80%;padding: 1rem;">
                     <img :src="photoFullUrl" class="mx-auto"
-                        alt="https://a.storyblok.com/f/108717/960x640/7fd6d1bd50/7-tipps-fur-gute-food-fotografie1.jpg"
                         height="150" width="150" />
                     <div class="card-body">
-                        <h4 class="fw-bold mb-3">{{ editingProduct.name }}</h4>
+                        <h4 class="fw-bold mb-3">{{ editingProduct.name }}  {{editingProduct}}</h4>
                         <p class="mb-1 fst-italic small">Atualizar os dados do producto</p>
                         <div class="mb-3 row">
                             <div class="col-12 col-md-4">
@@ -86,7 +90,7 @@
                                 <button class="btn btrn-sm btn-outline-dark" type="button"
                                     @click="$emit('close')">Cancelar</button>
                                 <button class="btn btrn-sm btn-outline-primary" type="button"
-                                    @click="atualizar">Guardar</button>
+                                    @click="save">{{operationType}} producto</button>
                             </div>
                         </div>
                     </div>

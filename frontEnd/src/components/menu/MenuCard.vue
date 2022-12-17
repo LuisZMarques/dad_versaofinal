@@ -14,7 +14,7 @@
       </div>
 
     </div>
-    <product-detail :product="product" :showProduct="showProduct" @close="toogleProductDetail" />
+    <product-detail :product="product" :showProduct="showProduct" @close="toogleProductDetail" operationType="Atualizar" />
   </div>
 </template>
 
