@@ -14,18 +14,15 @@
               Menu
             </span>
           </router-link>
-          
         </div>
-        <OrdersPublicBoardVue></OrdersPublicBoardVue>
       </div>
-
     </div>
   </div>
 </template>
 
 <script setup>
 
-import OrdersPublicBoardVue from '../components/modals/OrdersPublicBoard.vue';
+
 
 
 </script>

@@ -11,7 +11,7 @@
         </tr>
       </thead>
       <tbody>
-        <user-detail :user="user"></user-detail>
+        <user-detail  v-for="use in usersStore.users" :user="user"></user-detail>
       </tbody>
     </table>
   </div>

@@ -25,7 +25,4 @@ const sidebarstate = ref(true)
 const sideToggle = () => {
   sidebarstate.value = !sidebarstate.value
 }
-
-
-
 </script>

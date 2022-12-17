@@ -1,20 +1,22 @@
 <script setup>
-import { onMounted, inject } from "vue";
-import { useOrdersStore } from "@/stores/orders.js"
+    import { onMounted, inject } from "vue";
+    import { useOrdersStore } from "@/stores/orders.js"
 
-const ordersStore = useOrdersStore()
-const serverBaseUrl = inject("serverBaseUrl");
+    const ordersStore = useOrdersStore()
+    const serverBaseUrl = inject("serverBaseUrl");
 
-onMounted(() => {
-    if (ordersStore.orders.length == 0)
-        ordersStore.getOrders()
-})
+    onMounted(() => {
+        if (ordersStore.orders.length == 0)
+            ordersStore.getOrders()
+    })
 </script>
 
 <template>
     <div class="componentes-litas">
         <div class="row">
             <div class="col-12 ">Cozinha - {{ ordersStore.getHotDishs.length }} pratos para cozinhar </div>
+            <div class="col-12 ">Cozinha - {{ ordersStore.orders }} pratos para cozinhar </div>
+            <div class="col-12 ">Cozinha - {{ ordersStore }} pratos para cozinhar </div>
         </div>
         <table class="table table-bordered" style="background-color: #e92b2bff; border-color: rebeccapurple">
             <thead>

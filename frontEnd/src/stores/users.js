@@ -23,7 +23,7 @@ export const useUsersStore = defineStore("users", () => {
   let errors = ref([]);
 
   function clearUsers() {
-    projects.value = [];
+    users.value = [];
   }
 
   function clearUser() {

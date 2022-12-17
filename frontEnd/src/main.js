@@ -26,6 +26,12 @@ app.provide('axios', axios.create({
       'Content-type': 'application/json',
     },
   }))
+  app.provide('paymentGateway', axios.create({
+    baseURL: 'https://dad-202223-payments-api.vercel.app/api/',
+    headers: {
+      'Content-type': 'application/json',
+    },
+  }))
 app.provide('serverBaseUrl', serverBaseUrl)  
 
 app.use(Toaster, {
@@ -34,8 +40,6 @@ app.use(Toaster, {
     timeout: 3000,
     pauseOnHover: true
 })
-
-
 app.provide('toast', app.config.globalProperties.$toast);
 
 app.use(createPinia())

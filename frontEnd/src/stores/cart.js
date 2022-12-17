@@ -6,6 +6,7 @@ export const useCartStore = defineStore("cart", () => {
 
   let cart = ref([]);
   let totalCart = ref(0);
+  let pointsCart = ref();
   let cartModalShow = ref(false);
 
   let clearCart = () => {
@@ -19,6 +20,7 @@ export const useCartStore = defineStore("cart", () => {
     } */
     cart.value.push(item);
     totalCart.value += parseFloat(item.price);
+    pointsCart.value = parseInt(totalCart.value / 10)
     toast.success("Item adicionado ao carrinho!");
   };
 
@@ -36,6 +38,7 @@ export const useCartStore = defineStore("cart", () => {
   let totalCartProducts = computed(() => {
     return cart.value.length;
   });
+  
 
   return {
     cart,
@@ -44,6 +47,7 @@ export const useCartStore = defineStore("cart", () => {
     totalCartProducts,
     removeFromCart,
     totalCart,
+    pointsCart,
     cartModalShow,
   };
 });

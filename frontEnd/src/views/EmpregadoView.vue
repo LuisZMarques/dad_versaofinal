@@ -1,14 +1,14 @@
 <script setup>
-import { onMounted, inject } from "vue";
-import { useOrdersStore } from "@/stores/orders.js"
+    import { onMounted, inject } from "vue";
+    import { useOrdersStore } from "@/stores/orders.js"
 
-const ordersStore = useOrdersStore()
-const serverBaseUrl = inject("serverBaseUrl");
+    const ordersStore = useOrdersStore()
+    const serverBaseUrl = inject("serverBaseUrl");
 
-onMounted(() => {
-    if (ordersStore.orders.length == 0)
-        ordersStore.getOrders()
-})
+    onMounted(() => {
+        if (ordersStore.orders.length == 0)
+            ordersStore.getOrders()
+    })
 
 </script>
 

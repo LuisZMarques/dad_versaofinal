@@ -1,15 +1,10 @@
 <template>
   <modal :show="show">
     <div class="row justify-content-center">
-      <div
-        class="card text-center"
-        style="background-color: rebeccapurple; max-width: 80%; padding: 1rem"
-      >
+      <div class="card text-center"
+        style="background-color: rebeccapurple; max-width: 80%; padding: 1rem; overflow-y: auto;">
         <h2 style="color: white">Carrinho</h2>
-        <table
-          class="table table-bordered"
-          style="background-color: #e92b2bff; border-color: rebeccapurple"
-        >
+        <table class="table table-bordered" style="background-color: #e92b2bff; border-color: rebeccapurple">
           <thead>
             <tr>
               <th>#</th>
@@ -20,30 +15,23 @@
             </tr>
           </thead>
           <tbody>
-            <cart-card
-              v-for="(item, index) in cartStore.cart"
-              :key="index"
-              :item="item"
-            />
+            <cart-card v-for="(item, index) in cartStore.cart" :key="index" :item="item" />
           </tbody>
         </table>
-        <table
-          class="table table-bordered"
-          style="background-color: #e92b2bff; border-color: rebeccapurple"
-        >
+        <table class="table table-bordered" style="background-color: #e92b2bff; border-color: rebeccapurple">
           <tbody>
             <tr>
               <td class="texto">Pontos Acumulados:</td>
-              <td class="texto">{{ pointsCart }}</td>
+              <td class="texto">{{ cartStore.pointsCart }}</td>
             </tr>
             <tr>
-              <td class="texto">Desconto 5$:</td>
+              <td class="texto">Desconto:</td>
               <td class="texto">
-                <input
-                  type="checkbox"
-                  checked="true"
-                  class="carrinho-modal-checkbox-desconto"
-                />
+                <div>Selected: {{ selected }}</div>
+                <select class="form-select" aria-label="Default select example" v-model="selected">
+                  <option selected>Nenhum</option>
+                  <option :value="item" v-for="item in numberOfDiscounts()">{{ item }}</option>
+                </select>
               </td>
             </tr>
             <tr>
@@ -54,18 +42,10 @@
         </table>
         <div class="d-grid">
           <div class="btn-group" style="margin-bottom: 0.5rem">
-            <button
-              class="btn btrn-sm btn-outline-danger"
-              type="button"
-              @click="cartStore.cartModalShow = false"
-            >
+            <button class="btn btrn-sm btn-outline-danger" type="button" @click="cartStore.cartModalShow = false">
               Cancel
             </button>
-            <button
-              class="btn btrn-sm btn-outline-success"
-              type="button"
-              @click="updateUser()"
-            >
+            <button class="btn btrn-sm btn-outline-success" type="button" @click="paymentModal = true">
               Confirmar
             </button>
           </div>
@@ -77,61 +57,45 @@
 </template>
 
 <script setup>
-import { ref, inject, watch } from "vue";
+import { ref, inject, watch, computed } from "vue";
 import CartCard from "@/components/modals/CartCard.vue";
 import Modal from "@/components/global/modal.vue";
 import PaymentModal from "@/components/modals/OrderPayment.vue";
 import { useCartStore } from "@/stores/cart.js";
 import { useUsersStore } from "@/stores/users.js";
+import { useCustomerStore } from "@/stores/customer.js";
+import { useOrdersStore } from "@/stores/orders.js";
 
 defineEmits(["close"]);
 
 defineProps(["show"]);
 
+const selected = ref(0);
+watch(() => selected.value,
+  (opcao) => {
+    ordersStore.selectedDiscount = opcao;
+  }
+)
+
 const cartStore = useCartStore();
+
+const ordersStore = useOrdersStore();
 
 const usersStore = useUsersStore();
 
+const customerStore = useCustomerStore();
+
 const axios = inject("axios");
 
-
-const newOrder = () => {
-  return {
-    id: null,
-    ticket_number: 99,
-    status: "P",
-    customer_id: null,
-    total_price: cartStore.totalCart,
-    total_paid: cartStore.totalCart,
-    total_paid_with_points: null,
-    points_gained: null,
-    points_used_to_pay: null,
-    payment_type: null,
-    payment_reference: null,
-    products: cartStore.cart,
-  };
-};
-
-let dataToSend = ref(newOrder())
-
-async function updateUser() {
-  try {
-    const response = await axios.post("orders/", dataToSend);
-
-    //updateProductOnArray(response.data.data);
-    //socket.emit("updateProduct", response.data.data);
-    console.log(response.data);
-    toast.success(`Produto atualizado com sucesso`);
-  } catch (error) {
-    console.log(error);
+const discount = ref([]);
+let numberOfDiscounts = () => {                                                                  //Substituir pelo valor recebido do endpoint do customer
+  for (let i = 1; i < ((customerStore.testePontosCliente / 10) + 1); i++) {
+    discount.value[i - 1] = 5 * i;
   }
-
-  //updateProjectOnArray(response.data.data)
-  //return response.data.data
+  return discount.value;
 }
-
 
 const paymentModal = ref(false);
 
-let pointsCart = ref(0);
+
 </script>

@@ -2,7 +2,9 @@
   <div class="menu-list-container">
     <span class="texto-logo">
       <span>Menu</span>
-      <br />
+      <button class="btn btn-primary" @click="toogleProductDetail">
+        <span>Adicionar Produto</span>
+      </button>
     </span>
     <div>
       <div>
@@ -17,16 +19,31 @@
         </div>
       </div>
     </div>
+    <product-detail :product="newProduct()" :showProduct="showProduct" @close="toogleProductDetail" />
   </div>
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import MenuCard from "@/components/menu/MenuCard.vue";
 import { useProductsStore } from "../stores/products";
+import ProductDetail from '@/components/modals/ProductDetail.vue';
 
 const productsStore = useProductsStore();
 
+const newProduct = () => {                              
+    return {
+      name: "",
+      type: "",
+      description: "",
+      photo_url: "",
+    };
+  };
+
+let showProduct = ref(false)
+let toogleProductDetail = () => {
+  showProduct.value = !showProduct.value
+}
 onMounted(() => {
   if (productsStore.productsList.length == 0)
     productsStore.loadProducts();

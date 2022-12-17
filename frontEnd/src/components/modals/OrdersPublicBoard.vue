@@ -10,12 +10,12 @@ onMounted(() => {
 
 </script>
 <template>
-    <div class="row bg-primary rounded">
-        <div class="col-12 col-md-6">
+    <div class="row bg-primary rounded" >
+        <div class="col-12 col-md-6" style="background-color:#e92b2bff">
             <table class="table text-center table-borderless">
                 <thead>
                     <tr>
-                        <th>PREPARING</th>
+                        <th style="color:white">PREPARING</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,11 +27,11 @@ onMounted(() => {
             </table>
         </div>
 
-        <div class="col-12 col-md-6">
-            <table class="table text-center table-borderless">
+        <div class="col-12 col-md-6" style="background-color:#e92b2bff">
+            <table class="table text-center table-borderless" >
                 <thead>
                     <tr>
-                        <th>Ready</th>
+                        <th style="color:white">Ready</th>
                     </tr>
                 </thead>
                 <tbody>

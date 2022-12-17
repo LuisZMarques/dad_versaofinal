@@ -1,27 +1,35 @@
-<template>
+<template :user="user">
   <tr>
     <th scope="row">
-      <img alt="image" :src="photoFullUrl" class="img-fluid img-thumbnail" style="width: 30px; height: 30px" />
+      <img alt="image" :src="user.photoFullUrl" class="img-fluid img-thumbnail" style="width: 30px; height: 30px" />
     </th>
-    <td class="texto" colspan="4">user.name</td>
-    <td class="texto">user.type</td>
+    <td class="texto" colspan="4">{{user.name}}</td>
+    <td class="texto">{{user.type}}</td>
     <td colspan="4">
       <div style="display:flex;flex-direction: row;">
-        <button class="listas-botoes button">
-          <svg viewBox="0 0 1024 1024" class="item-user-icon2 icons-listas">
+        <button class="listas-botoes button" v-if="!user.blocked" @click="user.blocked = 1">
+          <svg viewBox="0 0 1024 1024" class="item-user-icon2 icons-listas" >
             <path
               d="M512 854q140 0 241-101t101-241q0-48-21-110t-51-100l-480 480q90 72 210 72zM170 512q0 48 21 110t51 100l480-480q-90-72-210-72-140 0-241 101t-101 241zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125z">
             </path>
           </svg>
-          <span class="texto item-user-text">Bloquear</span>
+          <span class="texto item-user-text" >Bloquear</span>
         </button>
-        <button class="listas-botoes button">
+        <button class="listas-botoes button" v-if="user.blocked" @click="user.blocked = 0">
           <svg viewBox="0 0 1024 1024" class="item-user-icon4 icons-listas">
             <path
               d="M660 874l-148-148 60-60 88 88 218-220 60 60zM470 512q-70 0-121-50t-51-120 51-121 121-51 120 51 50 121-50 120-120 50zM384 726l128 128h-384v-86q0-76 117-123t225-47q30 0 42 2z">
             </path>
           </svg>
           <span class="texto item-user-text1">Desbloquear</span>
+        </button>
+        <button class="listas-botoes button" @click="perfilModal = true">
+          <svg viewBox="0 0 1024 1024" class="item-user-icon6 icons-listas">
+            <path
+              d="M512 170.667c-188.544 0-341.333 152.832-341.333 341.333s152.789 341.333 341.333 341.333 341.333-152.832 341.333-341.333-152.789-341.333-341.333-341.333zM670.165 609.835c16.683 16.683 16.683 43.648 0 60.331-8.32 8.32-19.243 12.501-30.165 12.501s-21.845-4.181-30.165-12.501l-97.835-97.835-97.835 97.835c-8.32 8.32-19.243 12.501-30.165 12.501s-21.845-4.181-30.165-12.501c-16.683-16.683-16.683-43.648 0-60.331l97.835-97.835-97.835-97.835c-16.683-16.683-16.683-43.648 0-60.331s43.648-16.683 60.331 0l97.835 97.835 97.835-97.835c16.683-16.683 43.648-16.683 60.331 0s16.683 43.648 0 60.331l-97.835 97.835 97.835 97.835z">
+            </path>
+          </svg>
+          <span class="texto item-user-text2">Editar</span>
         </button>
         <button class="listas-botoes button">
           <svg viewBox="0 0 1024 1024" class="item-user-icon6 icons-listas">
@@ -34,26 +42,26 @@
       </div>
     </td>
   </tr>
+  <profile-modal :show="perfilModal" @close="perfilModal = false" :user="user" />
 </template>
   
 <script setup>
-import { useUsersStore } from '../../stores/users';
-import { inject, computed } from 'vue';
+import { inject, computed, ref } from 'vue';
+import ProfileModal from "@/components/modals/ProfileUser.vue"
 
 const serverBaseUrl = inject("serverBaseUrl");
-
+let perfilModal = ref(false)
 const props = defineProps({
   user: {
     type: Object,
     required: true
   }
 })
-/* 
 const photoFullUrl = computed(() => {
         return props.user.photo_url
-            ? serverBaseUrl + "/storage/fotos/" + props.users.photo_url
+            ? serverBaseUrl + "/storage/fotos/" + props.user.photo_url
             : null
-    }) */
+    }) 
 </script>
   
 <style scoped>

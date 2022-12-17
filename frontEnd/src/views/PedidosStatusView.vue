@@ -1,45 +1,50 @@
 <script setup>
-import { onMounted, inject } from "vue";
-import { useOrdersStore } from "@/stores/orders.js"
+    import { onMounted, inject } from "vue";
+    import { useOrdersStore } from "@/stores/orders.js"
+    import OrdersPublicBoardVue from '../components/modals/OrdersPublicBoard.vue';
 
-const ordersStore = useOrdersStore()
-const serverBaseUrl = inject("serverBaseUrl");
+    const ordersStore = useOrdersStore()
+    const serverBaseUrl = inject("serverBaseUrl");
 
-onMounted(() => {
-    if (ordersStore.orders.length == 0)
-        ordersStore.getOrders()
-})
+    onMounted(() => {
+        if (ordersStore.orders.length == 0)
+            ordersStore.getOrders()
+    })
 
 </script>
 
 <template>
-    <div class="m-3">
-        <div class="row">
-            <div class="col-12 ">Total de lista de pedidos {{ordersStore.orders.length}}</div>
+    <div style="width: 100%; height: auto;">
+        <div class="row bg-primary rounded" >
+        <div class="col-12 col-md-6" style="background-color:#e92b2bff">
+            <table class="table text-center table-borderless">
+                <thead>
+                    <tr>
+                        <th style="color:white">PREPARING</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="orderPreparing in ordersStore.ordersPreparing" :key="orderPreparing.id">
+                        <td>{{ orderPreparing.ticket_number }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="row">
-            <div class="col-12 table-responsive ">
-                <table class="table table-primary">
-                    <tbody>
-                        <tr v-for="order in ordersStore.orders">
 
-                            <td>{{ order.ticket_number }}</td>
-                            <td>{{ order.status }}</td>
-                            <td>
-                                <ul>
-                                    <li v-for="product in order.products">
-                                        {{ product.name }} - status {{ product.pivot.status }}
-                                    </li>
-                                </ul>
-                            </td>
-                            <td>
-                                <button class="btn btn-sm btn-outline-primary" @click="ordersStore.orderPreparedToReady(order.id)">Entregar</button>
-                            </td>
-                        </tr>
-
-                    </tbody>
-                </table>
-            </div>
+        <div class="col-12 col-md-6" style="background-color:#e92b2bff">
+            <table class="table text-center table-borderless" >
+                <thead>
+                    <tr>
+                        <th style="color:white">Ready</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="orderReady in ordersStore.ordersReady" :key="orderReady.id">
+                        <td>{{ orderReady.ticket_number }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+    </div>
     </div>
 </template>
