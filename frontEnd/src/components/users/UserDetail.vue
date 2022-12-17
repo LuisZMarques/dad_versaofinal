@@ -1,7 +1,7 @@
 <template :user="user">
   <tr>
     <th scope="row">
-      <img alt="image" :src="user.photoFullUrl" class="img-fluid img-thumbnail" style="width: 30px; height: 30px" />
+      <img alt="image" :src="photoFullUrl" class="img-fluid img-thumbnail" style="width: 50px; height: 50px" />
     </th>
     <td class="texto" colspan="4">{{user.name}}</td>
     <td class="texto">{{user.type}}</td>
@@ -51,6 +51,7 @@ import ProfileModal from "@/components/modals/ProfileUser.vue"
 
 const serverBaseUrl = inject("serverBaseUrl");
 let perfilModal = ref(false)
+
 const props = defineProps({
   user: {
     type: Object,
@@ -62,6 +63,7 @@ const photoFullUrl = computed(() => {
             ? serverBaseUrl + "/storage/fotos/" + props.user.photo_url
             : null
     }) 
+
 </script>
   
 <style scoped>

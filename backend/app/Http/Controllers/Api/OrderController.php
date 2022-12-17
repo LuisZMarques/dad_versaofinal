@@ -64,4 +64,9 @@ class OrderController extends Controller
 
         return response(null, 204);
     }
+
+    public function payments(Request $request)
+    {
+        return $request->all();
+    }
 }

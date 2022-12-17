@@ -14,7 +14,7 @@ class UserController extends Controller
 
     public function index()
     {
-        return UserResource::collection(User::all());
+        return UserResource::collection(User::with("customer")->get());
     }
 
     public function store(StoreUserRequest $request)
@@ -45,6 +45,7 @@ class UserController extends Controller
 
     public function show_me(Request $request)
     {
-        return new UserResource($request->user());
+        $user = User::findOrFail($request->user()->id);
+        return new UserResource($user);
     }
 }
