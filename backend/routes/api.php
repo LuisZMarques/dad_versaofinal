@@ -19,8 +19,8 @@ Route::middleware('auth:api')->group(function () {
 });
 
 
-Route::get('orderinfo', [OrderController::class, 'getLastOrder']);  // Get Last Order Info
-Route::post('addorder', [OrderController::class, 'store']); // Add New Order
+//Route::get('orderinfo', [OrderController::class, 'getLastOrder']);  // Get Last Order Info
+//Route::post('addorder', [OrderController::class, 'store']); // Add New Order
 
 Route::apiResource('products', ProductController::class, ['names' => 'products']);
 
