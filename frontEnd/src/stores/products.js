@@ -18,7 +18,7 @@ export const useProductsStore = defineStore("products", () => {
   });
 
   function clearProducts() {
-    projects.value = [];
+    products.value = [];
   }
 
   async function loadProducts() {

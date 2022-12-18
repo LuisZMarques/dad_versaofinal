@@ -109,10 +109,6 @@ export const useOrdersStore = defineStore("orders", () => {
   };
 
 
-  const selectedDiscount = ref(0);
-  const paymentMethod = ref('');
-  const paymentInput = ref('');
-  
 //sera preciso ir buscar o proximo id disponivel ,
 // o customer id e ver como fazer o ticket number, points_gained e total_paid esta a associar ao null aos campos
   const newOrder = () => {                             
@@ -122,7 +118,9 @@ export const useOrdersStore = defineStore("orders", () => {
       value: cartStore.cart.total_price,
     };
   };
-  async function createPayment() {
+
+
+/*   async function createPayment() {
     try {
       let order = newOrder();
       // Busca valores de ultimo pedido registado
@@ -154,7 +152,9 @@ export const useOrdersStore = defineStore("orders", () => {
       console.log(error);
       toast.success(`Pagamento falhado. Verifique os dados inseridos!`);
     }
-  }
+  } */
+
+
   // fazer a compra
 
   async function createOrder() {
@@ -184,7 +184,7 @@ export const useOrdersStore = defineStore("orders", () => {
     //newOrder,
     createOrder,
     //selectedDiscount,
-    createPayment,
+    //createPayment,
     //paymentInput,
     //paymentMethod,
     loadOrders,

@@ -55,14 +55,6 @@ export const useCartStore = defineStore("cart", () => {
     });
     cart.value.total_price += parseFloat(item.price);
     cart.value.points_gained = Math.floor(cart.value.total_price / 10);
-
-    /*     let item = {
-      price : item.price, 
-      product_id :item.id, 
-    } */
-    /*     cart.value.push(item);
-    totalCart.value += parseFloat(item.price);
-    pointsCart.value = parseInt(totalCart.value / 10);*/
     toast.success("Item adicionado ao carrinho!");
   };
 
@@ -84,6 +76,7 @@ export const useCartStore = defineStore("cart", () => {
   });
 
   let checkCart = () => {
+    let currentDate = new Date();
     if (cart.value.products.length > 0) {
       cartModalShow.value = true;
       (cart.value.customer_id = usersStore.user?.id ?? null),
@@ -95,7 +88,7 @@ export const useCartStore = defineStore("cart", () => {
         cart.value.payment_type ??
         usersStore.user?.customer.default_payment_type ??
         null;
-        cart.value.date = '2022-01-01'
+        cart.value.date = new Date().toJSON().slice(0,10).replace(/-/g,'/');
     } else {
       toast.success("O carrinho está vazio");
     }
