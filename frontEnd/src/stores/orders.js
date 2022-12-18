@@ -71,6 +71,7 @@ export const useOrdersStore = defineStore("orders", () => {
     );
     orders.value[orderIdx].products[productIdx].pivot.status = "P";
   };
+  
 
   let productReady = (orderId, id) => {
     let orderIdx = orders.value.findIndex((t) => t.id == orderId);
@@ -169,8 +170,9 @@ export const useOrdersStore = defineStore("orders", () => {
       //updateProductOnArray(response.data.data);
       //socket.emit("updateProduct", response.data.data);
       console.log(response.data.data);
-      cartStore.clearCart();
-      
+      cartStore.cart.cartModalShow = !cartStore.cart.cartModalShow
+      cartStore.cart.paymentModal = !cartStore.cart.paymentModal
+      cartStore.clearCart();      
     } catch (error) {
       console.log(error);
     }

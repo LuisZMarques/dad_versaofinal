@@ -61,7 +61,7 @@ class OrderController extends Controller
         $order = null;
         if ($response["status"] == "valid") {
 
-            if ($request->customer_id) {
+            if ($request->customer_id != null) {
                 $user = User::find($request->customer_id);
 
                 $order = $user->customer->orders()->create([
