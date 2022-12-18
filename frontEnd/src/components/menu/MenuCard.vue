@@ -9,7 +9,7 @@
     </div>
     <div class="card-footer">
       <div class="d-flex justify-content-between">
-        <button class="btn btn-sm btn-outline-info" @click="toogleProductDetail">Edit product</button>
+        <button class="btn btn-sm btn-outline-info" v-if="isUserManager" @click="toogleProductDetail">Edit product</button>
         <button class="btn btn-sm btn-outline-primary" @click="cartStore.addToCart(product)">Adicionar</button>
       </div>
 
@@ -24,7 +24,12 @@ import { useCartStore } from '@/stores/cart.js'
 
 import ProductDetail from '@/components/modals/ProductDetail.vue';
 
+import { useUsersStore } from '@/stores/users.js'
+
 const serverBaseUrl = inject("serverBaseUrl");
+
+const usersStore = useUsersStore()
+
 const cartStore = useCartStore();
 
 const props = defineProps({
@@ -44,6 +49,10 @@ const photoFullUrl = computed(() => {
   return props.product.photo_url
     ? serverBaseUrl + "/storage/products/" + props.product.photo_url
     : null
+})
+
+const isUserManager = computed(() => {
+  return usersStore.user?.type == "EM" ? true : false
 })
 
 </script>
