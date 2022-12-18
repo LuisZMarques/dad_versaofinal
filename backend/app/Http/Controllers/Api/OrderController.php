@@ -57,6 +57,8 @@ class OrderController extends Controller
 
         $response = $this->payments($data);
 
+
+
         $order = null;
         if ($response["status"] == "valid") {
             $order = new Order();
@@ -77,11 +79,11 @@ class OrderController extends Controller
         }
 
         if ($order) {
-            foreach ($request->products as $product) {
+            foreach ($request->products as $key=>$product) {
                 $order->products()->attach(
                     $product['product_id'],
                     [
-                        "order_local_number" => 1,
+                        "order_local_number" => $key,
                         "status" => $product['status'],
                         "notes" => $product['notes'],
                         "price" => $product['price']
