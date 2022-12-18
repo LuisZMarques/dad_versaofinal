@@ -50,7 +50,7 @@
                     <img :src="photoFullUrl" class="mx-auto"
                         height="150" width="150" />
                     <div class="card-body">
-                        <h4 class="fw-bold mb-3">{{ editingProduct.name }}  {{editingProduct}}</h4>
+                        <h4 class="fw-bold mb-3">{{ editingProduct.name }}</h4>
                         <p class="mb-1 fst-italic small">Atualizar os dados do producto</p>
                         <div class="mb-3 row">
                             <div class="col-12 col-md-4">
