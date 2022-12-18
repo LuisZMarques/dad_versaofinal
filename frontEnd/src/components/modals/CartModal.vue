@@ -29,7 +29,7 @@
               v-for="(item, index) in cartStore.cart.products"
               :key="index"
               :item="item"
-              :index = index
+              :index="index"
             />
           </tbody>
         </table>
@@ -44,17 +44,17 @@
               <td class="texto">Pontos Ganhos:</td>
               <td class="texto">{{ cartStore.cart.points_gained }}</td>
             </tr>
-            <tr v-if="usersStore.user && usersStore.user?.customer.points > 10">
+            <tr v-if="usersStore.user && usersStore.user?.customer.points > 10 ">
               <td class="texto">Desconto:</td>
-              <td class="texto">
+              <td class="texto" colspan="3">
                 <select
                   class="form-select"
                   aria-label="Default select example"
-                  v-model="selected"
+                  v-model="cartStore.cart.total_paid_with_points"
                 >
-                  <option selected>Nenhum</option>
-                  <option :value="item" v-for="item in numberOfDiscounts()">
-                    {{ item }} pontos
+                  <option value="0" selected>Nenhum</option>
+                  <option :value="item.value" v-for="item in numberOfDiscounts()">
+                    {{ item.label }} pontos
                   </option>
                 </select>
               </td>
@@ -63,7 +63,7 @@
               <td class="texto">Total do carrinho:</td>
               <td class="texto">{{ cartStore.cart.total_price }}</td>
               <td class="texto">Total a pagar:</td>
-              <td class="texto">{{ cartStore.cart.total_price  }}</td>
+              <td class="texto">{{ cartStore.cart.total_price - cartStore.cart.total_paid_with_points}}</td>
             </tr>
           </tbody>
         </table>
@@ -88,7 +88,11 @@
       </div>
     </div>
 
-    <payment-modal :show="paymentModal" @close="paymentModal = false" :card="cartStore.card" />
+    <payment-modal
+      :show="paymentModal"
+      @close="paymentModal = false"
+      :card="cartStore.card"
+    />
   </modal>
 </template>
 
@@ -125,11 +129,12 @@ const customerStore = useCustomerStore();
 const axios = inject("axios");
 
 const discount = ref([]);
+
 let numberOfDiscounts = () => {
   //Substituir pelo valor recebido do endpoint do customer
 
-  for (let i = 1; i < usersStore.user.customer.points / 10 + 1; i++) {
-    discount.value[i - 1] = 5 * i;
+  for (let i = 1; i < usersStore.user.customer.points / 10 ; i++) {
+    discount.value[i - 1] = {label:10*i, value: 5*i};
   }
   return discount.value;
 };

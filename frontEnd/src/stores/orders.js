@@ -106,22 +106,8 @@ export const useOrdersStore = defineStore("orders", () => {
     } catch (error) {}
   };
 
-  // fazer a compra 
 
-  async function createOrder() {
-    try {
-      const response = await axios.post("orders", dataToSend);
-      //updateProductOnArray(response.data.data);
-      //socket.emit("updateProduct", response.data.data);
-      console.log(response.data);
-      toast.success(
-        `Pagamento concluido a sua ordem vai começar a ser preparada!`
-      );
-    } catch (error) {
-      console.log(error);
-    }
-
-  }
+  /* REALIZAR O PAGAMENTO */
   const paymentData = () => {
     return {
       type: cartStore.cart.payment_type,
@@ -132,15 +118,31 @@ export const useOrdersStore = defineStore("orders", () => {
   async function createPayment() {
     try {
       const response = await axios.post("orders/payments", paymentData());
-      console.log(response.data);
-      //createOrder();
-      toast.success(
-        `Pagamento concluido a sua ordem vai começar a ser preparada!`
-      );
+      if (response.data.status == 201) {
+        createOrder();
+        toast.success(
+          `Pagamento concluido a sua ordem vai começar a ser preparada!`
+        );
+      } else {
+        console.log(response.data);
+      }
     } catch (error) {
       console.log(error);
     }
   }
+  // fazer a compra
+
+  async function createOrder() {
+    try {
+      const response = await axios.post("orders", cartStore.cart);
+      //updateProductOnArray(response.data.data);
+      //socket.emit("updateProduct", response.data.data);
+      console.log(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+ 
 
   return {
     isLoading,
