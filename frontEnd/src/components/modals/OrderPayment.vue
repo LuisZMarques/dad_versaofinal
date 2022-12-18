@@ -29,7 +29,7 @@ const paymentMethods = ["VISA", "PAYPAL", "MBWAY"];
             aria-label="Default select example"
             v-model="cartStore.cart.payment_type"
           >
-            <option :value="item" v-for="item in paymentMethods">
+            <option :value="item" v-for="item in paymentMethods" :key="item">
               {{ item }}
             </option>
           </select>

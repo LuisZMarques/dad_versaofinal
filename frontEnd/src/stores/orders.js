@@ -160,10 +160,17 @@ export const useOrdersStore = defineStore("orders", () => {
 
   async function createOrder() {
     try {
+      
+      cartStore.cart.points_used_to_pay = (cartStore.cart.total_paid_with_points)*2;
+      cartStore.cart.total_paid_with_points = cartStore.cart.total_price - cartStore.cart.total_paid_with_points;
+      console.log(cartStore.cart);
       const response = await axios.post("orders", cartStore.cart);
+
       //updateProductOnArray(response.data.data);
       //socket.emit("updateProduct", response.data.data);
       console.log(response.data.data);
+      cartStore.clearCart();
+      
     } catch (error) {
       console.log(error);
     }

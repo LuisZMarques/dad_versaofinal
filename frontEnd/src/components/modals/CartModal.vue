@@ -53,7 +53,7 @@
                   v-model="cartStore.cart.total_paid_with_points"
                 >
                   <option value="0" selected>Nenhum</option>
-                  <option :value="item.value" v-for="item in numberOfDiscounts()">
+                  <option :value="item.value" v-for="item in numberOfDiscounts()" :key="item">
                     {{ item.label }} pontos
                   </option>
                 </select>
