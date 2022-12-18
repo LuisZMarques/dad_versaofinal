@@ -16,7 +16,7 @@ import { io } from "socket.io-client"
 
 const app = createApp(App)
 
-const serverBaseUrl = 'http://127.0.0.1:8000'
+const serverBaseUrl = 'http://backend.test'
 
 app.provide('socket', io("http://127.0.0.1:8080"))
 

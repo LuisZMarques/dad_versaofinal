@@ -21,8 +21,8 @@
           </button>
         </div> -->
         <div class="metodo-pagamento-modal-container-inputs-metodos-pagamento">
-          <a>{{ordersStore.selectedDiscount}}</a>
-          <a>{{ordersStore.newOrder()}}</a>
+          <!--<a>{{ordersStore.selectedDiscount}}</a>
+          <a>{{ordersStore.newOrder()}}</a> -->
           
           <a style="color: white;">Selecione o método de pagamento.</a>
           <select class="form-select" aria-label="Default select example" v-model="ordersStore.paymentMethod">

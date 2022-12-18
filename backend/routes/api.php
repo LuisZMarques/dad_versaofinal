@@ -15,8 +15,12 @@ Route::middleware('auth:api')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::get('users/me', [UserController::class, 'show_me']);
     Route::apiResource('users', UserController::class, ['names' => 'users']);
+    Route::get('customers/me', [CustomerController::class, 'show_me']);
 });
 
+
+Route::get('orderinfo', [OrderController::class, 'getLastOrder']);  // Get Last Order Info
+Route::post('addorder', [OrderController::class, 'store']); // Add New Order
 
 Route::apiResource('products', ProductController::class, ['names' => 'products']);
 

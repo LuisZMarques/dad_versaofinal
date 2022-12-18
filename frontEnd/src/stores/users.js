@@ -41,7 +41,7 @@ export const useUsersStore = defineStore("users", () => {
     }
   }
 
-  async function loadUser() {
+  /*async function loadUser() {
     try {
       const response = await axios.get("users/1");
       user.value = response.data.data;
@@ -51,7 +51,7 @@ export const useUsersStore = defineStore("users", () => {
       user.value = null;
       throw error;
     }
-  }
+  }*/
 
   async function login() {
     try {
@@ -69,6 +69,15 @@ export const useUsersStore = defineStore("users", () => {
       toast.success(`Credenciais erradas.`);
       clearUser();
       throw error;
+    }
+  }
+
+  async function register(){
+    try{
+
+    }
+    catch(error){
+      
     }
   }
 

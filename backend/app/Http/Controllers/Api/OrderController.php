@@ -26,6 +26,14 @@ class OrderController extends Controller
     public function getOrdersPreparingOrReady()
     {
         return OrderResource::collection(Order::with("products")->whereNotIn("status",["D","C"])->get());
+        //Preparing : P
+        //Ready :     R
+        //Delivered:  D
+        //Cancelled:  C
+    }
+
+    public function getLastOrder(){
+        return Order::orderBy('id','desc')->first();
     }
 
 

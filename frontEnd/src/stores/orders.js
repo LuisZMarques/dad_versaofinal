@@ -3,12 +3,14 @@ import { defineStore } from "pinia";
 
 import {useUsersStore} from "@/stores/users.js"
 import {useCartStore} from "@/stores/cart.js"
+import { useCustomerStore } from "./customer";
 
 export const useOrdersStore = defineStore("orders", () => {
   const axios = inject("axios");
   const paymentGateway = inject("paymentGateway");
   const toast = inject("toast");
 
+  const customerStore = useCustomerStore();
   const usersStore = useUsersStore();
   const cartStore = useCartStore();
   const allOrders = ref([]);
@@ -113,7 +115,7 @@ export const useOrdersStore = defineStore("orders", () => {
   
 //sera preciso ir buscar o proximo id disponivel ,
 // o customer id e ver como fazer o ticket number, points_gained e total_paid esta a associar ao null aos campos
-  const newOrder = () => {                              
+  const newOrder = () => {                             
     return {
       id: null,
       ticket_number: 99,
@@ -132,13 +134,35 @@ export const useOrdersStore = defineStore("orders", () => {
   const dataToSend = ref(newOrder);
   async function createOrder() {
     try {
-      const response = await axios.post("orders", dataToSend);
+      let order = newOrder();
+      // Busca valores de ultimo pedido registado
+      const response = await axios.get("orderinfo");
+      console.log(response.data);
+      
+      // Verifica e Define id de order
+      order.id = response.data.id+1;
+
+      // Verifica o counter de ticker number
+      if(response.data.ticket_number==99){     
+        order.ticket_number = 1;
+      }else(order.ticket_number= (response.data.ticket_number)+1)
+      
+      // Verifica se é customer ou guest
+      await customerStore.loadCustomer();
+      //console.log(customerStore.customer);
+      if(customerStore.customer.id!=null){
+
+        order.customer_id = customerStore.customer.id;
+      }
+      console.log(order);
+      //const response2 = await axios.post("addorder", dataToSend); // To be DONE
       //updateProductOnArray(response.data.data);
       //socket.emit("updateProduct", response.data.data);
-      console.log(response.data);
-      toast.success(`Pagamento concluido a sua ordem vai começar a ser preparada!`);
+      //console.log(response2.data);
+      //cartStore.cartModalShow = false;
     } catch (error) {
       console.log(error);
+      toast.success(`Pagamento falhado. Verifique os dados inseridos!`);
     }
     //updateProjectOnArray(response.data.data)
     //return response.data.data
