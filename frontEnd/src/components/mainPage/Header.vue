@@ -91,45 +91,13 @@ const cartModal = ref(false);
   justify-content: flex-end;
 }
 
-.header-simples-root-class-name {
-  position: 0px;
-}
-
-.header-simples-root-class-name1 {
-  flex: 0 0 auto;
-  margin-bottom: 0rem;
-  background-image: linear-gradient(90deg,
-      rgb(189, 195, 199) 0%,
-      rgba(0, 90, 181, 0.58) 100%);
-}
-
-.header-simples-root-class-name5 {
-  height: 4rem;
-}
-
-.header-simples-root-class-name6 {
-  position: static;
-}
-
 @media (max-width: 991px) {
   .header-simples-header {
     position: sticky;
   }
-
-  .header-simples-root-class-name3 {
-    top: 4px;
-    left: 0px;
-    position: static;
-  }
 }
 
-@media (max-width: 767px) {
-  .header-simples-root-class-name3 {
-    top: 274px;
-    right: -44px;
-    position: static;
-  }
-}
+
 
 @media (max-width: 479px) {
   .header-simples-header {
@@ -144,8 +112,7 @@ const cartModal = ref(false);
     width: 25%;
   }
 
-  .header-simples-root-class-name3 {
-    position: static;
-  }
+ 
+
 }
 </style>

@@ -26,6 +26,7 @@ export const useOrdersStore = defineStore("orders", () => {
     try {
       const response = await axios.get("orders");
       allOrders.value = response.data.data;
+      console.log(allOrders.value)
     } catch (error) {
       clearOrders();
       throw error;
@@ -188,5 +189,6 @@ export const useOrdersStore = defineStore("orders", () => {
     //paymentInput,
     //paymentMethod,
     loadOrders,
+    allOrders
   };
 });

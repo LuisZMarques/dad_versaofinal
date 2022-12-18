@@ -1,41 +1,45 @@
 <template>
   <div class="componentes-litas">
-    <h2 class="text-center" style="color: white">Lista de Utilizadores:</h2>
-    <table class="table table-bordered" style="background-color: #e92b2bff; border-color: rebeccapurple;">
-      <thead>
-        <tr>
-          <th scope="row">Nº Pedido:</th>
-          <th scope="row" colspan="4">Estado Pedido:</th>
-          <th scope="row" colspan="4">Acções</th>
-          <th scope="row" colspan="4">{{ordersStore}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <order-detail :order="ordersStore.loadOrders()"></order-detail>
-      </tbody>
-    </table>
-  </div>
-  <!--   <div class="componentes-litas" >
-    <h1 class="lista-pedidos-titulo-estatico">{{ orderTitle }}</h1>
-    <div class="lista-pedidos-container1 container-listas-info">
-      <div class="container-listas-info">
-        <span class="texto">Nº Pedido:</span>
-      </div>
-      <div class="container-listas-info">
-        <span class="texto">Estado Pedido:</span>
-      </div>
-      <div class="lista-pedidos-container-acoes container-listas-info">
-        <span class="texto">Acções:</span>
-      </div>
-    </div>
-    <ul class="lista-pedidos-ul list">
-      <li class="list-item" v-for="order in ordersStore.orders">
-        <div>
-          <order-detail :order="order"></order-detail>
+    <section class="intro">
+      <div class="gradient-custom-2 h-100">
+        <div class="mask d-flex align-items-center h-100">
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-12">
+                <div class="table-responsive">
+                  <table class="table table-bordered text-center align-middle" style=" border-color: rebeccapurple">
+                    <thead style="background-color: transparent; color: white">
+                      <tr>
+                        <th scope="row">Nº Pedido:</th>
+                        <th scope="row" colspan="4">Acções</th>
+                        <!--  <th scope="row" colspan="4">{{ ordersStore }}</th> -->
+                      </tr>
+                    </thead>
+                    <tbody style="background-color: #C9A2FF;">
+                      <tr v-for="order in ordersStore.allOrders" v-if="order.status='D'" :key="order">
+                        <td class="texto">{{ order.status }}</td>
+                        <td>
+                          <div style="display:flex;flex-direction: row;align-items: center;justify-content: center;">
+                            <button class="btn btn-sm btn-outline-secondary" data-toggle="tooltip" title="Cancelar">
+                              <svg viewBox="0 0 1024 1024" class="icons-listas">
+                                <path
+                                  d="M512 170.667c-188.544 0-341.333 152.832-341.333 341.333s152.789 341.333 341.333 341.333 341.333-152.832 341.333-341.333-152.789-341.333-341.333-341.333zM670.165 609.835c16.683 16.683 16.683 43.648 0 60.331-8.32 8.32-19.243 12.501-30.165 12.501s-21.845-4.181-30.165-12.501l-97.835-97.835-97.835 97.835c-8.32 8.32-19.243 12.501-30.165 12.501s-21.845-4.181-30.165-12.501c-16.683-16.683-16.683-43.648 0-60.331l97.835-97.835-97.835-97.835c-16.683-16.683-16.683-43.648 0-60.331s43.648-16.683 60.331 0l97.835 97.835 97.835-97.835c16.683-16.683 43.648-16.683 60.331 0s16.683 43.648 0 60.331l-97.835 97.835 97.835 97.835z">
+                                </path>
+                              </svg>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </li>
-    </ul>
-  </div> -->
+      </div>
+    </section>
+  </div>
 </template>
 
 <script setup>

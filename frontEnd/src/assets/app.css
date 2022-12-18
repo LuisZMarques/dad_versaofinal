@@ -95,7 +95,7 @@
     height: 1.5rem;
     align-self: center;
     font-weight: 600;
-    margin-left: var(--dl-space-space-halfunit);
+    margin-left: 0.1rem;
   }
   .icons-listas:hover {
     transform: scale(1.1);

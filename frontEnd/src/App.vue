@@ -2,7 +2,8 @@
   <div class="flex flex-column">
     <header-page @sidebar-toggle="sideToggle" />
     <div class="flex">
-      <SideBar v-if="sidebarstate" />
+      <SideBar v-if="sidebarstate"/>
+
       <router-view />
     </div>
   </div>
@@ -13,13 +14,10 @@
 import HeaderPage from "@/components/mainPage/Header.vue"
 import SideBar from "@/components/mainPage/SideBar.vue"
 
-import { useUsersStore } from './stores/users.js'
-
 import { ref, inject } from "vue"
 
 const toast = inject("toast");
 const socket = inject("socket");
-
 const sidebarstate = ref(true)
 
 const sideToggle = () => {
