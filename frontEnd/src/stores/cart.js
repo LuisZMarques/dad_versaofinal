@@ -95,6 +95,7 @@ export const useCartStore = defineStore("cart", () => {
         cart.value.payment_type ??
         usersStore.user?.customer.default_payment_type ??
         null;
+        cart.value.date = '2022-01-01'
     } else {
       toast.success("O carrinho está vazio");
     }

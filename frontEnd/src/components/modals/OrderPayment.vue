@@ -81,7 +81,7 @@ const paymentMethods = ["VISA", "PAYPAL", "MBWAY"];
               <button
                 class="btn btrn-sm btn-outline-success"
                 type="button"
-                @click="ordersStore.createPayment()"
+                @click="ordersStore.createOrder()"
               >
                 Confirmar
               </button>
