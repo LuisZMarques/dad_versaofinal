@@ -11,7 +11,7 @@
         </tr>
       </thead>
       <tbody>
-        <user-detail  v-for="use in usersStore.users" :user="user"></user-detail>
+        <user-detail  v-for="user in usersStore.users" :key="user" :user="user"></user-detail>
       </tbody>
     </table>
   </div>
@@ -42,6 +42,8 @@ const usersStore = useUsersStore();
 onMounted(() => {
   usersStore.loadUsers()
 })
+
+
 </script>
 
 

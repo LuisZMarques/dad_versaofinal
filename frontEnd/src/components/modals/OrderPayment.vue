@@ -1,49 +1,90 @@
+<script setup>
+import { ref, watch } from "vue";
+import Modal from "@/components/global/modal.vue";
+import { useUsersStore } from "@/stores/users.js";
+import { useOrdersStore } from "@/stores/orders.js";
+import { useCartStore } from "@/stores/cart.js";
+
+const ordersStore = useOrdersStore();
+const cartStore = useCartStore();
+const usersStore = useUsersStore();
+
+defineEmits(["close"]);
+const props = defineProps(["show"]);
+
+const paymentMethods = ["VISA", "PAYPAL", "MBWAY"];
+</script>
 <template>
   <modal :show="props.show">
     <div class="row justify-content-center">
-      <div class="card text-center" style="background-color: rebeccapurple;max-width: 80%;padding: 1rem;">
-        <h2 style="color: white;">Portal de Pagamento</h2>
-        <!-- 
-        <div class="metodo-pagamento-modal-container-metodos-pagamento">
-          <button class="metodo-pagamento-modal-button button">
-            <img :alt="visacard_image" src="https://seeklogo.com/images/V/visa-logo-6F4057663D-seeklogo.com.png"
-              class="containers-metodoPagamento-imagens" />
-          </button>
-          <button class="metodo-pagamento-modal-button1 button">
-            <img :alt="paypal_image"
-              src="https://play-lh.googleusercontent.com/bDCkDV64ZPT38q44KBEWgicFt2gDHdYPgCHbA3knlieeYpNqbliEqBI90Wr6Tu8YOw"
-              class="containers-metodoPagamento-imagens" />
-          </button>
-          <button class="metodo-pagamento-modal-button2 button">
-            <img :alt="nbway_image"
-              src="https://play-lh.googleusercontent.com/nDKhDELMEjag8qJ9aKAjfTSzWZKVg3tY2OZ-eo8Jp8hxYDgifCFQoNOqxDwTaAW-O8o"
-              class="containers-metodoPagamento-imagens" />
-          </button>
-        </div> -->
+      <div
+        class="cart text-center"
+        style="background-color: rebeccapurple; max-width: 80%; padding: 1rem"
+      >
+        <h2 style="color: white">Portal de Pagamento</h2>
         <div class="metodo-pagamento-modal-container-inputs-metodos-pagamento">
-          <!--<a>{{ordersStore.selectedDiscount}}</a>
-          <a>{{ordersStore.newOrder()}}</a> -->
-          
-          <a style="color: white;">Selecione o método de pagamento.</a>
-          <select class="form-select" aria-label="Default select example" v-model="ordersStore.paymentMethod">
-            <option :value="item" v-for="item in paymentMethods">{{ item }}</option>
+          <a style="color: white">Selecione o método de pagamento.</a>
+          <select
+            class="form-select"
+            aria-label="Default select example"
+            v-model="cartStore.cart.payment_type"
+          >
+            <option :value="item" v-for="item in paymentMethods">
+              {{ item }}
+            </option>
           </select>
-            <div class="containers-modals-inputs" v-if="ordersStore.paymentMethod == 'visa'">
-              <label class="labels-modals">Nº Cartão VISA:</label>
-              <input type="text" v-model="ordersStore.paymentInput" class="input inputs-modals" />
-            </div>
-            <div class="containers-modals-inputs" v-if="ordersStore.paymentMethod == 'paypal'">
-              <label class="labels-modals">Email:</label>
-              <input type="text" v-model="ordersStore.paymentInput" class="input inputs-modals" />
-            </div>
-            <div class="containers-modals-inputs" v-if=" ordersStore.paymentMethod == 'mbway'">
-              <label class="labels-modals">Nº Telemóvel:</label>
-              <input type="text" v-model="ordersStore.paymentInput" class="input inputs-modals" />
-            </div>
+          <div
+            class="containers-modals-inputs"
+            v-if="cartStore.cart.payment_type == 'PAYPAL'"
+          >
+            <label class="labels-modals">Nº Cartão VISA:</label>
+            <input
+              type="email"
+              v-model="cartStore.cart.payment_reference"
+              class="input inputs-modals"
+              placeholder="colocar o seu email"
+            />
+          </div>
+          <div
+            class="containers-modals-inputs"
+            v-if="cartStore.cart.payment_type == 'VISA'"
+          >
+            <label class="labels-modals">Nº Cartão VISA:</label>
+            <input
+              type="text"
+              v-model="cartStore.cart.payment_reference"
+              class="input inputs-modals"
+              placeholder="colocar o seu numero de cartão"
+            />
+          </div>
+          <div
+            class="containers-modals-inputs"
+            v-if="cartStore.cart.payment_type == 'MBWAY'"
+          >
+            <label class="labels-modals">Nº Telemóvel:</label>
+            <input
+              type="text"
+              v-model="cartStore.cart.payment_reference"
+              class="input inputs-modals"
+              placeholder="colocar o seu nº de telefone"
+            />
+          </div>
           <div class="d-grid">
-            <div class="btn-group" style="margin-bottom : 0.5rem">
-              <button class="btn btrn-sm btn-outline-danger" type="button" @click="$emit('close')">Cancel</button>
-              <button class="btn btrn-sm btn-outline-success" type="button" @click="ordersStore.createPayment()">Confirmar</button>
+            <div class="btn-group" style="margin-bottom: 0.5rem">
+              <button
+                class="btn btrn-sm btn-outline-danger"
+                type="button"
+                @click="$emit('close')"
+              >
+                Cancel
+              </button>
+              <button
+                class="btn btrn-sm btn-outline-success"
+                type="button"
+                @click="ordersStore.createOrder()"
+              >
+                Confirmar
+              </button>
             </div>
           </div>
         </div>
@@ -51,26 +92,12 @@
     </div>
   </modal>
 </template>
-  
-<script setup>
-import { ref, watch } from "vue";
-import Modal from '@/components/global/modal.vue'
-import { useUsersStore } from '@/stores/users.js'
-import { useOrdersStore } from '@/stores/orders.js'
 
-const ordersStore = useOrdersStore()
-
-defineEmits(['close'])
-const props = defineProps(['show'])
-const usersStore = useUsersStore()
-const paymentMethods = ['visa', 'paypal', 'mbway']
-
-</script>
-  
 <style scoped>
-
-input, select, textarea{
-    color: #ff0000;
+input,
+select,
+textarea {
+  color: #ff0000;
 }
 .metodo-pagamento-modal-login {
   color: var(--dl-color-pimary-900);
@@ -136,7 +163,7 @@ input, select, textarea{
   color: var(--dl-color-gray-white);
 }
 
-@media(max-width: 767px) {
+@media (max-width: 767px) {
   .metodo-pagamento-modal-container-metodos-pagamento {
     width: 80%;
   }
@@ -146,7 +173,7 @@ input, select, textarea{
   }
 }
 
-@media(max-width: 479px) {
+@media (max-width: 479px) {
   .metodo-pagamento-modal-container {
     width: auto;
     height: auto;
@@ -158,4 +185,3 @@ input, select, textarea{
   }
 }
 </style>
-  

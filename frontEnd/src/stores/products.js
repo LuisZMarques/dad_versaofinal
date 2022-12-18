@@ -12,10 +12,11 @@ export const useProductsStore = defineStore("products", () => {
 
   const base64 = ref();
 
-  let productsList = computed(()=>{
-    return products.value.filter(proct => proct.name.toLowerCase().includes(searchProduct.value))
-  })
-  
+  let productsList = computed(() => {
+    return products.value
+      .filter((proct) => proct.name.toLowerCase().includes(searchProduct.value));
+  });
+
   function clearProducts() {
     projects.value = [];
   }
@@ -32,24 +33,28 @@ export const useProductsStore = defineStore("products", () => {
     }
   }
 
+  async function saveProduct(product) {
+    if (product.id) {
+      try {
+        product.photo_url = base64.value;
+        const response = await axios.put("products/" + product.id, product);
+        updateProductOnArray(response.data.data);
+        socket.emit("updateProduct", response.data.data);
+        toast.success(`Produto atualizado com sucesso`);
+        base64.value = null;
 
-  async function updateProduct(updateProduct) {
-    try {
-      updateProduct.photo_url = base64.value;
-      const response = await axios.put(
-        "products/" + updateProduct.id,
-        updateProduct
-      );
-      updateProductOnArray(response.data.data);
-      socket.emit("updateProduct", response.data.data);
-      toast.success(`Produto atualizado com sucesso`);
+        return products.value;
+      } catch (error) {}
+    }
+    if (!product.id) {
+      product.photo_url = base64.value;
+      const response = await axios.post("products/", product);
+      //socket.emit("updateProduct", response.data.data);
+      toast.success(`Produto adicionado com sucesso`);
       base64.value = null;
-
+      products.value.push(response.data.data);
       return products.value;
-    } catch (error) {}
-
-    //updateProjectOnArray(response.data.data)
-    //return response.data.data
+    }
   }
 
   let uploadImage = (e) => {
@@ -76,5 +81,12 @@ export const useProductsStore = defineStore("products", () => {
     toast.success(`O producto ${product.name} foi atualizado com sucesso.`);
   });
 
-  return { products, loadProducts, updateProduct, uploadImage, productsList, searchProduct };
+  return {
+    products,
+    loadProducts,
+    saveProduct,
+    uploadImage,
+    productsList,
+    searchProduct,
+  };
 });

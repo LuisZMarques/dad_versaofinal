@@ -14,7 +14,7 @@
       <input class="form-control form-control-sm" type="text" placeholder="input some notes" v-model="item.notes">
     </td>
     <td>
-      <button  type="button" class="btn btn-light btn-sm" @click="cartStore.removeFromCart(item)">remover</button>
+      <button  type="button" class="btn btn-light btn-sm" @click="cartStore.removeFromCart(index)">remover</button>
     </td>
   </tr>
 </template>
@@ -31,6 +31,9 @@ let props = defineProps({
     type: Object,
     required: true,
   },
+  index:{
+    type: Number
+  }
 });
 
 const photoFullUrl = computed(() => {

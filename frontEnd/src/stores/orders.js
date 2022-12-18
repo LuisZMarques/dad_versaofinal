@@ -83,7 +83,7 @@ export const useOrdersStore = defineStore("orders", () => {
     let orderIdx = orders.value.findIndex((t) => t.id == orderId);
     let updatedOrder = orders.value[orderIdx];
     updatedOrder.status = "D";
-    updatedOrder.delivered_by = useUsersStore.user.id
+    updatedOrder.delivered_by = useUsersStore.user.id;
     try {
       const response = await axios.patch(
         "orders/" + orderId + "/updateEstadoDaOrder/",
@@ -117,22 +117,12 @@ export const useOrdersStore = defineStore("orders", () => {
 // o customer id e ver como fazer o ticket number, points_gained e total_paid esta a associar ao null aos campos
   const newOrder = () => {                             
     return {
-      id: null,
-      ticket_number: 99,
-      status: "P",
-      customer_id: null,
-      total_price: cartStore.totalCart,
-      total_paid: (cartStore.totalCart-selectedDiscount),
-      total_paid_with_points: selectedDiscount,
-      points_gained: cartStore.pointsCart,
-      points_used_to_pay: (selectedDiscount*2),
-      payment_type: paymentMethod,
-      payment_reference: paymentInput,
-      products: cartStore.cart,
+      type: cartStore.cart.payment_type,
+      reference: cartStore.cart.payment_reference,
+      value: cartStore.cart.total_price,
     };
   };
-  const dataToSend = ref(newOrder);
-  async function createOrder() {
+  async function createPayment() {
     try {
       let order = newOrder();
       // Busca valores de ultimo pedido registado
@@ -164,27 +154,21 @@ export const useOrdersStore = defineStore("orders", () => {
       console.log(error);
       toast.success(`Pagamento falhado. Verifique os dados inseridos!`);
     }
-    //updateProjectOnArray(response.data.data)
-    //return response.data.data
   }
-  const paymentData = () => {                              
-    return { 
-      type: paymentMethod.value,
-      reference: paymentInput.value,
-      value: Math.ceil(cartStore.totalCart),
-    };
-  };
-  async function createPayment() {
+  // fazer a compra
+
+  async function createOrder() {
     try {
-      const response = await paymentGateway.post("payments", JSON.stringify(paymentData()));
-      console.log(response.data);
-      createOrder();
-      toast.success(`Pagamento concluido a sua ordem vai começar a ser preparada!`);
+      const response = await axios.post("orders", cartStore.cart);
+      //updateProductOnArray(response.data.data);
+      //socket.emit("updateProduct", response.data.data);
+      console.log(response.data.data);
     } catch (error) {
       console.log(error);
     }
   }
-  
+ 
+
   return {
     isLoading,
     orders,
@@ -197,13 +181,12 @@ export const useOrdersStore = defineStore("orders", () => {
     orderPreparedToReady,
     hotDishs,
     getHotDishs,
-    newOrder,
+    //newOrder,
     createOrder,
-    newOrder,
-    selectedDiscount,
+    //selectedDiscount,
     createPayment,
-    paymentInput,
-    paymentMethod,
-    loadOrders
+    //paymentInput,
+    //paymentMethod,
+    loadOrders,
   };
 });
