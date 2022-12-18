@@ -74,7 +74,7 @@ const paymentMethods = ["VISA", "PAYPAL", "MBWAY"];
               <button
                 class="btn btrn-sm btn-outline-danger"
                 type="button"
-                @click="$emit('close')"
+                @click="cartStore.paymentModal = false"
               >
                 Cancel
               </button>

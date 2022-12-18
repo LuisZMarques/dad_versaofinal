@@ -23,6 +23,7 @@ export const useCartStore = defineStore("cart", () => {
   });
 
   let cartModalShow = ref(false);
+  let paymentModal = ref(false);
 
   let clearCart = () => {
     return (cart.value = {
@@ -100,5 +101,6 @@ export const useCartStore = defineStore("cart", () => {
     removeFromCart,
     cartModalShow,
     checkCart,
+    paymentModal
   };
 });

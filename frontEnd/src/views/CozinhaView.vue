@@ -13,11 +13,11 @@ onMounted(() => {
 
 <template>
     <div class="componentes-litas">
-        <div class="row">
+<!--         <div class="row">
             <div class="col-12 ">Cozinha - {{ ordersStore.getHotDishs.length }} pratos para cozinhar </div>
             <div class="col-12 ">Cozinha - {{ ordersStore.orders }} pratos para cozinhar </div>
             <div class="col-12 ">Cozinha - {{ ordersStore }} pratos para cozinhar </div>
-        </div>
+        </div> -->
         <section class="intro">
             <div class="gradient-custom-2 h-100">
                 <div class="mask d-flex align-items-center h-100">

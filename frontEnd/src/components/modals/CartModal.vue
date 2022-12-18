@@ -79,7 +79,7 @@
             <button
               class="btn btrn-sm btn-outline-success"
               type="button"
-              @click="paymentModal = true"
+              @click="cartStore.paymentModal = true"
             >
               Confirmar
             </button>
@@ -89,8 +89,8 @@
     </div>
 
     <payment-modal
-      :show="paymentModal"
-      @close="paymentModal = false"
+      :show="cartStore.paymentModal"
+      @close="cartStore.paymentModal = false"
       :card="cartStore.card"
     />
   </modal>
@@ -139,5 +139,5 @@ let numberOfDiscounts = () => {
   return discount.value;
 };
 
-const paymentModal = ref(false);
+
 </script>
