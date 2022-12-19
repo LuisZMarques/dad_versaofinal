@@ -16,6 +16,7 @@ export const useOrdersStore = defineStore("orders", () => {
   const allOrders = ref([]);
   const orders = ref([]);
   const hotDishs = ref([]);
+  const  ordersCustomer = ref([])
   let isLoading = ref(false);
 
   function clearOrders() {
@@ -35,11 +36,11 @@ export const useOrdersStore = defineStore("orders", () => {
   }
 
   // Devolve os pedidos do cliente
-  async function getOrdersUser() {
+  async function getOrdersCustomer() {
     try {
       isLoading.value = true;
-      const response = await axios.get("orders/me");
-      orders.value = response.data.data;
+      const response = await axios.get("/orders/ordersByCustomer/" + usersStore.user.id);
+      ordersCustomer.value = response.data.data;
       console.log(orders);
       isLoading.value = false;
     } catch (error) {
@@ -230,7 +231,8 @@ export const useOrdersStore = defineStore("orders", () => {
     //paymentMethod,
     loadOrders,
     allOrders,
-    getOrdersUser,
-    getOrdersDelivered
+    getOrdersCustomer,
+    getOrdersDelivered,
+    ordersCustomer
   };
 });

@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Http\Resources\OrderResource;
+use App\Models\Customer;
 use App\Models\Product;
 use App\Models\User;
 use App\Services\OrderService;
@@ -39,9 +40,9 @@ class OrderController extends Controller
         return Order::with("products")->whereNotIn("status", ["D", "C"])->orderBy('id', 'desc')->first();
     }
 
-    public function history()
+    public function getOrdersByCustomer(User $user)
     {
-        return OrderResource::collection(Order::with("products")->where("customer_id", auth()->user()->customer->id)->get());
+        return OrderResource::collection(Order::with("products")->where("customer_id", $user->customer->id)->get());
     }
 
     public function deliveryHistory()
@@ -153,7 +154,6 @@ class OrderController extends Controller
 
     public function payments($data)
     {
-
         $response = Http::post('https://dad-202223-payments-api.vercel.app/api/payments', $data);
         return $response;
     }

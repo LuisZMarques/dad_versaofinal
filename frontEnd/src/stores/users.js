@@ -1,10 +1,10 @@
 import { ref, computed, inject } from "vue";
 import { defineStore } from "pinia";
-import avatarNoneUrl from "@/assets/avatar-none.png";
 
 export const useUsersStore = defineStore("users", () => {
   const axios = inject("axios");
   const toast = inject("toast");
+  const serverBaseUrl = inject("serverBaseUrl");
 
   const users = ref([]);
   const user = ref();
@@ -41,17 +41,15 @@ export const useUsersStore = defineStore("users", () => {
     }
   }
 
-  /*async function loadUser() {
+  async function loadUser() {
     try {
-      const response = await axios.get("users/1");
+      const response = await axios.get("users/me");
       user.value = response.data.data;
-      toast.success(`Utilizadores carregados com successo.`);
-      return user.value;
     } catch (error) {
-      user.value = null;
+      clearUser();
       throw error;
     }
-  }*/
+  }
 
   async function login() {
     try {
@@ -72,13 +70,9 @@ export const useUsersStore = defineStore("users", () => {
     }
   }
 
-  async function register(){
-    try{
-
-    }
-    catch(error){
-      
-    }
+  async function register() {
+    try {
+    } catch (error) {}
   }
 
   function clearUser() {
@@ -87,15 +81,11 @@ export const useUsersStore = defineStore("users", () => {
     user.value = null;
   }
 
-  async function loadUser() {
-    try {
-      const response = await axios.get("users/me");
-      user.value = response.data.data;
-    } catch (error) {
-      clearUser();
-      throw error;
-    }
-  }
+  const photoFullUrl = computed(() => {
+    return user?.photo_url
+      ? serverBaseUrl + "/storage/fotos/" + user.photo_url
+      : serverBaseUrl + "/storage/fotos/anonymos.jpg";
+  });
 
   async function logout() {
     try {
@@ -112,8 +102,7 @@ export const useUsersStore = defineStore("users", () => {
     }
   }
 
-
-/*   const updateUser = () => {
+  /*   const updateUser = () => {
     errors.value = null
     axios.put('users/' + props.id, user.value)
       .then((response) => {
@@ -180,6 +169,7 @@ export const useUsersStore = defineStore("users", () => {
 
   return {
     users,
+    restoreToken,
     loadUsers,
     user,
     loginModalState,
@@ -191,5 +181,6 @@ export const useUsersStore = defineStore("users", () => {
     loginModal,
     updateUser,
     errors,
+    photoFullUrl
   };
 });

@@ -1,26 +1,32 @@
 <template>
+
   <div class="menu-list-container">
-    <div class="justify-content-center text-center" style="display: flex; width: 100%;">
-      <span class="texto-logo" style="align-self: center;">Menu</span>
-      <button class="btn btn-primary btn-sm" v-if="usersStore.user?.type =='EM'" style="align-self: flex-end;" @click="toogleProductDetail">
-        <span>Criar Produto</span>
-      </button>
-    </div>
-    <div>
+    <div v-if="!productsStore.isloading">
+      <div class="justify-content-center text-center" style="display: flex; width: 100%;">
+        <span class="texto-logo" style="align-self: center;">Menu</span>
+        <button class="btn btn-primary btn-sm" v-if="usersStore.user?.type == 'EM'" style="align-self: flex-end;"
+          @click="toogleProductDetail">
+          <span>Criar Produto</span>
+        </button>
+      </div>
       <div>
-        <div class="row m-3 justify-content-center">
-          <input class="form-control mr-sm-2" type="search" placeholder="procurar de produto"
-            v-model="productsStore.searchProduct" style="width: 95%;" />
+        <div>
+          <div class="row m-3 justify-content-center">
+            <input class="form-control mr-sm-2" type="search" placeholder="procurar de produto"
+              v-model="productsStore.searchProduct" style="width: 95%;" />
+          </div>
+        </div>
+        <div class="row m-3">
+          <div class="col-12 col-md-4 mb-4" v-for="product in productsStore.productsList" :key="product">
+            <menu-card :product="product" class="" />
+          </div>
         </div>
       </div>
-      <div class="row m-3">
-        <div class="col-12 col-md-4 mb-4" v-for="product in productsStore.productsList" :key="product">
-          <menu-card :product="product" class="" />
-        </div>
-      </div>
+      <product-detail :product="newProduct()" :showProduct="showProduct" @close="toogleProductDetail" />
+
     </div>
-    <product-detail :product="newProduct()" :showProduct="showProduct" @close="toogleProductDetail" />
   </div>
+
 </template>
 
 <script setup>
@@ -29,6 +35,7 @@ import MenuCard from "@/components/menu/MenuCard.vue";
 import { useProductsStore } from "../stores/products";
 import { useUsersStore } from "@/stores/users.js";
 import ProductDetail from '@/components/modals/ProductDetail.vue';
+import LoadingBar from '../components/global/LoadingBar.vue'
 
 const productsStore = useProductsStore();
 const usersStore = useUsersStore();

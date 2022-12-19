@@ -82,7 +82,7 @@ watch(
 const photoFullUrl = computed(() => {
   return usersStore.user?.photo_url
     ? serverBaseUrl + "/storage/fotos/" + usersStore.user.photo_url
-    : serverBaseUrl + "/storage/fotos/anonyms.png";
+    : serverBaseUrl + "/storage/fotos/anonymos.png";
 });
 
 

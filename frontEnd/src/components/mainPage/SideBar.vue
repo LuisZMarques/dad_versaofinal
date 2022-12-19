@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar-container">
     <div class="sidebar-perfil">
-      <img :src="photoFullUrl" class="mx-auto rounded-circle" alt="foto_user" height="100" :width="100"/>
+      <img :src="usersStore.photoFullUrl" class="mx-auto rounded-circle" alt="foto_user" height="100" :width="100"/>
       <span class="sidebar-nome-user-dinamico">{{ usersStore.user?.name ?? "anónimo" }}</span>
       <div class="sidebar-container-acesso-login">
         <button class="botoes-com-border button botoes-sidebar-perfil" v-if="usersStore.user"
@@ -52,7 +52,7 @@
           </svg>
           <span class="texto sidebar-text">Quadro Público</span>
         </router-link>
-        <router-link :to="{ name: 'user-orders-history' }"
+        <router-link :to="{ name: 'customer-orders-history' }"
           class="sidebar-navlink button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar "
           v-if="usersStore.user">
           <svg viewBox="0 0 877.7142857142857 1024" class="icons-sidebar-nav">
@@ -126,21 +126,14 @@ import LoginModal from '@/components/modals/Login.vue'
 import ProfileModal from "@/components/modals/ProfileUser.vue"
 import { useUsersStore } from '@/stores/users.js'
 
-const serverBaseUrl = inject("serverBaseUrl");
-
 const usersStore = useUsersStore()
 
 let perfilModal = ref(false)
 
-onMounted(() => {
-  usersStore.loadUser()
-})
 
-const photoFullUrl = computed(() => {
-  return usersStore.user?.photo_url
-    ? serverBaseUrl + "/storage/fotos/" + usersStore.user.photo_url
-    : serverBaseUrl + "/storage/fotos/anonyms.png";
-});
+onMounted(() => {
+  usersStore.restoreToken()
+})
 
 </script>
 

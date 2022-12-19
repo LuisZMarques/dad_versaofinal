@@ -61,9 +61,9 @@
             </tr>
             <tr>
               <td class="texto">Total do carrinho:</td>
-              <td class="texto">{{ cartStore.cart.total_price }}</td>
+              <td class="texto">{{ cartStore.cart.total_price }} €</td>
               <td class="texto">Total a pagar:</td>
-              <td class="texto">{{ cartStore.cart.total_price - cartStore.cart.total_paid_with_points}}</td>
+              <td class="texto">{{ cartStore.cart.total_price - cartStore.cart.total_paid_with_points}} €</td>
             </tr>
           </tbody>
         </table>

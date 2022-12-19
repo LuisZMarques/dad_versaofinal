@@ -6,7 +6,7 @@ import Orders from '../views/Orders.vue'
 import CozinhaView from '../views/CozinhaView.vue'
 import EmpregadoView from '../views/EmpregadoView.vue'
 import PedidosStatusView from '../views/PedidosStatusView.vue'
-import UserOrdersHistoty from '../views/UserOrdersHistoty.vue'
+import CustomerOrdersHistoty from '../views/CustomerOrdersHistoty.vue'
 
 
 const router = createRouter({
@@ -44,8 +44,8 @@ const router = createRouter({
     },
     {
       path: '/os-meus-pedidos',
-      name: 'user-orders-history',
-      component: UserOrdersHistoty,
+      name: 'customer-orders-history',
+      component: CustomerOrdersHistoty,
     },
     {
       path: '/pedidos-em-curso',

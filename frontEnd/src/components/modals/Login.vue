@@ -30,7 +30,7 @@
             </div>
           </div>
           <div class="text-center fst-italic small">
-            <p class="mb-0 text-center">Sem conta?<a type="button" class="text-white fw-bold"
+            <p class="mb-0 text-center">Sem conta? <a type="button" class="text-white fw-bold"
                 @click="registerModal = true"> Registar</a>
             </p>
           </div>
