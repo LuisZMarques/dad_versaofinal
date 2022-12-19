@@ -50,6 +50,7 @@ class OrderController extends Controller
         return OrderResource::collection(Order::with("products")->where("status", ["D"])->orderBy('id', 'desc')->get());
     }
 
+
     public function store(StoreOrderRequest $request)
     {
 
@@ -147,11 +148,33 @@ class OrderController extends Controller
 
     public function updateEstadoDaOrder(Request $request, Order $order)
     {
+        if ($order->status == "C") {
+            $data =  [
+                "type" => strtolower($order->payment_type),
+                'reference' => $order->payment_reference,
+                'value' => 1.00 * $order->total_price
+            ];
+
+            $response = Http::post('https://dad-202223-payments-api.vercel.app/api/refunds', $data);
+
+            if ($response["status"] != "valid") {
+                return response()->json([
+                    'message' => $response["message"],
+                    'order' => [],
+                    'status' => 422
+                ], 422);
+            }
+        }
+
         $order->status = $request->status;
 
         $order->save();
 
-        return $order;
+        return response()->json([
+            'message' => "Pedido cancelado com sucesso",
+            'order' => new OrderResource($order),
+            'status' => 201
+        ], 201);
     }
 
     public function destroy(Order $order)

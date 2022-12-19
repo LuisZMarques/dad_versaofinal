@@ -12,13 +12,13 @@ onMounted(() => {
 
 <template>
     <div class="componentes-litas">
-        <div class="row">
+        <!--         <div class="row">
             <div class="col-12 ">Cozinha - {{ ordersStore.getHotDishs.length }} pratos para cozinhar </div>
         </div>
-<!--         <div>
+         <div>
             <div class="col-12 ">Cozinha - {{ ordersStore.orders }} pratos para cozinhar </div>
             <div class="col-12 ">Cozinha - {{ ordersStore }} pratos para cozinhar </div>
-        </div> -->
+        </div> --> -->
         <section class="intro">
             <div class="gradient-custom-2 h-100">
                 <div class="mask d-flex align-items-center h-100">
@@ -34,17 +34,15 @@ onMounted(() => {
                                                 <th scope="row">Nome</th>
                                                 <th scope="row">Produto</th>
                                                 <th scope="row">Tipo:</th>
-                                                <th scope="row">Id do Pedido</th>
                                                 <th scope="row">Acções</th>
                                             </tr>
                                         </thead>
                                         <tbody style="background-color: #C9A2FF;">
                                             <tr v-for="product, index in ordersStore.getHotDishs" :key="product">
-                                                <td>{{ index }}</td>
+                                                <td>{{ index + 1}}</td>
                                                 <td>{{ product.name }}</td>
-                                                <td>{{ product }}</td>
+                                                <td>{{ product.status }}</td>
                                                 <td>{{ product.type }}</td>
-                                                <td>{{ product.pivot.order_id }}</td>
                                                 <td>
                                                     <div
                                                         style="display:flex;flex-direction: row;align-items: center;justify-content: center;">

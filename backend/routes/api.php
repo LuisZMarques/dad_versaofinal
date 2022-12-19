@@ -18,12 +18,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('customers/me', [CustomerController::class, 'show_me']);
     Route::get('orders/ordersByCustomer/{user}', [OrderController::class, 'getOrdersByCustomer']);
     Route::apiResource('users', UserController::class, ['names' => 'users']);
+    Route::get('orders/delivered', [OrderController::class, 'deliveryHistory']);
 });
-
-Route::get('orders/delivered', [OrderController::class, 'deliveryHistory']);
-
-//Route::get('orderinfo', [OrderController::class, 'getLastOrder']);  // Get Last Order Info
-//Route::post('addorder', [OrderController::class, 'store']); // Add New Order
 
 Route::apiResource('products', ProductController::class, ['names' => 'products']);
 

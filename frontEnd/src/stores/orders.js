@@ -7,14 +7,14 @@ import { useCustomerStore } from "./customer";
 
 export const useOrdersStore = defineStore("orders", () => {
   const axios = inject("axios");
-  const paymentGateway = inject("paymentGateway");
   const toast = inject("toast");
 
-  const customerStore = useCustomerStore();
   const usersStore = useUsersStore();
   const cartStore = useCartStore();
+
   const allOrders = ref([]);
   const orders = ref([]);
+  const ordersPreparingOrReady = ref([]);
   const hotDishs = ref([]);
   const ordersCustomer = ref([]);
   let isLoading = ref(false);
@@ -52,11 +52,11 @@ export const useOrdersStore = defineStore("orders", () => {
   }
 
   // Devolve todos os pedidos em preparação ou prontos
-  async function getOrders() {
+  async function getOrderPreparingOrReady() {
     try {
       isLoading.value = true;
       const response = await axios.get("orders/preparingOrReady");
-      orders.value = response.data.data;
+      ordersPreparingOrReady.value = response.data.data;
       isLoading.value = false;
     } catch (error) {
       clearOrders();
@@ -64,6 +64,17 @@ export const useOrdersStore = defineStore("orders", () => {
     }
   }
 
+  async function getOrders() {
+    try {
+      isLoading.value = true;
+      const response = await axios.get("orders");
+      allOrders.value = response.data.data;
+      isLoading.value = false;
+    } catch (error) {
+      clearOrders();
+      throw error;
+    }
+  }
   // Devolve pedidos já entregues
   async function getOrdersDelivered() {
     try {
@@ -104,7 +115,6 @@ export const useOrdersStore = defineStore("orders", () => {
       (p) => p.id == id
     );
     orders.value[orderIdx].products[productIdx].pivot.status = "P";
-    
   };
 
   let productReady = (orderId, id) => {
@@ -130,6 +140,11 @@ export const useOrdersStore = defineStore("orders", () => {
     } catch (error) {}
   };
 
+  let orderNotCanceled = computed(()=>{
+    return ordersPreparingOrReady.value.filter((order)=>order.status !="C")
+  })
+
+
   let orderPreparedToReady = async (orderId) => {
     let orderIdx = orders.value.findIndex((t) => t.id == orderId);
     let updatedOrder = orders.value[orderIdx];
@@ -154,52 +169,35 @@ export const useOrdersStore = defineStore("orders", () => {
     };
   };
 
-  /*   async function createPayment() {
-    try {
-      let order = newOrder();
-      // Busca valores de ultimo pedido registado
-      const response = await axios.get("orderinfo");
-      console.log(response.data);
-      
-      // Verifica e Define id de order
-      order.id = response.data.id+1;
-
-      // Verifica o counter de ticker number
-      if(response.data.ticket_number==99){     
-        order.ticket_number = 1;
-      }else(order.ticket_number= (response.data.ticket_number)+1)
-      
-      // Verifica se é customer ou guest
-      await customerStore.loadCustomer();
-      //console.log(customerStore.customer);
-      if(customerStore.customer.id!=null){
-
-        order.customer_id = customerStore.customer.id;
-      }
-      console.log(order);
-      //const response2 = await axios.post("addorder", dataToSend); // To be DONE
-      //updateProductOnArray(response.data.data);
-      //socket.emit("updateProduct", response.data.data);
-      //console.log(response2.data);
-      //cartStore.cartModalShow = false;
-    } catch (error) {
-      console.log(error);
-      toast.success(`Pagamento falhado. Verifique os dados inseridos!`);
-    }
-  } */
-
   // fazer a compra
 
   async function createOrder() {
     try {
       const response = await axios.post("orders", cartStore.cart);
       toast.success("Mesagem: pagamento feito com sucesso");
+      orders.value.push(response.data.data);
       //socket.emit("updateProduct", response.data.data);
       cartStore.clearCart();
     } catch (error) {
       toast.error("Mesagem:" + error.response.data.message);
     }
   }
+
+  let cancelOrder = async (orderId) => {
+    let orderIdx = ordersPreparingOrReady.value.findIndex(
+      (t) => t.id == orderId
+    );
+    if (orderIdx >= 0) ordersPreparingOrReady.value[orderIdx].status = "C";
+    try {
+      const response = await axios.patch(
+        "orders/" + orderId + "/updateEstadoDaOrder/",
+        ordersPreparingOrReady.value[orderIdx]
+      );
+      toast.success("Mesagem: pedido cancelado com com sucesso");
+    } catch (error) {
+      toast.error("Mesagem:" + error.response.data.message);
+    }
+  };
 
   return {
     isLoading,
@@ -211,14 +209,17 @@ export const useOrdersStore = defineStore("orders", () => {
     productPreparing,
     orderReadyToDelivery,
     orderPreparedToReady,
+    getOrderPreparingOrReady,
     hotDishs,
     getHotDishs,
-
     createOrder,
     loadOrders,
     allOrders,
     getOrdersCustomer,
     getOrdersDelivered,
     ordersCustomer,
+    orderNotCanceled,
+    ordersPreparingOrReady,
+    cancelOrder,
   };
 });
