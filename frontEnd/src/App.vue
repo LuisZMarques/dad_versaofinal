@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-column">
     <header-page @sidebar-toggle="sideToggle" />
-    <div class="flex">
+    <div class="flex" style="background-color: rebeccapurple;">
       <SideBar v-if="sidebarstate"/>
 
       <router-view />

@@ -1,5 +1,6 @@
 <template>
   <modal :show="props.show" :id="props.id">
+    {{ userEdit }}
     <div class="row justify-content-center">
       <div class="col-4">
         <div class="card text-white" style="background-color: rebeccapurple;max-width: 80%;padding: 1rem;">
@@ -7,7 +8,7 @@
             <h2 class="fw-bold mb-2 text-center">FasTuga</h2>
             <h5 class="fw-bold mb-2 text-center">Perfil</h5>
             <div class="text-center">
-              <img :src="photoFullUrl" class="rounded img-thumbnail" alt="...">
+              <img :src="usersStore.photoFullUrl" class="rounded img-thumbnail"  height="100" :width="100"/>
             </div>
             <div class="mb-3">
               <label for="email" class=" form-label fw-bold">Nome:</label>
@@ -48,7 +49,6 @@ import { useUsersStore } from '@/stores/users.js'
 import { ref, inject, computed, watch } from 'vue';
 import Modal from '@/components/global/modal.vue'
 
-const serverBaseUrl = inject("serverBaseUrl");
 const axios = inject('axios')
 
 const props = defineProps(['show',"id"])
@@ -59,11 +59,12 @@ let userEdit = ref()
 
 let errors = ref()
 
-let loadUser = (id) => {
+let loadUser = (id) => { 
   errors.value = null
   axios.get('users/' + id)
     .then((response) => {
       userEdit.value = response.data.data
+      console.log(response.data.data)
     })
     .catch((error) => {
       console.log(error)
@@ -76,14 +77,5 @@ watch(
       loadUser(newValue)
   },
 )
-
-
-
-const photoFullUrl = computed(() => {
-  return usersStore.user?.photo_url
-    ? serverBaseUrl + "/storage/fotos/" + usersStore.user.photo_url
-    : serverBaseUrl + "/storage/fotos/anonymos.png";
-});
-
 
 </script>

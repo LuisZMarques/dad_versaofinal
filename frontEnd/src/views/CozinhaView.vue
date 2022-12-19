@@ -6,15 +6,16 @@ const ordersStore = useOrdersStore()
 const serverBaseUrl = inject("serverBaseUrl");
 
 onMounted(() => {
-    if (ordersStore.orders.length == 0)
-        ordersStore.getOrders()
+    ordersStore.getOrders()
 })
 </script>
 
 <template>
     <div class="componentes-litas">
-<!--         <div class="row">
+        <div class="row">
             <div class="col-12 ">Cozinha - {{ ordersStore.getHotDishs.length }} pratos para cozinhar </div>
+        </div>
+<!--         <div>
             <div class="col-12 ">Cozinha - {{ ordersStore.orders }} pratos para cozinhar </div>
             <div class="col-12 ">Cozinha - {{ ordersStore }} pratos para cozinhar </div>
         </div> -->

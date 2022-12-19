@@ -82,8 +82,8 @@ export const useUsersStore = defineStore("users", () => {
   }
 
   const photoFullUrl = computed(() => {
-    return user?.photo_url
-      ? serverBaseUrl + "/storage/fotos/" + user.photo_url
+    return user.value?.photo_url
+      ? serverBaseUrl + "/storage/fotos/" + user.value.photo_url
       : serverBaseUrl + "/storage/fotos/anonymos.jpg";
   });
 
@@ -94,6 +94,8 @@ export const useUsersStore = defineStore("users", () => {
         "User " + user.value.name + " has logged out of the application."
       );
       clearUser();
+      router.push({name:"home"})
+
       delete axios.defaults.headers.common.Authorization;
       router.push({ name: "login" });
       return true;
