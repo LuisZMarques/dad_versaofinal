@@ -34,6 +34,7 @@ onMounted(() => {
                                                 <th scope="row">Produto</th>
                                                 <th scope="row">Tipo:</th>
                                                 <th scope="row">Id do Pedido</th>
+                                                <th scope="row">Acções</th>
                                             </tr>
                                         </thead>
                                         <tbody style="background-color: #C9A2FF;">

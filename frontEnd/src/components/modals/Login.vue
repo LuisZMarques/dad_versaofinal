@@ -1,39 +1,43 @@
 <template>
   <modal :show="props.show">
     <div class="row justify-content-center">
-        <div class="card text-white" style="background-color: rebeccapurple;max-width: 50%;padding: 1rem;">
-          <div class="card-body">
-            <h2 class="fw-bold mb-2 text-center">Login</h2>
-            <p class="mb-1 fst-italic small text-center">Por favor colocar email e password para se autenticar..</p>
-            <div class="mb-3">
-              <p class="text-center"><label for="email" class="form-label fw-bold">Email:</label></p>
-              <input type="email" class="form-control input-tres-quartos" id="email" placeholder="name@example.com"
-                v-model="usersStore.credentials.username">
-            </div>
-            <div class="mb-3">
-              <p class="text-center">
-                <label for="password" class="form-label fw-bold">Password:</label>
-              </p>
-              <input type="password" class="form-control input-tres-quartos" id="password" placeholder="*******"
-                v-model="usersStore.credentials.password">
-            </div>
-<!--             <p class="small text-center">
+      <div class="card text-white" style="background-color: rebeccapurple;max-width: 25%;padding: 1rem;">
+        <div class="card-body">
+          <h2 class="fw-bold mb-2 text-center">Login</h2>
+          <p class="mb-1 fst-italic small text-center">Por favor colocar email e password para se autenticar..</p>
+          <div class="mb-3">
+            <p class="text-center">
+              <label for="email" class="form-label fw-bold">Email:</label>
+            </p>
+            <input type="email" class="form-control input-tres-quartos" id="email" placeholder="name@example.com"
+              v-model="usersStore.credentials.username">
+          </div>
+          <div class="mb-3">
+            <p class="text-center">
+              <label for="password" class="form-label fw-bold">Password:</label>
+            </p>
+            <input type="password" class="form-control input-tres-quartos" id="password" placeholder="*******"
+              v-model="usersStore.credentials.password">
+          </div>
+          <!--             <p class="small text-center">
               <a class="text-bg-primary" href="#">Esqueceu-se da password?</a>
             </p> -->
-            <div class="d-grid">
-              <div class="d-flex justify-content-center">
-                <button class="btn btrn-sm btn-outline-danger" type="button" @click="usersStore.loginModal = false">Cancel</button>
-                <button class="btn btrn-sm btn-outline-success" type="button" @click="usersStore.login">Entrar</button>
-              </div>
-            </div>
-            <div class="text-center fst-italic small">
-              <p class="mb-0 text-center">Sem conta?<a type="button" class="text-white fw-bold" @click="registerModal = true"> Registar</a>
-              </p>
+          <div class="d-grid">
+            <div class="d-flex justify-content-center">
+              <button class="btn btrn-sm btn-outline-danger" type="button"
+                @click="usersStore.loginModal = false">Cancel</button>
+              <button class="btn btrn-sm btn-outline-success" type="button" @click="usersStore.login">Entrar</button>
             </div>
           </div>
+          <div class="text-center fst-italic small">
+            <p class="mb-0 text-center">Sem conta?<a type="button" class="text-white fw-bold"
+                @click="registerModal = true"> Registar</a>
+            </p>
+          </div>
         </div>
-      
-      <register-modal :show="registerModal" @close="registerModal = false"/>
+      </div>
+
+      <register-modal :show="registerModal" @close="registerModal = false" />
     </div>
   </modal>
 </template>
@@ -54,11 +58,12 @@ const usersStore = useUsersStore()
 </script>
 
 <style setup>
-.btn{
+.btn {
   margin: 0.1rem;
   margin-bottom: 0.5rem;
 }
-.input-tres-quartos{  
+
+.input-tres-quartos {
   width: 75%;
   justify-content: center;
 }

@@ -12,11 +12,10 @@
                       <tr>
                         <th scope="row">Nº Pedido:</th>
                         <th scope="row" colspan="4">Acções</th>
-                        <!--  <th scope="row" colspan="4">{{ ordersStore }}</th> -->
                       </tr>
                     </thead>
                     <tbody style="background-color: #C9A2FF;">
-                      <tr v-for="order in ordersStore.allOrders" v-if="order.status='D'" :key="order">
+                      <tr v-for="order in ordersStore.deliveredOrders" v-if="order.status='D'" :key="order">
                         <td class="texto">{{ order.status }}</td>
                         <td>
                           <div style="display:flex;flex-direction: row;align-items: center;justify-content: center;">
@@ -43,7 +42,6 @@
 </template>
 
 <script setup>
-import OrderDetail from "@/components/orders/OrderDetail.vue";
 import { useUsersStore } from "@/stores/users.js";
 import { useOrdersStore } from "../stores/orders";
 import { onMounted } from "vue";
@@ -60,7 +58,7 @@ onMounted(() => {
 
 
 onMounted(() => {
-  ordersStore.loadOrders();
+  ordersStore.loadDeliveredOrders();
 })
 
 </script>

@@ -19,7 +19,7 @@ const paymentMethods = ["VISA", "PAYPAL", "MBWAY"];
     <div class="row justify-content-center">
       <div
         class="cart text-center"
-        style="background-color: rebeccapurple; max-width: 80%; padding: 1rem"
+        style="background-color: rebeccapurple; max-width: 25%; padding: 1rem"
       >
         <h2 style="color: white">Portal de Pagamento</h2>
         <div class="metodo-pagamento-modal-container-inputs-metodos-pagamento">
@@ -41,7 +41,7 @@ const paymentMethods = ["VISA", "PAYPAL", "MBWAY"];
             <input
               type="email"
               v-model="cartStore.cart.payment_reference"
-              class="input inputs-modals"
+              class="input"
               placeholder="colocar o seu email"
             />
           </div>
@@ -53,7 +53,7 @@ const paymentMethods = ["VISA", "PAYPAL", "MBWAY"];
             <input
               type="text"
               v-model="cartStore.cart.payment_reference"
-              class="input inputs-modals"
+              class="input"
               placeholder="colocar o seu numero de cartão"
             />
           </div>
@@ -65,7 +65,7 @@ const paymentMethods = ["VISA", "PAYPAL", "MBWAY"];
             <input
               type="text"
               v-model="cartStore.cart.payment_reference"
-              class="input inputs-modals"
+              class="input"
               placeholder="colocar o seu nº de telefone"
             />
           </div>
@@ -97,6 +97,6 @@ const paymentMethods = ["VISA", "PAYPAL", "MBWAY"];
 input,
 select,
 textarea {
-  color: #ff0000;
+  color: black;
 }
 </style>

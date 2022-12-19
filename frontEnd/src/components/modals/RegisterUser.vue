@@ -15,6 +15,11 @@
               <input type="email" class="form-control" id="email" placeholder="name@example.com"
                 v-model="user.email_registo">
             </div>
+            <div class=" mb-3">
+              <p class="text-center"><label for="email" class="form-label fw-bold">Email:</label></p>
+              <input type="email" class="form-control" id="email" placeholder="name@example.com"
+                v-model="user.email_registo">
+            </div>
             <div class="mb-3">
               <p class="text-center">
                 <label for="password" class="form-label fw-bold">Password:</label>

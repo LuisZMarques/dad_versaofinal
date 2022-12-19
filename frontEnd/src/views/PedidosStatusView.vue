@@ -40,7 +40,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="orderReady in ordersStore.ordersReady" :key="orderReady.id">
-                        <td>{{ orderReady.ticket_number }}</td>
+                        <td style="color:white">{{ orderReady.ticket_number }}</td>
                     </tr>
                 </tbody>
             </table>

@@ -51,7 +51,7 @@
                         height="150" width="150" />
                     <div class="card-body">
                         <h4 class="fw-bold mb-3">{{ editingProduct.name }}</h4>
-                        <p class="mb-1 fst-italic small">Atualizar os dados do producto</p>
+                        <p class="mb-1 fst-italic small text-center">Atualizar os dados do producto</p>
                         <div class="mb-3 row">
                             <div class="col-12 col-md-4">
                                 <label for="nome_do_producto" class="fw-bold">Nome:</label>
@@ -59,7 +59,7 @@
                                     placeholder="nome do producto" v-model="editingProduct.name">
                             </div>
                             <div class="col-12 col-md-2">
-                                <label for="tipo_de_producto" class="fw-bold">Tipo:</label>
+                                <label for="tipo_de_producto text-center" class="fw-bold">Tipo:</label>
                                 <select class="form-select form-select-sm" aria-label=".form-select-sm example"
                                     v-model="editingProduct.type">
                                     <option selected>Selecionar</option>
@@ -87,7 +87,7 @@
                         </div>
                         <div class="d-grid">
                             <div class="d-flex justify-content-between">
-                                <button class="btn btrn-sm btn-outline-dark" type="button"
+                                <button class="btn btrn-sm btn-outline-danger" type="button"
                                     @click="$emit('close')">Cancelar</button>
                                 <button class="btn btrn-sm btn-outline-primary" type="button"
                                     @click="save">{{operationType}} producto</button>

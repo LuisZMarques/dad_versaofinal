@@ -29,7 +29,6 @@ onMounted(() => {
                                                 <th scope="row">Nº Pedido:</th>
                                                 <th scope="row" colspan="4">Produtos</th>
                                                 <th scope="row" colspan="4">Acções</th>
-                                                <!--  <th scope="row" colspan="4">{{ ordersStore }}</th> -->
                                             </tr>
                                         </thead>
                                         <tbody style="background-color: #C9A2FF;">

@@ -7,14 +7,18 @@
             <div class="row justify-content-center">
               <div class="col-12">
                 <div class="table-responsive">
-                  <table class="table table-bordered text-center align-middle"
-                    style=" border-color: rebeccapurple">
+                  <table class="table table-bordered text-center align-middle" style=" border-color: rebeccapurple">
                     <thead style="background-color: transparent; color: white">
                       <tr>
                         <th scope="row">Foto</th>
                         <th scope="row" colspan="4">Nome</th>
                         <th scope="row">Permissão</th>
-                        <th scope="row" colspan="4">Acções</th>
+                        <th scope="row" colspan="4">Acções
+                          <button class="btn btn-primary btn-sm"
+                            style="margin-left: 1rem;" @click="toogleProductDetail">
+                            <span>Criar Funcionário</span>
+                          </button>
+                        </th>
                       </tr>
                     </thead>
                     <tbody style="background-color: #C9A2FF;">
@@ -29,13 +33,16 @@
       </div>
     </section>
   </div>
+  <register-modal :show="registerModal" @close="registerModal = false" />
 </template>
 
 <script setup>
 import UserDetail from "@/components/users/UserDetail.vue";
+import RegisterModal from "@/components/modals/RegisterUser.vue"
 import { useUsersStore } from "../stores/users";
 import { onMounted } from "vue";
 
+const registerModal = ref(false)
 const usersStore = useUsersStore();
 
 onMounted(() => {
@@ -48,12 +55,10 @@ onMounted(() => {
 
 
 <style scoped>
-
 @media(max-width: 570px) {
   .table {
     overflow-x: auto;
   }
 
 }
-
 </style>

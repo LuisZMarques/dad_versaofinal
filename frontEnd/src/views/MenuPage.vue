@@ -1,16 +1,16 @@
 <template>
   <div class="menu-list-container">
-    <span class="texto-logo">
-      <span>Menu</span>
-      <button class="btn btn-primary" @click="toogleProductDetail">
-        <span>Adicionar Produto</span>
+    <div class="justify-content-center text-center" style="display: flex; width: 100%;">
+      <span class="texto-logo" style="align-self: center;">Menu</span>
+      <button class="btn btn-primary btn-sm" v-if="usersStore.user.type =='EM'" style="align-self: flex-end;" @click="toogleProductDetail">
+        <span>Criar Produto</span>
       </button>
-    </span>
+    </div>
     <div>
       <div>
-        <div class="row m-3">
+        <div class="row m-3 justify-content-center">
           <input class="form-control mr-sm-2" type="search" placeholder="procurar de produto"
-            v-model="productsStore.searchProduct" />
+            v-model="productsStore.searchProduct" style="width: 95%;" />
         </div>
       </div>
       <div class="row m-3">
@@ -27,18 +27,19 @@
 import { onMounted, ref } from "vue";
 import MenuCard from "@/components/menu/MenuCard.vue";
 import { useProductsStore } from "../stores/products";
+import { useUsersStore } from "@/stores/users.js";
 import ProductDetail from '@/components/modals/ProductDetail.vue';
 
 const productsStore = useProductsStore();
-
-const newProduct = () => {                              
-    return {
-      name: "",
-      type: "",
-      description: "",
-      photo_url: "",
-    };
+const usersStore = useUsersStore();
+const newProduct = () => {
+  return {
+    name: "",
+    type: "",
+    description: "",
+    photo_url: "",
   };
+};
 
 let showProduct = ref(false)
 let toogleProductDetail = () => {
