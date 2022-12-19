@@ -48,25 +48,22 @@ class OrderController extends Controller
     public function deliveryHistory()
     {
         return OrderResource::collection(Order::with("products")->where("status", ["D"])->orderBy('id', 'desc')->get());
-
-        //return OrderResource::collection(Order::all()->where("status", ["D"]));
-        //return OrderResource::collection(Order::with("products")->where("status", ["D"])->orderBy('id', 'desc'));
     }
 
-    public function store(Request $request)
+    public function store(StoreOrderRequest $request)
     {
 
         $lastOrder = $this->getLastOrder();
 
-        if ($lastOrder == null || $lastOrder->id == 99)
+        if ($lastOrder == null || $lastOrder->ticket_number == 99)
             $ticketNumber = 1;
         else
-            $ticketNumber = $lastOrder->id;
+            $ticketNumber = $lastOrder->ticket_number + 1;
 
         $data =  [
-            "type" => strtolower($request->payment_type),
-            'reference' => $request->payment_reference,
-            'value' => $request->total_price
+            "type" => strtolower($request->validated("payment_type")),
+            'reference' => $request->validated("payment_reference"),
+            'value' => $request->validated("total_price")
         ];
 
         $response = $this->payments($data);
@@ -74,54 +71,66 @@ class OrderController extends Controller
         $order = null;
         if ($response["status"] == "valid") {
 
-            if ($request->customer_id != null) {
-                $user = User::find($request->customer_id);
+            if ($request->validated("customer_id") != null) {
+                $customer = Customer::find($request->validated("customer_id"));
 
-                $order = $user->customer->orders()->create([
+                $order = $customer->orders()->create([
                     "ticket_number" =>  $ticketNumber,
-                    "status" => $request->status,
-                    "customer_id" => $request->customer_id,
-                    "total_price" => $request->total_price,
+                    "status" => $request->validated("status"),
+                    "customer_id" => $request->validated("customer_id"),
+                    "total_price" => $request->validated("total_price"),
                     "total_paid" => $response["value"],
-                    "total_paid_with_points" => $request->total_paid_with_points,
-                    "points_gained" => $request->points_gained,
-                    "points_used_to_pay" => $request->points_used_to_pay,
-                    "payment_type" => $request->payment_type,
-                    "payment_reference" => $request->payment_reference,
-                    "date" => $request->date
+                    "total_paid_with_points" => $request->validated("total_paid_with_points"),
+                    "points_gained" => $request->validated("points_gained"),
+                    "points_used_to_pay" => $request->validated("points_used_to_pay"),
+                    "payment_type" => $request->validated("payment_type"),
+                    "payment_reference" => $request->validated("payment_reference"),
+                    "date" => $request->validated("date")
                 ]);
             } else {
                 $order = new Order();
                 $order->ticket_number =  $ticketNumber;
-                $order->status = $request->status;
-                $order->customer_id = $request->customer_id;
-                $order->total_price = $request->total_price;
+                $order->status = $request->validated("status");
+                $order->customer_id = $request->validated("customer_id");
+                $order->total_price =  $request->validated("total_price");
                 $order->total_paid = $response["value"];
-                $order->total_paid_with_points = $request->total_paid_with_points;
-                $order->points_gained = $request->points_gained;
-                $order->points_used_to_pay = $request->points_used_to_pay;
-                $order->payment_type = $request->payment_type;
-                $order->payment_reference = $request->payment_reference;
-                $order->date = $request->date;
+                $order->total_paid_with_points = $request->validated("total_paid_with_points");
+                $order->points_gained = $request->validated("points_gained");
+                $order->points_used_to_pay = $request->validated("points_used_to_pay");
+                $order->payment_type = $request->validated("payment_type");
+                $order->payment_reference = $request->validated("payment_reference");
+                $order->date = $request->validated("date");
 
                 $order->save();
             }
-        }
 
-        if ($order) {
-            foreach ($request->products as $key => $product) {
-                $order->products()->attach(
-                    $product['product_id'],
-                    [
-                        "order_local_number" => $key,
-                        "status" => $product['status'],
-                        "notes" => $product['notes'],
-                        "price" => $product['price']
-                    ]
-                );
+
+            if ($order) {
+                foreach ($request->products as $key => $product) {
+                    $order->products()->attach(
+                        $product['product_id'],
+                        [
+                            "order_local_number" => $key,
+                            "status" => $product['status'],
+                            "notes" => $product['notes'],
+                            "price" => $product['price']
+                        ]
+                    );
+                }
             }
+            return response()->json([
+                'message' => $response["message"],
+                'order' => new OrderResource($order),
+                'status' => 201
+            ], 201);
+        } else {
+
+            return response()->json([
+                'message' => $response["message"],
+                'order' => [],
+                'status' => 422
+            ], 422);
         }
-        return new OrderResource($order);
     }
 
     public function show(Order $order)
@@ -155,6 +164,7 @@ class OrderController extends Controller
     public function payments($data)
     {
         $response = Http::post('https://dad-202223-payments-api.vercel.app/api/payments', $data);
+
         return $response;
     }
 }

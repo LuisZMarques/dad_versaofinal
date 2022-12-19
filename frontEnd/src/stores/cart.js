@@ -11,7 +11,7 @@ export const useCartStore = defineStore("cart", () => {
     id: null,
     ticket_number: 1,
     status: "P",
-    customer_id: usersStore.user?.id ?? null,
+    customer_id: null,
     total_price: 0,
     total_paid_with_points: 0,
     points_gained: 0,
@@ -63,11 +63,10 @@ export const useCartStore = defineStore("cart", () => {
     cart.value.products.splice(index, 1);
     if (cart.value.products.length == 0) {
       cartModalShow.value = false;
-      clearCart()
+      clearCart();
     }
 
     toast.success("Item removido do carrinho!");
-
   };
 
   let totalCartProducts = computed(() => {
@@ -75,10 +74,9 @@ export const useCartStore = defineStore("cart", () => {
   });
 
   let checkCart = () => {
-    let currentDate = new Date();
     if (cart.value.products.length > 0) {
       cartModalShow.value = true;
-      (cart.value.customer_id = usersStore.user?.id ?? null),
+      (cart.value.customer_id = usersStore.user?.customer.id ?? null),
         (cart.value.payment_reference =
           cart.value.payment_reference ??
           usersStore.user?.customer.default_payment_reference ??
@@ -87,7 +85,7 @@ export const useCartStore = defineStore("cart", () => {
         cart.value.payment_type ??
         usersStore.user?.customer.default_payment_type ??
         null;
-        cart.value.date = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+      cart.value.date = new Date().toJSON().slice(0, 10).replace(/-/g, "/");
     } else {
       toast.success("O carrinho está vazio");
     }
@@ -101,6 +99,6 @@ export const useCartStore = defineStore("cart", () => {
     removeFromCart,
     cartModalShow,
     checkCart,
-    paymentModal
+    paymentModal,
   };
 });

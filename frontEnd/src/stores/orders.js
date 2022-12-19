@@ -1,8 +1,8 @@
 import { ref, inject, computed } from "vue";
 import { defineStore } from "pinia";
 
-import {useUsersStore} from "@/stores/users.js"
-import {useCartStore} from "@/stores/cart.js"
+import { useUsersStore } from "@/stores/users.js";
+import { useCartStore } from "@/stores/cart.js";
 import { useCustomerStore } from "./customer";
 
 export const useOrdersStore = defineStore("orders", () => {
@@ -16,19 +16,19 @@ export const useOrdersStore = defineStore("orders", () => {
   const allOrders = ref([]);
   const orders = ref([]);
   const hotDishs = ref([]);
-  const  ordersCustomer = ref([])
+  const ordersCustomer = ref([]);
   let isLoading = ref(false);
 
   function clearOrders() {
     orders.value = [];
   }
- 
+
   // Devolve todos os pedidos
   async function loadOrders() {
     try {
       const response = await axios.get("orders");
       allOrders.value = response.data.data;
-      console.log(allOrders.value)
+      console.log(allOrders.value);
     } catch (error) {
       clearOrders();
       throw error;
@@ -39,7 +39,9 @@ export const useOrdersStore = defineStore("orders", () => {
   async function getOrdersCustomer() {
     try {
       isLoading.value = true;
-      const response = await axios.get("/orders/ordersByCustomer/" + usersStore.user.id);
+      const response = await axios.get(
+        "/orders/ordersByCustomer/" + usersStore.user.id
+      );
       ordersCustomer.value = response.data.data;
       console.log(orders);
       isLoading.value = false;
@@ -75,8 +77,6 @@ export const useOrdersStore = defineStore("orders", () => {
       throw error;
     }
   }
-
-
 
   let ordersReady = computed(() => {
     return orders.value.filter((order) => order.status == "R");
@@ -143,10 +143,9 @@ export const useOrdersStore = defineStore("orders", () => {
     } catch (error) {}
   };
 
-
-//sera preciso ir buscar o proximo id disponivel ,
-// o customer id e ver como fazer o ticket number, points_gained e total_paid esta a associar ao null aos campos
-  const newOrder = () => {                             
+  //sera preciso ir buscar o proximo id disponivel ,
+  // o customer id e ver como fazer o ticket number, points_gained e total_paid esta a associar ao null aos campos
+  const newOrder = () => {
     return {
       type: cartStore.cart.payment_type,
       reference: cartStore.cart.payment_reference,
@@ -154,8 +153,7 @@ export const useOrdersStore = defineStore("orders", () => {
     };
   };
 
-
-/*   async function createPayment() {
+  /*   async function createPayment() {
     try {
       let order = newOrder();
       // Busca valores de ultimo pedido registado
@@ -189,27 +187,19 @@ export const useOrdersStore = defineStore("orders", () => {
     }
   } */
 
-
   // fazer a compra
 
   async function createOrder() {
     try {
-      
-      /*cartStore.cart.points_used_to_pay = (cartStore.cart.total_paid_with_points)*2;
-      cartStore.cart.total_paid_with_points = cartStore.cart.total_price - cartStore.cart.total_paid_with_points;*/
-      console.log(cartStore.cart);
       const response = await axios.post("orders", cartStore.cart);
 
-      //updateProductOnArray(response.data.data);
+      toast.error("Mesagem: pagamento feito com sucesso");
       //socket.emit("updateProduct", response.data.data);
-      console.log(response.data.data);
       cartStore.clearCart();
-
     } catch (error) {
-      console.log(error);
+      toast.error("Mesagem:" + error.response.data.message);
     }
   }
- 
 
   return {
     isLoading,
@@ -233,6 +223,6 @@ export const useOrdersStore = defineStore("orders", () => {
     allOrders,
     getOrdersCustomer,
     getOrdersDelivered,
-    ordersCustomer
+    ordersCustomer,
   };
 });
