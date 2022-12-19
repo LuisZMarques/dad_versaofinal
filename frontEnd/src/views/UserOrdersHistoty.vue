@@ -8,7 +8,7 @@ const serverBaseUrl = inject("serverBaseUrl");
 
 onMounted(() => {
     if (ordersStore.orders.length == 0)
-        ordersStore.getOrders()
+        ordersStore.getOrdersUser()
 })
 
 </script>
@@ -31,11 +31,11 @@ onMounted(() => {
                                             </tr>
                                         </thead>
                                         <tbody style="background-color: #C9A2FF;">
-                                            <tr v-for="order in ordersStore.ordersReady">
+                                            <tr v-for="order in ordersStore.ordersReady" :key="order">
                                                 <td>{{ order.ticket_number }}</td>
                                                 <td>
                                                     <ul>
-                                                        <li v-for="product in order.products">
+                                                        <li v-for="product in order.products" :key="product">
                                                             {{ product.name }} - status {{ product.pivot.status }}
                                                         </li>
                                                     </ul>

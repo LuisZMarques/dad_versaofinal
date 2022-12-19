@@ -39,6 +39,18 @@ class OrderController extends Controller
         return Order::with("products")->whereNotIn("status", ["D", "C"])->orderBy('id', 'desc')->first();
     }
 
+    public function history()
+    {
+        return OrderResource::collection(Order::with("products")->where("customer_id", auth()->user()->customer->id)->get());
+    }
+
+    public function deliveryHistory()
+    {
+        return OrderResource::collection(Order::with("products")->where("status", ["D"])->orderBy('id', 'desc')->get());
+
+        //return OrderResource::collection(Order::all()->where("status", ["D"]));
+        //return OrderResource::collection(Order::with("products")->where("status", ["D"])->orderBy('id', 'desc'));
+    }
 
     public function store(Request $request)
     {

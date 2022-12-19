@@ -1,5 +1,3 @@
-UserOrderHistory view -> Falta endpoint para ir buscar orders do user
 
-Orders -> endpoint para ir buscar todas orders = 'D'
 
 Fazer animacao de loading para paginas que precisem

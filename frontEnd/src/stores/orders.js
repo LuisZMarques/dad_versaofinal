@@ -21,7 +21,8 @@ export const useOrdersStore = defineStore("orders", () => {
   function clearOrders() {
     orders.value = [];
   }
-
+ 
+  // Devolve todos os pedidos
   async function loadOrders() {
     try {
       const response = await axios.get("orders");
@@ -33,6 +34,21 @@ export const useOrdersStore = defineStore("orders", () => {
     }
   }
 
+  // Devolve os pedidos do cliente
+  async function getOrdersUser() {
+    try {
+      isLoading.value = true;
+      const response = await axios.get("orders/me");
+      orders.value = response.data.data;
+      console.log(orders);
+      isLoading.value = false;
+    } catch (error) {
+      clearOrders();
+      throw error;
+    }
+  }
+
+  // Devolve todos os pedidos em preparação ou prontos
   async function getOrders() {
     try {
       isLoading.value = true;
@@ -44,6 +60,23 @@ export const useOrdersStore = defineStore("orders", () => {
       throw error;
     }
   }
+
+  // Devolve pedidos já entregues
+  async function getOrdersDelivered() {
+    try {
+      isLoading.value = true;
+      const response = await axios.get("orders/delivered");
+      orders.value = response.data.data;
+      isLoading.value = false;
+      console.log(orders);
+    } catch (error) {
+      clearOrders();
+      throw error;
+    }
+  }
+
+
+
   let ordersReady = computed(() => {
     return orders.value.filter((order) => order.status == "R");
   });
@@ -71,7 +104,6 @@ export const useOrdersStore = defineStore("orders", () => {
     );
     orders.value[orderIdx].products[productIdx].pivot.status = "P";
   };
-  
 
   let productReady = (orderId, id) => {
     let orderIdx = orders.value.findIndex((t) => t.id == orderId);
@@ -162,17 +194,16 @@ export const useOrdersStore = defineStore("orders", () => {
   async function createOrder() {
     try {
       
-      cartStore.cart.points_used_to_pay = (cartStore.cart.total_paid_with_points)*2;
-      cartStore.cart.total_paid_with_points = cartStore.cart.total_price - cartStore.cart.total_paid_with_points;
+      /*cartStore.cart.points_used_to_pay = (cartStore.cart.total_paid_with_points)*2;
+      cartStore.cart.total_paid_with_points = cartStore.cart.total_price - cartStore.cart.total_paid_with_points;*/
       console.log(cartStore.cart);
       const response = await axios.post("orders", cartStore.cart);
 
       //updateProductOnArray(response.data.data);
       //socket.emit("updateProduct", response.data.data);
       console.log(response.data.data);
-      cartStore.cart.cartModalShow = !cartStore.cart.cartModalShow
-      cartStore.cart.paymentModal = !cartStore.cart.paymentModal
-      cartStore.clearCart();      
+      cartStore.clearCart();
+
     } catch (error) {
       console.log(error);
     }
@@ -198,6 +229,8 @@ export const useOrdersStore = defineStore("orders", () => {
     //paymentInput,
     //paymentMethod,
     loadOrders,
-    allOrders
+    allOrders,
+    getOrdersUser,
+    getOrdersDelivered
   };
 });
