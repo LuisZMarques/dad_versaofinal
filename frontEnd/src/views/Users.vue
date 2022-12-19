@@ -15,7 +15,7 @@
                         <th scope="row">Permissão</th>
                         <th scope="row" colspan="4">Acções
                           <button class="btn btn-primary btn-sm"
-                            style="margin-left: 1rem;" @click="toogleProductDetail">
+                            style="margin-left: 1rem;" @click="registerModal = true">
                             <span>Criar Funcionário</span>
                           </button>
                         </th>
@@ -40,7 +40,7 @@
 import UserDetail from "@/components/users/UserDetail.vue";
 import RegisterModal from "@/components/modals/RegisterUser.vue"
 import { useUsersStore } from "../stores/users";
-import { onMounted } from "vue";
+import { ref, onMounted } from "vue";
 
 const registerModal = ref(false)
 const usersStore = useUsersStore();

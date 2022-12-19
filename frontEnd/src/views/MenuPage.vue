@@ -2,7 +2,7 @@
   <div class="menu-list-container">
     <div class="justify-content-center text-center" style="display: flex; width: 100%;">
       <span class="texto-logo" style="align-self: center;">Menu</span>
-      <button class="btn btn-primary btn-sm" v-if="usersStore.user.type =='EM'" style="align-self: flex-end;" @click="toogleProductDetail">
+      <button class="btn btn-primary btn-sm" v-if="usersStore.user?.type =='EM'" style="align-self: flex-end;" @click="toogleProductDetail">
         <span>Criar Produto</span>
       </button>
     </div>
