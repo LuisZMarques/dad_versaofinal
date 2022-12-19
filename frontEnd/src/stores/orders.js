@@ -104,6 +104,7 @@ export const useOrdersStore = defineStore("orders", () => {
       (p) => p.id == id
     );
     orders.value[orderIdx].products[productIdx].pivot.status = "P";
+    
   };
 
   let productReady = (orderId, id) => {
@@ -192,8 +193,7 @@ export const useOrdersStore = defineStore("orders", () => {
   async function createOrder() {
     try {
       const response = await axios.post("orders", cartStore.cart);
-
-      toast.error("Mesagem: pagamento feito com sucesso");
+      toast.success("Mesagem: pagamento feito com sucesso");
       //socket.emit("updateProduct", response.data.data);
       cartStore.clearCart();
     } catch (error) {
@@ -213,12 +213,8 @@ export const useOrdersStore = defineStore("orders", () => {
     orderPreparedToReady,
     hotDishs,
     getHotDishs,
-    //newOrder,
+
     createOrder,
-    //selectedDiscount,
-    //createPayment,
-    //paymentInput,
-    //paymentMethod,
     loadOrders,
     allOrders,
     getOrdersCustomer,
