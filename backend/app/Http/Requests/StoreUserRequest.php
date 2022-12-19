@@ -25,7 +25,7 @@ class StoreUserRequest extends FormRequest
                     ->mixedCase()
                     ->numbers()
             ],
-            'type' => 'required|string|' . new Enum(PaymentTypeEnum::class),
+            'type' => 'required|string|' . new Enum(UserTypeEnum::class),
             'blocked' => 'required|integer|digits:1',
             'photo_url' => 'nullable|string|max:255',
             'custom' => 'nullable|json',

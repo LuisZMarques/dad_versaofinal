@@ -15,7 +15,7 @@
                       </tr>
                     </thead>
                     <tbody style="background-color: #C9A2FF;">
-                      <tr v-for="order in ordersStore.deliveredOrders" v-if="order.status='D'" :key="order">
+                      <tr v-for="order in ordersStore.orders" :key="order">
                         <td class="texto">{{ order.status }}</td>
                         <td>
                           <div style="display:flex;flex-direction: row;align-items: center;justify-content: center;">
@@ -58,7 +58,7 @@ onMounted(() => {
 
 
 onMounted(() => {
-  ordersStore.loadDeliveredOrders();
+  ordersStore.getOrders();
 })
 
 </script>

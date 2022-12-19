@@ -1,0 +1,11 @@
+<?php
+
+namespace App\Enums;
+
+enum UserTypeEnum: string
+{
+    case EM = 'EM';
+    case EC = 'EC';
+    case ED = 'ED';
+    case C = 'C';
+}

@@ -38,7 +38,7 @@ onMounted(() => {
                                             </tr>
                                         </thead>
                                         <tbody style="background-color: #C9A2FF;">
-                                            <tr v-for="product, index in ordersStore.getHotDishs">
+                                            <tr v-for="product, index in ordersStore.getHotDishs" :key="product">
                                                 <td>{{ index }}</td>
                                                 <td>{{ product.name }}</td>
                                                 <td>{{ product }}</td>

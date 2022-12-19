@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar-container">
     <div class="sidebar-perfil">
-      <img :src="photoFullUrl" class="mx-auto rounded-circle" alt="foto_user" height="100" :width="100" width="150" />
+      <img :src="photoFullUrl" class="mx-auto rounded-circle" alt="foto_user" height="100" :width="100"/>
       <span class="sidebar-nome-user-dinamico">{{ usersStore.user?.name ?? "anónimo" }}</span>
       <div class="sidebar-container-acesso-login">
         <button class="botoes-com-border button botoes-sidebar-perfil" v-if="usersStore.user"
