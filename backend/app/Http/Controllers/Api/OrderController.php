@@ -119,11 +119,7 @@ class OrderController extends Controller
                     );
                 }
             }
-            return response()->json([
-                'message' => $response["message"],
-                'order' => new OrderResource($order),
-                'status' => 201
-            ], 201);
+            return new OrderResource($order);
         } else {
 
             return response()->json([
@@ -166,15 +162,16 @@ class OrderController extends Controller
             }
         }
 
-        $order->status = $request->status;
+        foreach ($order->products as $key => $product) {
+            $order->products()
+                ->wherePivot('product_id', $product->product_id)
+                ->updateExistingPivot($product->product_id, ["status" => $product->pivot->status], false);
+        }
 
+        $order->status = $request->status;
         $order->save();
 
-        return response()->json([
-            'message' => "Pedido cancelado com sucesso",
-            'order' => new OrderResource($order),
-            'status' => 201
-        ], 201);
+        return new OrderResource($order);
     }
 
     public function destroy(Order $order)

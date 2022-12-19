@@ -14,12 +14,13 @@
                         <th scope="row" colspan="4">Acções</th>
                       </tr>
                     </thead>
-                    <tbody style="background-color: #C9A2FF;">
-                      <tr v-for="order in ordersStore.orderNotCanceled" :key="order.id">
+                    <tbody style="background-color: #C9A2FF;" >
+                      <tr v-for="order in ordersStore.orderNotCanceled" :key="order" >
                         <td class="texto">{{ order.ticket_number }}</td>
-                        <td class="texto">{{ order.status }}</td>
+                        <td class="texto">{{ order }}</td>
                         <td>
                           <div style="display:flex;flex-direction: row;align-items: center;justify-content: center;">
+                            Cancelar pedido
                             <button class="btn btn-sm btn-outline-secondary" data-toggle="tooltip" title="Cancelar" @click="ordersStore.cancelOrder(order.id)">
                               <svg viewBox="0 0 1024 1024" class="icons-listas">
                                 <path
@@ -29,6 +30,9 @@
                             </button>
                           </div>
                         </td>
+                      </tr>
+                      <tr v-if="ordersStore.orderNotCanceled.length == 0" >
+                        <td colspan="3">Sem pedidos para gerir</td>
                       </tr>
                     </tbody>
                   </table>

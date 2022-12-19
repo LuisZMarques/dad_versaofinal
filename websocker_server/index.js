@@ -16,4 +16,7 @@ io.on("connection", (socket) => {
   socket.on("updateProduct", (product) => {
     socket.broadcast.emit("updateProduct", product);
   });
+  socket.on("newOrder", (order) => {
+    socket.broadcast.emit("newOrder", order);
+  });  
 });

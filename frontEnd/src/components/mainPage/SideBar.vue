@@ -86,7 +86,7 @@
         </router-link>
       </div>
       <div class="sidebar-container-manager" v-if="usersStore.user?.type == 'EM'">
-        <router-link :to="{ name: 'orders' }"
+        <router-link :to="{ name: 'gestao-de-pedidos' }"
           class="sidebar-navlink button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar">
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
             <path

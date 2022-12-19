@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '../views/HomePage.vue'
 import MenuPage from '../views/MenuPage.vue'
 import Users from '../views/Users.vue'
-import Orders from '../views/Orders.vue'
+import GestaoDePedidos from '../views/GestaoDePedidos.vue'
 import CozinhaView from '../views/CozinhaView.vue'
 import EmpregadoView from '../views/EmpregadoView.vue'
 import PedidosStatusView from '../views/PedidosStatusView.vue'
@@ -28,9 +28,9 @@ const router = createRouter({
       component: Users
     },
     {
-      path: '/orders',
-      name: 'orders',
-      component: Orders,
+      path: '/gestao-de-pedidos',
+      name: 'gestao-de-pedidos',
+      component: GestaoDePedidos,
     },
     {
       path: '/cozinha',

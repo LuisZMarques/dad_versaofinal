@@ -8,14 +8,15 @@ import { useCustomerStore } from "./customer";
 export const useOrdersStore = defineStore("orders", () => {
   const axios = inject("axios");
   const toast = inject("toast");
+  const socket = inject("socket");
 
   const usersStore = useUsersStore();
   const cartStore = useCartStore();
 
   const allOrders = ref([]);
   const orders = ref([]);
-  const ordersPreparingOrReady = ref([]);
   const hotDishs = ref([]);
+  const ordersPreparingOrReady = ref([]);
   const ordersCustomer = ref([]);
   let isLoading = ref(false);
 
@@ -57,6 +58,7 @@ export const useOrdersStore = defineStore("orders", () => {
       isLoading.value = true;
       const response = await axios.get("orders/preparingOrReady");
       ordersPreparingOrReady.value = response.data.data;
+      getHotDishs();
       isLoading.value = false;
     } catch (error) {
       clearOrders();
@@ -96,65 +98,104 @@ export const useOrdersStore = defineStore("orders", () => {
     return orders.value.filter((order) => order.status == "P");
   });
 
-  let getHotDishs = computed(() => {
+  let getHotDishs = () => {
     hotDishs.value = [];
-    orders.value.forEach((order) => {
+    ordersPreparingOrReady.value.forEach((order) => {
       if (order.status == "P") {
         order.products.forEach((product) => {
-          if (product.type == "hot dish" && product.pivot.status != "R")
+          if (
+            product.type == "hot dish" &&
+            (product.pivot.status == "P" || product.pivot.status == "W")
+          )
             hotDishs.value.push(product);
         });
       }
     });
-    return hotDishs.value;
-  });
-
-  let productPreparing = (orderId, id) => {
-    let orderIdx = orders.value.findIndex((t) => t.id == orderId);
-    let productIdx = orders.value[orderIdx].products.findIndex(
-      (p) => p.id == id
-    );
-    orders.value[orderIdx].products[productIdx].pivot.status = "P";
   };
 
-  let productReady = (orderId, id) => {
-    let orderIdx = orders.value.findIndex((t) => t.id == orderId);
-    let productIdx = orders.value[orderIdx].products.findIndex(
+  let productPreparing = async (orderId, id) => {
+    let orderIdx = ordersPreparingOrReady.value.findIndex(
+      (t) => t.id == orderId
+    );
+    let productIdx = ordersPreparingOrReady.value[orderIdx].products.findIndex(
       (p) => p.id == id
     );
-    orders.value[orderIdx].products[productIdx].pivot.status = "R";
-  };
-
-  let orderReadyToDelivery = async (orderId) => {
-    let orderIdx = orders.value.findIndex((t) => t.id == orderId);
-    let updatedOrder = orders.value[orderIdx];
-    updatedOrder.status = "D";
-    updatedOrder.delivered_by = useUsersStore.user.id;
+   
+      
     try {
+      ordersPreparingOrReady.value[orderIdx].products[productIdx].pivot.status =
+      "P";
       const response = await axios.patch(
         "orders/" + orderId + "/updateEstadoDaOrder/",
-        updatedOrder
+        ordersPreparingOrReady.value[orderIdx]
       );
-      console.log(response.data);
+      toast.success("Mesagem: Pedido a preparar");
       return response.data.data;
     } catch (error) {}
   };
 
-  let orderNotCanceled = computed(()=>{
-    return ordersPreparingOrReady.value.filter((order)=>order.status !="C")
-  })
+  async function update(data){
+    try {
+      const response = await axios.patch(
+        "orders/" + orderId + "/updateEstadoDaOrder/",
+        ordersPreparingOrReady.value[orderIdx]
+      );
+      return response.data.data;
+    } catch (error) {}
+  }
 
+  let productReady = async (orderId, id) => {
+    let orderIdx = ordersPreparingOrReady.value.findIndex(
+      (t) => t.id == orderId
+    );
+    let productIdx = ordersPreparingOrReady.value[orderIdx].products.findIndex(
+      (p) => p.id == id
+    );
+    ordersPreparingOrReady.value[orderIdx].products[productIdx].pivot.status =
+      "R";
+
+    toast.success("Mesagem: Pedido pronto");
+    try {
+      const response = await axios.patch(
+        "orders/" + orderId + "/updateEstadoDaOrder/",
+        ordersPreparingOrReady.value[orderIdx]
+      );
+      toast.success("Mesagem: Producto pronto");
+      return response.data.data;
+    } catch (error) {}
+  };
+
+  let orderReadyToDelivery = async (orderId) => {
+    let orderIdx = ordersPreparingOrReady.value.findIndex(
+      (t) => t.id == orderId
+    );
+    let updatedOrder = ordersPreparingOrReady.value[orderIdx];
+    updatedOrder.status = "D";
+    updatedOrder.delivered_by = useUsersStore.user.id;
+    toast.success("Mesagem: Pedido entregue");
+    try {
+      const response = await axios.patch(
+        "orders/" + orderId + "/updateEstadoDaOrder/",
+        ordersPreparingOrReady.value[orderIdx]
+      );
+      return response.data.data;
+    } catch (error) {}
+  };
+
+  let orderNotCanceled = computed(() => {
+    return ordersPreparingOrReady.value.filter((order) => order.status != "C");
+  });
 
   let orderPreparedToReady = async (orderId) => {
     let orderIdx = orders.value.findIndex((t) => t.id == orderId);
     let updatedOrder = orders.value[orderIdx];
     updatedOrder.status = "R";
+    toast.success("Mesagem: Pedido pronto");
     try {
       const response = await axios.patch(
         "orders/" + orderId + "/updateEstadoDaOrder/",
         updatedOrder
       );
-      console.log(response.data);
       return response.data.data;
     } catch (error) {}
   };
@@ -175,9 +216,9 @@ export const useOrdersStore = defineStore("orders", () => {
     try {
       const response = await axios.post("orders", cartStore.cart);
       toast.success("Mesagem: pagamento feito com sucesso");
-      orders.value.push(response.data.data);
-      //socket.emit("updateProduct", response.data.data);
+      socket.emit("newOrder", response.data.data);
       cartStore.clearCart();
+      return response.data.data;
     } catch (error) {
       toast.error("Mesagem:" + error.response.data.message);
     }
@@ -194,10 +235,21 @@ export const useOrdersStore = defineStore("orders", () => {
         ordersPreparingOrReady.value[orderIdx]
       );
       toast.success("Mesagem: pedido cancelado com com sucesso");
+      return response.data.data;
     } catch (error) {
       toast.error("Mesagem:" + error.response.data.message);
     }
   };
+
+  function addOrderOnArray(order) {
+    ordersPreparingOrReady.value.push(order);
+    getHotDishs();
+  }
+
+  socket.on("newOrder", (order) => {
+    addOrderOnArray(order);
+    toast.success(`Novo pedido foi criado com sucesso.`);
+  });
 
   return {
     isLoading,
