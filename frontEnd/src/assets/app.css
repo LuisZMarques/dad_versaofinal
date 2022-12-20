@@ -207,6 +207,9 @@
 .flex-column{
   flex-direction: column;
 }
+.p{
+  margin-bottom: 0.1rem;
+}
 
 @media(max-width: 991px) {
   .icons-sidebar-nav {

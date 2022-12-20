@@ -21,10 +21,7 @@ onMounted(() => {
             <div class="row justify-content-center">
               <div class="col-12">
                 <div class="table-responsive">
-                  <table
-                    class="table table-bordered text-center align-middle"
-                    style="border-color: rebeccapurple"
-                  >
+                  <table class="table table-bordered text-center align-middle" style="border-color: rebeccapurple">
                     <thead style="background-color: transparent; color: white">
                       <tr>
                         <th scope="row">Nº ticket:</th>
@@ -44,16 +41,12 @@ onMounted(() => {
                           </ul>
                         </td>
                         <td>
-                          <button
-                            class="btn btn-sm btn-outline-secondary"
-                            data-toggle="tooltip"
-                            title="Entregar"
-                            @click="ordersStore.orderReadyToDelivery(order.id)"
-                          >
+                          <button class="btn btn-sm btn-outline-secondary" data-toggle="tooltip" title="Entregar"
+                            @click="ordersStore.orderReadyToDelivery(order.id)">
                             <svg viewBox="0 0 1024 1024" class="icons-listas">
                               <path
-                                d="M18 572l60-60 238 238-60 60zM948 238l62 60-512 512-240-238 62-60 178 178zM768 298l-270 272-60-60 270-272z"
-                              ></path>
+                                d="M18 572l60-60 238 238-60 60zM948 238l62 60-512 512-240-238 62-60 178 178zM768 298l-270 272-60-60 270-272z">
+                              </path>
                             </svg>
                           </button>
                         </td>
