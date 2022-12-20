@@ -110,7 +110,7 @@ export const useOrdersStore = defineStore("orders", () => {
     try {
       loadingStore.toggleLoading();
       const response = await axios.patch(
-        "orders/" + orderId + "/updateEstadoDaOrder/",
+        "orders/" + orderId + "/updateEstadoDaOrder",
         ordersPreparingOrReady.value[orderIdx]
       );
       return response.data.data;
@@ -132,7 +132,7 @@ export const useOrdersStore = defineStore("orders", () => {
     toast.success("Menssagem: Pedido entregue");
     try {
       const response = await axios.patch(
-        "orders/" + orderId + "/updateEstadoDaOrder/",
+        "orders/" + orderId + "/updateEstadoDaOrder",
         ordersPreparingOrReady.value[orderIdx]
       );
       return response.data.data;
@@ -157,8 +157,8 @@ export const useOrdersStore = defineStore("orders", () => {
         if (el.type == "hot dish")
           socket.emit("pratoParaCozinhar", el.name);
       });
-
       cartStore.clearCart();
+      loadingStore.toggleLoading();
       return response.data.data;
     } catch (error) {
       toast.error("Menssagem:" + error.response);
@@ -173,7 +173,7 @@ export const useOrdersStore = defineStore("orders", () => {
     try {
       loadingStore.toggleLoading();
       const response = await axios.patch(
-        "orders/" + orderId + "/updateEstadoDaOrder/",
+        "orders/" + orderId + "/updateEstadoDaOrder",
         ordersPreparingOrReady.value[orderIdx]
       );
       toast.success("Menssagem: pedido cancelado com com sucesso");

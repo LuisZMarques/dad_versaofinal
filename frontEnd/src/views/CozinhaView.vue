@@ -17,7 +17,7 @@ let productPreparing = (index) => {
         ordersStore.hotDishs[index].pivot.status =
             "P";
         const response = axios.patch(
-            "orders/" + orderId + "/updateEstadoDosProdutos/",
+            "orders/" + orderId + "/updateEstadoDosProdutos",
             ordersStore.hotDishs[index].pivot
         );
         toast.success("Mesagem: Producto a preparar");
@@ -31,13 +31,13 @@ let productReady = (index) => {
         ordersStore.hotDishs[index].pivot.status =
             "R";
         const response = axios.patch(
-            "orders/" + orderId + "/updateEstadoDosProdutos/",
+            "orders/" + orderId + "/updateEstadoDosProdutos",
             ordersStore.hotDishs[index].pivot
         );
         if (isAllReadyForDelivering(orderId)) {
             orderPreparedToReady(orderId);
         }
-        return response.data.data;
+        return response.data?.data;
     } catch (error) {
         console.log(error)
     }
@@ -51,11 +51,11 @@ let orderPreparedToReady = (orderId) => {
     updatedOrder.status = "R";
     try {
         const response = axios.patch(
-            "orders/" + updatedOrder.id + "/updateEstadoDaOrder/",
+            "orders/" + updatedOrder.id + "/updateEstadoDaOrder",
             updatedOrder
         );
         toast.success("Mesagem: Pedido pronto");
-        return response.data.data;
+        return response.data?.data;
     } catch (error) {
         console.log(error)
     }

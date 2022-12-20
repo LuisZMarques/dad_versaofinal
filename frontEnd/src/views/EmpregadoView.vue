@@ -33,11 +33,11 @@ onMounted(() => {
                       </tr>
                     </thead>
                     <tbody style="background-color: #c9a2ff">
-                      <tr v-for="order in ordersStore.ordersReady">
+                      <tr v-for="order in ordersStore.ordersReady" :key="order">
                         <td>{{ order.ticket_number }}</td>
                         <td>
                           <ul>
-                            <li v-for="product in order.products" style="list-style-type: none;">
+                            <li v-for="product in order.products" :key="product" style="list-style-type: none;">
                               {{ product.name }} - status
                               {{ product.pivot.status }}
                             </li>

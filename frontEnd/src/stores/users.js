@@ -88,6 +88,7 @@ export const useUsersStore = defineStore("users", () => {
   async function register(user) {
     try {
       user.photo_url = base64.value;
+      loadingStore.toggleLoading();
       const response = await axios.post("users", user);
       toast.success(`Utilizador criado com sucesso`);
       base64.value = null;
@@ -96,6 +97,8 @@ export const useUsersStore = defineStore("users", () => {
     } catch (error) {
       toast.error(`Erro no registo do utilizador.`);
       throw error;
+    }finally{
+      loadingStore.toggleLoading();
     }
   }
 
