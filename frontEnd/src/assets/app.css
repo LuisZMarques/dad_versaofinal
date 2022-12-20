@@ -231,6 +231,7 @@
     width: auto;
     height: auto;
     background-color: var(--dl-color-pimary-laranjavivo);
+    margin-top: 1rem;
   }
   .botoes-com-border {
     border-width: unset;

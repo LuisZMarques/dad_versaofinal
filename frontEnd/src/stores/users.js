@@ -1,10 +1,13 @@
 import { ref, computed, inject } from "vue";
 import { defineStore } from "pinia";
+import { useLoadingStore } from "@/stores/loading.js";
 
 export const useUsersStore = defineStore("users", () => {
   const axios = inject("axios");
   const toast = inject("toast");
   const serverBaseUrl = inject("serverBaseUrl");
+
+  const loadingStore = useLoadingStore();
 
   const users = ref([]);
   const user = ref();
@@ -31,6 +34,7 @@ export const useUsersStore = defineStore("users", () => {
   }
   async function loadUsers() {
     try {
+      loadingStore.toggleLoading();
       const response = await axios.get("users");
       users.value = response.data.data;
       toast.success(`Utilizadores carregados com successo.`);
@@ -38,21 +42,27 @@ export const useUsersStore = defineStore("users", () => {
     } catch (error) {
       clearUsers();
       throw error;
+    }finally{
+      loadingStore.toggleLoading();
     }
   }
 
   async function loadUser() {
     try {
+      loadingStore.toggleLoading();
       const response = await axios.get("users/me");
       user.value = response.data.data;
     } catch (error) {
       clearUser();
       throw error;
+    }finally{
+      loadingStore.toggleLoading();
     }
   }
 
   async function login() {
     try {
+      loadingStore.toggleLoading();
       const response = await axios.post("login", credentials.value);
       axios.defaults.headers.common.Authorization =
         "Bearer " + response.data.access_token;
@@ -67,6 +77,8 @@ export const useUsersStore = defineStore("users", () => {
       toast.success(`Credenciais erradas.`);
       clearUser();
       throw error;
+    }finally{
+      loadingStore.toggleLoading();
     }
   }
 
@@ -89,6 +101,7 @@ export const useUsersStore = defineStore("users", () => {
 
   async function logout() {
     try {
+      loadingStore.toggleLoading();
       await axios.post("logout");
       toast.success(
         "User " + user.value.name + " has logged out of the application."
@@ -101,6 +114,8 @@ export const useUsersStore = defineStore("users", () => {
       return true;
     } catch (error) {
       return false;
+    }finally{
+      loadingStore.toggleLoading();
     }
   }
 
@@ -130,6 +145,7 @@ export const useUsersStore = defineStore("users", () => {
   async function updateUser(updateProduct) {
     try {
       updateProduct.photo_url = base64.value;
+      loadingStore.toggleLoading();
       const response = await axios.put(
         "products/" + updateProduct.id,
         updateProduct
@@ -140,7 +156,11 @@ export const useUsersStore = defineStore("users", () => {
       base64.value = null;
 
       return products.value;
-    } catch (error) {}
+    } catch (error) {
+
+    }finally{
+      loadingStore.toggleLoading();
+    }
 
     //updateProjectOnArray(response.data.data)
     //return response.data.data

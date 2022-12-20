@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 
 import { useUsersStore } from "@/stores/users.js";
 import { useCartStore } from "@/stores/cart.js";
+import { useLoadingStore } from "@/stores/loading.js";
 
 export const useOrdersStore = defineStore("orders", () => {
   const axios = inject("axios");
@@ -11,6 +12,7 @@ export const useOrdersStore = defineStore("orders", () => {
 
   const usersStore = useUsersStore();
   const cartStore = useCartStore();
+  const loadingStore = useLoadingStore();
 
   const allOrders = ref([]);
   const orders = ref([]);
@@ -22,19 +24,22 @@ export const useOrdersStore = defineStore("orders", () => {
   // Devolve todos os pedidos
   async function loadOrders() {
     try {
+      loadingStore.toggleLoading();
       const response = await axios.get("orders");
       allOrders.value = response.data.data;
       console.log(allOrders.value);
     } catch (error) {
       clearOrders();
       throw error;
+    }finally{
+      loadingStore.toggleLoading();
     }
   }
 
   // Devolve os pedidos do cliente
   async function getOrdersCustomer() {
     try {
-      isLoading.value = true;
+      loadingStore.toggleLoading();
       const response = await axios.get(
         "/orders/ordersByCustomer/" + usersStore.user.id
       );
@@ -44,13 +49,15 @@ export const useOrdersStore = defineStore("orders", () => {
     } catch (error) {
       clearOrders();
       throw error;
+    }finally{
+      loadingStore.toggleLoading();
     }
   }
 
   // Devolve todos os pedidos em preparação ou prontos
   async function getOrderPreparingOrReady() {
     try {
-      isLoading.value = true;
+      loadingStore.toggleLoading();
       const response = await axios.get("orders/preparingOrReady");
       ordersPreparingOrReady.value = response.data.data;
       getHotDishs();
@@ -58,24 +65,28 @@ export const useOrdersStore = defineStore("orders", () => {
     } catch (error) {
       clearOrders();
       throw error;
+    }finally{
+      loadingStore.toggleLoading();
     }
   }
 
   async function getOrders() {
     try {
-      isLoading.value = true;
+      loadingStore.toggleLoading();
       const response = await axios.get("orders");
       allOrders.value = response.data.data;
       isLoading.value = false;
     } catch (error) {
       clearOrders();
       throw error;
+    }finally{
+      loadingStore.toggleLoading();
     }
   }
   // Devolve pedidos já entregues
   async function getOrdersDelivered() {
     try {
-      isLoading.value = true;
+      loadingStore.toggleLoading();
       const response = await axios.get("orders/delivered");
       orders.value = response.data.data;
       isLoading.value = false;
@@ -83,6 +94,8 @@ export const useOrdersStore = defineStore("orders", () => {
     } catch (error) {
       clearOrders();
       throw error;
+    }finally{
+      loadingStore.toggleLoading();
     }
   }
 
@@ -120,23 +133,33 @@ export const useOrdersStore = defineStore("orders", () => {
     try {
       ordersPreparingOrReady.value[orderIdx].products[productIdx].pivot.status =
         "P";
+        loadingStore.toggleLoading();
       const response = await axios.patch(
         "orders/" + orderId + "/updateEstadoDosProdutos/",
         ordersPreparingOrReady.value[orderIdx].products[productIdx].pivot
       );
       toast.success("Mesagem: Pedido a preparar");
       return response.data.data;
-    } catch (error) {}
+    } catch (error) {
+
+    }finally{
+      loadingStore.toggleLoading();
+    }
   };
 
   async function update(data) {
     try {
+      loadingStore.toggleLoading();
       const response = await axios.patch(
         "orders/" + orderId + "/updateEstadoDaOrder/",
         ordersPreparingOrReady.value[orderIdx]
       );
       return response.data.data;
-    } catch (error) {}
+    } catch (error) {
+
+    }finally{
+      loadingStore.toggleLoading();
+    }
   }
 
   let productReady = async (orderId, id) => {
@@ -158,13 +181,18 @@ export const useOrdersStore = defineStore("orders", () => {
     let updatedOrder = ordersPreparingOrReady.value[orderIdx];
     updatedOrder.status = "R";
     try {
+      loadingStore.toggleLoading();
       const response = await axios.patch(
         "orders/" + updatedOrder.id + "/updateEstadoDaOrder/",
         updatedOrder
       );
       toast.success("Mesagem: Pedido pronto");
       return response.data.data;
-    } catch (error) {}
+    } catch (error) {
+
+    }finally{
+      loadingStore.toggleLoading();
+    }
   };
 
   let orderReadyToDelivery = async (orderId) => {
@@ -177,12 +205,17 @@ export const useOrdersStore = defineStore("orders", () => {
     updatedOrder.delivered_by = usersStore.user.id;
     toast.success("Mesagem: Pedido entregue");
      try {
+      loadingStore.toggleLoading();
       const response = await axios.patch(
         "orders/" + orderId + "/updateEstadoDaOrder/",
         ordersPreparingOrReady.value[orderIdx]
       );
       return response.data.data;
-    } catch (error) {} 
+    } catch (error) {
+
+    }finally{
+      loadingStore.toggleLoading();
+    }
   };
 
   let orderNotCanceled = computed(() => {
@@ -203,6 +236,7 @@ export const useOrdersStore = defineStore("orders", () => {
 
   async function createOrder() {
     try {
+      loadingStore.toggleLoading();
       const response = await axios.post("orders", cartStore.cart);
       toast.success("Mesagem: pagamento feito com sucesso");
       socket.emit("newOrder", response.data.data);
@@ -210,6 +244,8 @@ export const useOrdersStore = defineStore("orders", () => {
       return response.data.data;
     } catch (error) {
       toast.error("Mesagem:" + error.response.data.message);
+    }finally{
+      loadingStore.toggleLoading();
     }
   }
 
@@ -219,6 +255,7 @@ export const useOrdersStore = defineStore("orders", () => {
     );
     if (orderIdx >= 0) ordersPreparingOrReady.value[orderIdx].status = "C";
     try {
+      loadingStore.toggleLoading();
       const response = await axios.patch(
         "orders/" + orderId + "/updateEstadoDaOrder/",
         ordersPreparingOrReady.value[orderIdx]
@@ -227,6 +264,8 @@ export const useOrdersStore = defineStore("orders", () => {
       return response.data.data;
     } catch (error) {
       toast.error("Mesagem:" + error.response.data.message);
+    }finally{
+      loadingStore.toggleLoading();
     }
   };
 
