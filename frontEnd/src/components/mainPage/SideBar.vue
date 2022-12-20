@@ -35,7 +35,8 @@
     </div>
     <nav class="sidebar-navegacao">
       <div class="sidebar-container-utilizadores">
-        <router-link to="/menu" class="sidebar-navlink button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar">
+        <router-link to="/menu" class="sidebar-navlink button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
+         v-if="usersStore.user?.type != 'EC' || usersStore.user?.type != 'ED' ">
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
             <path
               d="M224 0c-106.040 0-192 100.288-192 224 0 105.924 63.022 194.666 147.706 217.998l-31.788 518.124c-2.154 35.132 24.882 63.878 60.082 63.878h32c35.2 0 62.236-28.746 60.082-63.878l-31.788-518.124c84.684-23.332 147.706-112.074 147.706-217.998 0-123.712-85.96-224-192-224zM869.334 0l-53.334 320h-40l-26.666-320h-26.668l-26.666 320h-40l-53.334-320h-26.666v416c0 17.672 14.326 32 32 32h83.338l-31.42 512.122c-2.154 35.132 24.882 63.878 60.082 63.878h32c35.2 0 62.236-28.746 60.082-63.878l-31.42-512.122h83.338c17.674 0 32-14.328 32-32v-416h-26.666z">
@@ -54,7 +55,7 @@
         </router-link>
         <router-link :to="{ name: 'customer-orders-history' }"
           class="sidebar-navlink button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar "
-          v-if="usersStore.user">
+          v-if="usersStore.user?.type == null || usersStore.user?.type == 'C' ">
           <svg viewBox="0 0 877.7142857142857 1024" class="icons-sidebar-nav">
             <path
               d="M877.714 512c0 241.714-197.143 438.857-438.857 438.857-130.857 0-254.286-57.714-337.714-158.286-5.714-7.429-5.143-18.286 1.143-24.571l78.286-78.857c4-3.429 9.143-5.143 14.286-5.143 5.143 0.571 10.286 2.857 13.143 6.857 56 72.571 140 113.714 230.857 113.714 161.143 0 292.571-131.429 292.571-292.571s-131.429-292.571-292.571-292.571c-74.857 0-145.714 28.571-198.857 78.286l78.286 78.857c10.857 10.286 13.714 26.286 8 39.429-5.714 13.714-18.857 22.857-33.714 22.857h-256c-20 0-36.571-16.571-36.571-36.571v-256c0-14.857 9.143-28 22.857-33.714 13.143-5.714 29.143-2.857 39.429 8l74.286 73.714c80.571-76 189.714-121.143 302.286-121.143 241.714 0 438.857 197.143 438.857 438.857zM512 347.429v256c0 10.286-8 18.286-18.286 18.286h-182.857c-10.286 0-18.286-8-18.286-18.286v-36.571c0-10.286 8-18.286 18.286-18.286h128v-201.143c0-10.286 8-18.286 18.286-18.286h36.571c10.286 0 18.286 8 18.286 18.286z">
@@ -66,7 +67,7 @@
       <div class="sidebar-container-permissoes-utlizadores">
         <router-link :to="{ name: 'cozinha' }"
           class="sidebar-navlink button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
-          v-if="usersStore.user?.type == 'EC' || usersStore.user?.type == 'EM'">
+          v-if="usersStore.user?.type == 'EC'">
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
             <path
               d="M634 492l-62 62 294 294-60 60-294-294-294 294-60-60 416-416q-24-48-7-112t67-114q62-62 138-71t122 37 37 123-71 139q-50 50-114 66t-112-8zM346 570l-180-180q-50-50-50-120t50-120l300 298z">
@@ -76,7 +77,7 @@
         </router-link>
         <router-link :to="{ name: 'pronto-a-entregar' }"
           class="sidebar-navlink button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
-          v-if="usersStore.user?.type == 'ED' || usersStore.user?.type == 'EM'">
+          v-if="usersStore.user?.type == 'ED'">
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
             <path
               d="M810 726q18 0 31-13t13-31-13-30-31-12-30 12-12 30 12 31 30 13zM810 554q52 0 90 38t38 90-38 90-90 38-90-38-38-90 38-90 90-38zM214 256h212v86h-212v-86zM298 726q18 0 31-13t13-31h-86q0 18 12 31t30 13zM810 298v144l-192 240h-192q0 52-38 90t-90 38-90-38-38-90h-84v-128q0-70 50-120t120-50h170v214h150l150-186v-114h-128v-84h128q34 0 59 25t25 59z">

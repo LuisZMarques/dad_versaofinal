@@ -13,10 +13,8 @@
 </script>
 
 <template>
-    <div style="width: 100%; height: auto;">
-        <div class="row bg-primary rounded" >
-        <div class="col-12 col-md-6" style="background-color:#e92b2bff">
-            <table class="table text-center table-borderless">
+    <div style="width: 100%; height: 100vw; display: flex;background-color:#e92b2bff;justify-content: space-between;">
+            <table class="table text-center table-borderless" style="width: 45%; height: 100%; display: flex;background-color:#e92b2bff; justify-content: center;">
                 <thead>
                     <tr>
                         <th style="color:white">PREPARING</th>
@@ -28,10 +26,8 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
 
-        <div class="col-12 col-md-6" style="background-color:#e92b2bff">
-            <table class="table text-center table-borderless" >
+            <table class="table text-center table-borderless" style="width: 45%; height: 100%; display: flex;background-color:#e92b2bff; justify-content: center;">
                 <thead>
                     <tr>
                         <th style="color:white">Ready</th>
@@ -43,7 +39,5 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
-    </div>
     </div>
 </template>
