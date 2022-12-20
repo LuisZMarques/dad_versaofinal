@@ -103,7 +103,7 @@ export const useUsersStore = defineStore("users", () => {
       users.value.push(response.data.data);
       return response.data.data.id;
     } catch (error) {
-      toast.error(`Erro no registo do utilizador.`);
+      toast.error(`${error.response.data.message}`);
       throw error;
     }finally{
       loadingStore.toggleLoading();
