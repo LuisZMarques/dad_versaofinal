@@ -5,6 +5,8 @@ import { useLoadingStore } from "@/stores/loading.js";
 export const useUsersStore = defineStore("users", () => {
   const axios = inject("axios");
   const toast = inject("toast");
+  const socket = inject("socket");
+
   const serverBaseUrl = inject("serverBaseUrl");
 
   const loadingStore = useLoadingStore();
@@ -52,6 +54,7 @@ export const useUsersStore = defineStore("users", () => {
       loadingStore.toggleLoading();
       const response = await axios.get("users/me");
       user.value = response.data.data;
+      socket.emit('loggedIn', user.value)
     } catch (error) {
       clearUser();
       throw error;
@@ -71,7 +74,7 @@ export const useUsersStore = defineStore("users", () => {
       toast.success(user.value.name + ` logado com sucesso.`);
       credentials.value.password = "";
       loginModal.value = false;
-      //socket.emit('loggedIn', user.value)
+      socket.emit('loggedIn', user.value)
       return true;
     } catch (error) {
       toast.error(`Credenciais erradas.`);
@@ -115,11 +118,9 @@ export const useUsersStore = defineStore("users", () => {
       toast.success(
         "User " + user.value.name + " has logged out of the application."
       );
+      socket.emit('loggedOut', user)
       clearUser();
-      router.push({name:"home"})
-
       delete axios.defaults.headers.common.Authorization;
-      router.push({ name: "login" });
       return true;
     } catch (error) {
       return false;
@@ -127,29 +128,6 @@ export const useUsersStore = defineStore("users", () => {
       loadingStore.toggleLoading();
     }
   }
-
-  /*   const updateUser = () => {
-    errors.value = null
-    axios.put('users/' + props.id, user.value)
-      .then((response) => {
-        user.value = response.data.data
-        socket.emit('updateUser', user.value)
-        if (user.value.id == userStore.user.id) {
-          userStore.user = user.value 
-        }
-        originalValueStr = dataAsString()
-        toast.success('User #' + user.value.id + ' was updated successfully.')
-        router.back()
-      })
-      .catch((error) => {
-        if (error.response.status == 422) {
-            toast.error('User #' + props.id + ' was not updated due to validation errors!')
-            errors.value = error.response.data.errors
-          } else {
-            toast.error('User #' + props.id + ' was not updated due to unknown server error!')
-          }
-      })
-} */
 
   async function updateUser(updateProduct) {
     try {
@@ -159,8 +137,7 @@ export const useUsersStore = defineStore("users", () => {
         "products/" + updateProduct.id,
         updateProduct
       );
-      //updateProductOnArray(response.data.data);
-      //socket.emit("updateProduct", response.data.data);
+      socket.emit("updateUser", response.data.data);
       toast.success(`Produto atualizado com sucesso`);
       base64.value = null;
 
@@ -214,6 +191,6 @@ export const useUsersStore = defineStore("users", () => {
     loginModal,
     updateUser,
     errors,
-    photoFullUrl
+    photoFullUrl,
   };
 });

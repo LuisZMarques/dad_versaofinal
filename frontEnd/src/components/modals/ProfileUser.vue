@@ -63,7 +63,6 @@ let loadUser = (id) => {
   axios.get('users/' + id)
     .then((response) => {
       userEdit.value = response.data.data
-      console.log(response.data.data)
     })
     .catch((error) => {
       console.log(error)

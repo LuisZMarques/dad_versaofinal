@@ -94,6 +94,8 @@ export const useCartStore = defineStore("cart", () => {
     } else {
       toast.success("O carrinho está vazio");
     }
+
+    
   };
 
   return {

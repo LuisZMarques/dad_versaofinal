@@ -27,9 +27,9 @@ onMounted(() => {
                   >
                     <thead style="background-color: transparent; color: white">
                       <tr>
-                        <th scope="row">Nº Pedido:</th>
-                        <th scope="row" colspan="4">Produtos</th>
-                        <th scope="row" colspan="4">Acções</th>
+                        <th scope="row">Nº ticket:</th>
+                        <th scope="row">Produtos</th>
+                        <th scope="row">Acções</th>
                       </tr>
                     </thead>
                     <tbody style="background-color: #c9a2ff">
@@ -37,7 +37,7 @@ onMounted(() => {
                         <td>{{ order.ticket_number }}</td>
                         <td>
                           <ul>
-                            <li v-for="product in order.products">
+                            <li v-for="product in order.products" style="list-style-type: none;">
                               {{ product.name }} - status
                               {{ product.pivot.status }}
                             </li>
