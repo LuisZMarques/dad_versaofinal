@@ -35,7 +35,6 @@
                       </tr>
                     </thead>
                     <tbody style="background-color: #C9A2FF;">
-                      
                       <user-detail v-for="user in usersStore.usersList" :key="user" :user="user"></user-detail>
                     </tbody>
                   </table>

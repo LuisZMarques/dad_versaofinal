@@ -162,6 +162,8 @@ export const useOrdersStore = defineStore("orders", () => {
       return response.data.data;
     } catch (error) {
       toast.error("Menssagem:" + error.response);
+    }finally{
+      loadingStore.toggleLoading();
     }
   }
 
@@ -180,6 +182,8 @@ export const useOrdersStore = defineStore("orders", () => {
       return response.data.data;
     } catch (error) {
       toast.error("Menssagem:" + error.response.data.message);
+    }finally{
+      loadingStore.toggleLoading();
     }
   };
 
