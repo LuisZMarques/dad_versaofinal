@@ -37,7 +37,7 @@ export const useCustomerStore = defineStore("customer", () => {
       customers.value.push(response.data.data);
       return response.data.data;
     } catch (error) {
-      toast.error(`Erro no registo do cliente.`);
+      toast.error(`${error.response.data.message}`);
       throw error;
     }
   }
