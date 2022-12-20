@@ -63,7 +63,7 @@ export const useProductsStore = defineStore("products", () => {
     if (!product.id) {
       product.photo_url = base64.value;
       loadingStore.toggleLoading();
-      const response = await axios.post("products/", product);
+      const response = await axios.post("products", product);
       //socket.emit("updateProduct", response.data.data);
       toast.success(`Produto adicionado com sucesso`);
       base64.value = null;
