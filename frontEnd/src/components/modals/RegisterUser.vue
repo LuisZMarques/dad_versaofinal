@@ -7,19 +7,19 @@
             <h2 class="fw-bold mb-2 text-center">Registar</h2>
             <div class="mb-3">
               <p class="text-center"><label for="email" class="form-label fw-bold">Nome:</label></p>
-              <input type="text" class="form-control" id="name" placeholder="name" v-model="editingUser.name">
+              <input type="text" class="form-control" id="name" placeholder="name" v-model="createUser.name">
             </div>
             <div class=" mb-3">
               <p class="text-center"><label for="email" class="form-label fw-bold">Email:</label></p>
               <input type="email" class="form-control" id="email" placeholder="name@example.com"
-                v-model="editingUser.email">
+                v-model="createUser.email">
             </div>
             <div class="mb-3">
               <p class="text-center">
                 <label for="password" class="form-label fw-bold">Password:</label>
               </p>
               <input type="password" class="form-control" id="password" placeholder="*******"
-                v-model="editingUser.password">
+                v-model="createUser.password">
             </div>
             <div class="md-3">
               <p class="text-center">
@@ -30,44 +30,44 @@
             </div>
             <div class="md-3">
               <label class="labels-modals">Nº de Telemóvel:</label>
-              <input type="text" size="16" v-model="editingCustomer.phone" class="input"
+              <input type="text" size="16" v-model="createCustomer.phone" class="input"
               placeholder="colocar o seu numero de telemóvel" />
             </div>
             <div class="md-3">
               <label class="labels-modals">NIF(Número de Identificação Fiscal):</label>
-              <input type="text" size="16" v-model="editingCustomer.nif" class="input"
+              <input type="text" size="16" v-model="createCustomer.nif" class="input"
               placeholder="colocar o seu NIF" />
             </div>
             <div class="md-3">
               <label for="tipo_de_producto text-center" class="form-label fw-bold">Tipo:</label>
                                 <select class="form-select form-select-sm" aria-label=".form-select-sm example"
-                                    v-model="editingCustomer.default_payment_type">
+                                    v-model="createCustomer.default_payment_type">
                                     <option selected>Selecionar</option>
                                     <option value="VISA">VISA</option>
                                     <option value="PAYPAL">PAYPAL</option>
                                     <option value="MBWAY">MBWAY</option>
                                 </select>
             </div>
-            <div class="md-3" v-if="editingCustomer.default_payment_type == 'PAYPAL'">
+            <div class="md-3" v-if="createCustomer.default_payment_type == 'PAYPAL'">
               <label class="labels-modals">Email do Paypal:</label>
-              <input type="email" v-model="editingCustomer.default_payment_reference" class="input"
+              <input type="email" v-model="createCustomer.default_payment_reference" class="input"
               placeholder="colocar o seu email" />
             </div>
-            <div class="md-3" v-if="editingCustomer.default_payment_type == 'VISA'">
+            <div class="md-3" v-if="createCustomer.default_payment_type == 'VISA'">
               <label class="labels-modals">Nº Cartão VISA:</label>
-              <input type="text" size="16" v-model="editingCustomer.default_payment_reference" class="input"
+              <input type="text" size="16" v-model="createCustomer.default_payment_reference" class="input"
               placeholder="colocar o seu numero de cartão" />
             </div>
-            <div class="md-3" v-if="editingCustomer.default_payment_type == 'MBWAY'">
+            <div class="md-3" v-if="createCustomer.default_payment_type == 'MBWAY'">
               <label class="labels-modals">Nº Telemóvel:</label>
-              <input type="text" size="9" v-model="editingCustomer.default_payment_reference" class="input"
+              <input type="text" size="9" v-model="createCustomer.default_payment_reference" class="input"
                 placeholder="colocar o seu nº de telemóvel" />
             </div>
             <div class="d-grid">
               <div class="btn-group" style="margin-bottom : 0.5rem">
                 <button class="btn btrn-sm btn-outline-danger" type="button" @click="$emit('close')">Cancel</button>
                 <button class="btn btrn-sm btn-outline-success" type="button"
-                @click="save">Registar</button>
+                @click="checkInputs">Registar</button>
               </div>
             </div>
           </div>
@@ -103,19 +103,10 @@ let props = defineProps({
         }
     })
 
-let editingUser = ref(props.user)
-let editingCustomer = ref(props.customer)
+let createUser = ref(props.user)
+let createCustomer = ref(props.customer)
 
-/*let user = ref({
-  nome_registo: null,
-  email_registo: null,
-  password_registo: null,
-  type:'C',
-  blocked:0,
-  photo_url:null,
-  custom:null
-});*/
-
+/* 
 const save = async () => {
   try {
     if(editingCustomer.value.default_payment_reference == null)
@@ -130,6 +121,48 @@ const save = async () => {
     toast.error("dados em falta")
     console.log(error)
   }
-}
+} */
+
+ const checkInputs = async () =>{
+  if( !createUser.name ){
+    return toast.error("Nome em falta")
+  }
+  if( !createUser.email ){
+    return toast.error("Email em falta")
+  }
+  if( !createUser.password ){
+    return toast.error("Password em falta")
+  }
+  if( !createCustomer.phone ){
+    return toast.error("Telemóvel em falta")
+  }
+  if( !createCustomer.nif ){
+    return toast.error("NIF em falta")
+  }
+  if( !createCustomer.default_payment_type ){
+    return toast.error("Tipo de pagamento em falta")
+  }
+  if( !createCustomer.default_payment_reference ){
+    return toast.error("Referência de pagamento em falta")
+  } 
+/*   //Registar user
+  const responseUser = await usersStore.registerUser(createUser.value)
+
+  //Obter id do user gerado na base de dados
+  const responseUserId = await usersStore.getUserByX();
+
+  //Registar customer
+  const responseCustomer = await usersStore.registerCustomer(createCustomer.value)
+  
+  if(responseUser instanceof Error)
+    throw new Error("Erro a criar user")
+
+  if(responseCustomer instanceof Error)
+    throw new Error("Erro a criar customer")
+
+  if(responseUserId instanceof Error)
+    throw new Error("Erro a obter id do user")
+   */
+ }
 </script>
 
