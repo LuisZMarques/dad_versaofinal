@@ -27,7 +27,7 @@
                     <select class="form-select form-select-sm" aria-label=".form-select-sm example"
                         v-model="editingUser.type">
                         <option selected>Selecionar</option>
-                        <option value="EM">ED</option>
+                        <option value="EM">EM</option>
                         <option value="EC">EC</option>
                         <option value="ED">ED</option>
                     </select>
