@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\PaymentTypeEnum;
+use App\Enums\UserTypeEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\Rules\Password;
@@ -11,7 +11,7 @@ class StoreUserRequest extends FormRequest
 {
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     public function rules()
@@ -25,9 +25,9 @@ class StoreUserRequest extends FormRequest
                     ->mixedCase()
                     ->numbers()
             ],
-            'type' => 'required|string|' . new Enum(UserTypeEnum::class),
+            'type' => 'required|in:EM,EC,ED,C',
             'blocked' => 'required|integer|digits:1',
-            'photo_url' => 'nullable|string|max:255',
+            'photo_url' => 'required|string',
             'custom' => 'nullable|json',
         ];
     }

@@ -24,7 +24,8 @@ Route::middleware('auth:api')->group(function () {
 Route::apiResource('products', ProductController::class, ['names' => 'products']);
 
 Route::apiResource('customers', CustomerController::class, ['names' => 'customers']);
-
+Route::post('customers', [CustomerController::class, 'store']);
+Route::post('users', [UserController::class, 'store']);
 Route::get("orders/preparingOrReady", [OrderController::class, "getOrdersPreparingOrReady"]);
 Route::patch('orders/{order}/updateEstadoDaOrder', [OrderController::class, "updateEstadoDaOrder"]);
 Route::patch('orders/{order}/updateEstadoDosProdutos', [OrderController::class, "updateEstadoDosProdutos"]);

@@ -82,7 +82,7 @@ export const useUsersStore = defineStore("users", () => {
     }
   }
 
-  async function register() {
+  async function register(user) {
     try {
       user.photo_url = base64.value;
       const response = await axios.post("users", user);
@@ -201,7 +201,9 @@ export const useUsersStore = defineStore("users", () => {
   return {
     users,
     restoreToken,
+    uploadImage,
     loadUsers,
+    register,
     user,
     loginModalState,
     perfilModalState,
