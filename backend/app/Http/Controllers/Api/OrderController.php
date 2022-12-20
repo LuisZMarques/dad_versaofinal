@@ -142,6 +142,15 @@ class OrderController extends Controller
         return $request->all();
     }
 
+    public function updateEstadoDosProdutos(Request $request, Order $order)
+    {
+        $order->products()
+            ->wherePivot('product_id', $request->product_id)
+            ->updateExistingPivot($request->product_id, ["status" => $request->status], false);
+
+         return new OrderResource($order);
+    }
+
     public function updateEstadoDaOrder(Request $request, Order $order)
     {
         if ($order->status == "C") {

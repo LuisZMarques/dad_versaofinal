@@ -10,7 +10,7 @@ export const useCartStore = defineStore("cart", () => {
   let cart = ref({
     id: null,
     ticket_number: 1,
-    status: "P",
+    status: "R",
     customer_id: null,
     total_price: 0,
     total_paid_with_points: 0,
@@ -56,7 +56,6 @@ export const useCartStore = defineStore("cart", () => {
     cart.value.total_price += parseFloat(item.price);
     cart.value.points_gained = Math.floor(cart.value.total_price / 10);
     toast.success("Item adicionado ao carrinho!");
-    console.log(cart.value)
   };
 
   let removeFromCart = (index) => {
@@ -89,7 +88,7 @@ export const useCartStore = defineStore("cart", () => {
         null;
       cart.value.date = new Date().toJSON().slice(0, 10).replace(/-/g, "/");
       cart.value.products.forEach(element => {
-        if(element.type == 'hot dish')
+        if(element.status == 'W')
           cart.value.status = 'P'
       });
     } else {
