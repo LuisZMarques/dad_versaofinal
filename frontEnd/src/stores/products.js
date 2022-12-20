@@ -1,10 +1,13 @@
 import { ref, inject, computed } from "vue";
 import { defineStore } from "pinia";
+import { useLoadingStore } from "@/stores/loading.js";
 
 export const useProductsStore = defineStore("products", () => {
   const axios = inject("axios");
   const toast = inject("toast");
   const socket = inject("socket");
+
+  const loadingStore = useLoadingStore();
 
   const products = ref([]);
 
@@ -24,8 +27,8 @@ export const useProductsStore = defineStore("products", () => {
   }
 
   async function loadProducts() {
-    isloading.value = true
     try {
+      loadingStore.toggleLoading();
       const response = await axios.get("products");
       products.value = response.data.data;
       toast.success(`Produtos loaded com successo`);
@@ -34,6 +37,8 @@ export const useProductsStore = defineStore("products", () => {
     } catch (error) {
       clearProducts();
       throw error;
+    }finally{
+      loadingStore.toggleLoading();
     }
   }
 
@@ -41,6 +46,7 @@ export const useProductsStore = defineStore("products", () => {
     if (product.id) {
       try {
         product.photo_url = base64.value;
+        loadingStore.toggleLoading();
         const response = await axios.put("products/" + product.id, product);
         updateProductOnArray(response.data.data);
         socket.emit("updateProduct", response.data.data);
@@ -48,11 +54,16 @@ export const useProductsStore = defineStore("products", () => {
         base64.value = null;
 
         return products.value;
-      } catch (error) {}
+      } catch (error) {
+
+      }finally{
+        loadingStore.toggleLoading();
+      }
     }
     if (!product.id) {
       product.photo_url = base64.value;
-      const response = await axios.post("products/", product);
+      loadingStore.toggleLoading();
+      const response = await axios.post("products", product);
       //socket.emit("updateProduct", response.data.data);
       toast.success(`Produto adicionado com sucesso`);
       base64.value = null;

@@ -33,12 +33,12 @@
       </div>
     </section>
   </div>
-  <register-modal :show="registerModal" @close="registerModal = false" />
+  <register-modal :show="registerModal" :user="newUser()" @close="registerModal = false" />
 </template>
 
 <script setup>
 import UserDetail from "@/components/users/UserDetail.vue";
-import RegisterModal from "@/components/modals/RegisterUser.vue"
+import RegisterModal from "@/components/modals/RegisterEmployee.vue"
 import { useUsersStore } from "../stores/users";
 import { ref, onMounted } from "vue";
 
@@ -49,6 +49,17 @@ onMounted(() => {
   usersStore.loadUsers()
 })
 
+const newUser = () => {
+  return {
+  name: null,
+  email: null,
+  password: null,
+  type:null,
+  blocked:0,
+  photo_url:"",
+  custom:null
+  };
+};
 
 </script>
 

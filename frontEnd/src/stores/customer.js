@@ -4,8 +4,10 @@ import { useUsersStore } from "./users";
 
 export const useCustomerStore = defineStore("customer", () => {
   const axios = inject("axios");
+  const toast = inject("toast");
 
-  const customer = ref([]);
+  const customer = ref();
+  const customers = ref([]);
   const testePontosCliente = ref("50");
   const usersStore = useUsersStore();
   //const userStore = useUsersStore();
@@ -26,8 +28,23 @@ export const useCustomerStore = defineStore("customer", () => {
     }
   }
 
+  async function register(customer,userId) {
+    try {
+      console.log(customer)
+      customer.user_id = userId;
+      const response = await axios.post("customers", customer);
+      toast.success(`Cliente criado com sucesso`);
+      customers.value.push(response.data.data);
+      return response.data.data;
+    } catch (error) {
+      toast.error(`Erro no registo do cliente.`);
+      throw error;
+    }
+  }
+
   return {
     loadCustomer,
+    register,
     customer,
     testePontosCliente
   };

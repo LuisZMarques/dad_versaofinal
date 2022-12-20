@@ -7,7 +7,7 @@ import CozinhaView from '../views/CozinhaView.vue'
 import EmpregadoView from '../views/EmpregadoView.vue'
 import PedidosStatusView from '../views/PedidosStatusView.vue'
 import CustomerOrdersHistoty from '../views/CustomerOrdersHistoty.vue'
-
+import StatisticsPage from '@/views/StatisticsPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -52,6 +52,11 @@ const router = createRouter({
       name: 'pedidos-em-curso',
       component: PedidosStatusView,
       props: { orderTitle: 'Pedidos em Curso'}
+    },
+    {
+      path: '/estatisticas',
+      name: 'statistics',
+      component: StatisticsPage,
     }
   ]
 })
