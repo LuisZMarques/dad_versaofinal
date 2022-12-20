@@ -1,24 +1,21 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import axios from 'axios'
-
 import App from './App.vue'
 import router from './router'
-
 import Toaster from "@meforma/vue-toaster";
-
 import 'bootstrap/dist/css/bootstrap.min.css'
-
-
 import './assets/app.css'
-
 import { io } from "socket.io-client"
+
+const apiDomain = import.meta.env.VITE_API_DOMAIN
+const wsConnection = import.meta.env.VITE_WS_CONNECTION
 
 const app = createApp(App)
 
-const serverBaseUrl = 'http://127.0.0.1:8000'
+const serverBaseUrl = apiDomain
 
-app.provide('socket', io("http://127.0.0.1:8080"))
+app.provide('socket', io(wsConnection))
 
 app.provide('axios', axios.create({
     baseURL: serverBaseUrl + '/api/',
