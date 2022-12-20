@@ -74,7 +74,7 @@ export const useUsersStore = defineStore("users", () => {
       //socket.emit('loggedIn', user.value)
       return true;
     } catch (error) {
-      toast.success(`Credenciais erradas.`);
+      toast.error(`Credenciais erradas.`);
       clearUser();
       throw error;
     }finally{
@@ -84,7 +84,16 @@ export const useUsersStore = defineStore("users", () => {
 
   async function register() {
     try {
-    } catch (error) {}
+      user.photo_url = base64.value;
+      const response = await axios.post("users", user);
+      toast.success(`Utilizador criado com sucesso`);
+      base64.value = null;
+      users.value.push(response.data.data);
+      return response.data.data.id;
+    } catch (error) {
+      toast.error(`Erro no registo do utilizador.`);
+      throw error;
+    }
   }
 
   function clearUser() {
