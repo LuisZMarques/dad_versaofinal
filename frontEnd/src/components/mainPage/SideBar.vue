@@ -105,7 +105,7 @@
           </svg>
           <span class="texto sidebar-text">Gestão de Utilizadores</span>
         </router-link>
-        <router-link to="/" class="sidebar-navlink button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
+        <router-link :to="{ name: 'statistics' }" class="sidebar-navlink button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
           v-if="usersStore.user">
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
             <path
