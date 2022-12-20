@@ -4,7 +4,7 @@
       <div class="col-4">
         <div class="card text-white" style="background-color: rebeccapurple;max-width: 80%;padding: 1rem;text-align: center;">
           <div class="card-body">
-            <h2 class="fw-bold mb-2 text-center">FasTuga Registar</h2>
+            <h2 class="fw-bold mb-2 text-center">Registar</h2>
             <div class="mb-3">
               <p class="text-center"><label for="email" class="form-label fw-bold">Nome:</label></p>
               <input type="text" class="form-control" id="name" placeholder="name" v-model="editingUser.name">
