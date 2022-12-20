@@ -27,7 +27,8 @@ export const useUsersStore = defineStore("users", () => {
 
   let errors = ref([]);
 
-  const searchUser = ref("");
+  let searchUser = ref('');
+
 
   let usersList = computed(() => {
     return users.value
@@ -202,6 +203,7 @@ export const useUsersStore = defineStore("users", () => {
     updateUser,
     errors,
     photoFullUrl,
-    usersList
+    usersList,
+    searchUser
   };
 });
