@@ -3,7 +3,6 @@ import { defineStore } from "pinia";
 
 import { useUsersStore } from "@/stores/users.js";
 import { useCartStore } from "@/stores/cart.js";
-import { useCustomerStore } from "./customer";
 
 export const useOrdersStore = defineStore("orders", () => {
   const axios = inject("axios");
@@ -19,10 +18,6 @@ export const useOrdersStore = defineStore("orders", () => {
   const ordersPreparingOrReady = ref([]);
   const ordersCustomer = ref([]);
   let isLoading = ref(false);
-
-  function clearOrders() {
-    orders.value = [];
-  }
 
   // Devolve todos os pedidos
   async function loadOrders() {
@@ -92,10 +87,11 @@ export const useOrdersStore = defineStore("orders", () => {
   }
 
   let ordersReady = computed(() => {
-    return orders.value.filter((order) => order.status == "R");
+    return ordersPreparingOrReady.value.filter((order) => order.status == "R");
   });
+
   let ordersPreparing = computed(() => {
-    return orders.value.filter((order) => order.status == "P");
+    return ordersPreparingOrReady.value.filter((order) => order.status == "P");
   });
 
   let getHotDishs = () => {
@@ -120,21 +116,20 @@ export const useOrdersStore = defineStore("orders", () => {
     let productIdx = ordersPreparingOrReady.value[orderIdx].products.findIndex(
       (p) => p.id == id
     );
-   
-      
+    console.log(isAllReadyForDelivering(orderIdx));
     try {
       ordersPreparingOrReady.value[orderIdx].products[productIdx].pivot.status =
-      "P";
+        "P";
       const response = await axios.patch(
-        "orders/" + orderId + "/updateEstadoDaOrder/",
-        ordersPreparingOrReady.value[orderIdx]
+        "orders/" + orderId + "/updateEstadoDosProdutos/",
+        ordersPreparingOrReady.value[orderIdx].products[productIdx].pivot
       );
       toast.success("Mesagem: Pedido a preparar");
       return response.data.data;
     } catch (error) {}
   };
 
-  async function update(data){
+  async function update(data) {
     try {
       const response = await axios.patch(
         "orders/" + orderId + "/updateEstadoDaOrder/",
@@ -153,52 +148,46 @@ export const useOrdersStore = defineStore("orders", () => {
     );
     ordersPreparingOrReady.value[orderIdx].products[productIdx].pivot.status =
       "R";
+    if (isAllReadyForDelivering(orderIdx)) {
+      orderPreparedToReady(orderIdx);
+    }
+  };
 
-    toast.success("Mesagem: Pedido pronto");
+  let orderPreparedToReady = async (orderIdx) => {
+    //let orderIdx = orders.value.findIndex((t) => t.id == orderId);
+    let updatedOrder = ordersPreparingOrReady.value[orderIdx];
+    updatedOrder.status = "R";
     try {
       const response = await axios.patch(
-        "orders/" + orderId + "/updateEstadoDaOrder/",
-        ordersPreparingOrReady.value[orderIdx]
+        "orders/" + updatedOrder.id + "/updateEstadoDaOrder/",
+        updatedOrder
       );
-      toast.success("Mesagem: Producto pronto");
+      toast.success("Mesagem: Pedido pronto");
       return response.data.data;
     } catch (error) {}
   };
 
   let orderReadyToDelivery = async (orderId) => {
+    usersStore.loadUser()
     let orderIdx = ordersPreparingOrReady.value.findIndex(
       (t) => t.id == orderId
     );
     let updatedOrder = ordersPreparingOrReady.value[orderIdx];
     updatedOrder.status = "D";
-    updatedOrder.delivered_by = useUsersStore.user.id;
+    updatedOrder.delivered_by = usersStore.user.id;
     toast.success("Mesagem: Pedido entregue");
-    try {
+     try {
       const response = await axios.patch(
         "orders/" + orderId + "/updateEstadoDaOrder/",
         ordersPreparingOrReady.value[orderIdx]
       );
       return response.data.data;
-    } catch (error) {}
+    } catch (error) {} 
   };
 
   let orderNotCanceled = computed(() => {
     return ordersPreparingOrReady.value.filter((order) => order.status != "C");
   });
-
-  let orderPreparedToReady = async (orderId) => {
-    let orderIdx = orders.value.findIndex((t) => t.id == orderId);
-    let updatedOrder = orders.value[orderIdx];
-    updatedOrder.status = "R";
-    toast.success("Mesagem: Pedido pronto");
-    try {
-      const response = await axios.patch(
-        "orders/" + orderId + "/updateEstadoDaOrder/",
-        updatedOrder
-      );
-      return response.data.data;
-    } catch (error) {}
-  };
 
   //sera preciso ir buscar o proximo id disponivel ,
   // o customer id e ver como fazer o ticket number, points_gained e total_paid esta a associar ao null aos campos
@@ -240,6 +229,19 @@ export const useOrdersStore = defineStore("orders", () => {
       toast.error("Mesagem:" + error.response.data.message);
     }
   };
+
+  function isAllReadyForDelivering(idx) {
+    let boolean = true;
+    ordersPreparingOrReady.value[idx].products.forEach((el) => {
+      if (el.pivot.status != "R") boolean = false;
+    });
+
+    return boolean;
+  }
+
+  function clearOrders() {
+    orders.value = [];
+  }
 
   function addOrderOnArray(order) {
     ordersPreparingOrReady.value.push(order);

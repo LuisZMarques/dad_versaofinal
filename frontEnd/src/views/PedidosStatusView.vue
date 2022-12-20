@@ -7,8 +7,7 @@
     const serverBaseUrl = inject("serverBaseUrl");
 
     onMounted(() => {
-        if (ordersStore.orders.length == 0)
-            ordersStore.getOrders()
+            ordersStore.getOrderPreparingOrReady()
     })
 
 </script>

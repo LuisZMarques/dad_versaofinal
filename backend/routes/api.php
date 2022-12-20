@@ -27,5 +27,6 @@ Route::apiResource('customers', CustomerController::class, ['names' => 'customer
 
 Route::get("orders/preparingOrReady", [OrderController::class, "getOrdersPreparingOrReady"]);
 Route::patch('orders/{order}/updateEstadoDaOrder', [OrderController::class, "updateEstadoDaOrder"]);
+Route::patch('orders/{order}/updateEstadoDosProdutos', [OrderController::class, "updateEstadoDosProdutos"]);
 Route::apiResource('orders', OrderController::class, ['names' => 'orders']);
 Route::post("orders/payments", [OrderController::class, "payments"]);

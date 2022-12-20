@@ -46,6 +46,7 @@ class UserController extends Controller
     public function show_me(Request $request)
     {
         $user = User::findOrFail($request->user()->id);
+        
         return new UserResource($user);
     }
 }
