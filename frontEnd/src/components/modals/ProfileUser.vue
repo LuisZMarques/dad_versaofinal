@@ -2,7 +2,7 @@
   <modal :show="props.show" :id="props.id">
     <div class="row justify-content-center">
       <div class="col-4">
-        <div class="card text-white" style="background-color: rebeccapurple;max-width: 80%;padding: 1rem;">
+        <div class="card text-white" style="background-color: rebeccapurple;max-width: 80%;padding: 1rem;text-align: center;">
           <div class="card-body">
             <h2 class="fw-bold mb-2 text-center">FasTuga</h2>
             <h5 class="fw-bold mb-2 text-center">Perfil</h5>
@@ -45,7 +45,7 @@
 <script setup>
 
 import { useUsersStore } from '@/stores/users.js'
-import { ref, inject, computed, watch } from 'vue';
+import { ref, inject, onMounted, watch } from 'vue';
 import Modal from '@/components/global/modal.vue'
 
 const axios = inject('axios')
@@ -75,5 +75,8 @@ watch(
       loadUser(newValue)
   },
 )
+onMounted(() => {
+  loadUser(props.id)
+})
 
 </script>

@@ -2,10 +2,9 @@
   <modal :show="props.show">
     <div class="row justify-content-center">
       <div class="col-4">
-        <div class="card text-white" style="background-color: rebeccapurple;max-width: 80%;padding: 1rem;">
+        <div class="card text-white" style="background-color: rebeccapurple;max-width: 80%;padding: 1rem;text-align: center;">
           <div class="card-body">
-            <h2 class="fw-bold mb-2 text-center">FasTuga</h2>
-            <h5 class="fw-bold mb-2 text-center">Register</h5>
+            <h2 class="fw-bold mb-2 text-center">FasTuga Registar</h2>
             <div class="mb-3">
               <p class="text-center"><label for="email" class="form-label fw-bold">Nome:</label></p>
               <input type="text" class="form-control" id="name" placeholder="name" v-model="editingUser.name">
@@ -32,12 +31,12 @@
             <div class="md-3">
               <label class="labels-modals">Nº de Telemóvel:</label>
               <input type="text" size="16" v-model="editingCustomer.phone" class="input"
-              placeholder="colocar o seu numero de cartão" />
+              placeholder="colocar o seu numero de telemóvel" />
             </div>
             <div class="md-3">
               <label class="labels-modals">NIF(Número de Identificação Fiscal):</label>
               <input type="text" size="16" v-model="editingCustomer.nif" class="input"
-              placeholder="colocar o seu numero de cartão" />
+              placeholder="colocar o seu NIF" />
             </div>
             <div class="md-3">
               <label for="tipo_de_producto text-center" class="form-label fw-bold">Tipo:</label>
@@ -62,7 +61,7 @@
             <div class="md-3" v-if="editingCustomer.default_payment_type == 'MBWAY'">
               <label class="labels-modals">Nº Telemóvel:</label>
               <input type="text" size="9" v-model="editingCustomer.default_payment_reference" class="input"
-                placeholder="colocar o seu nº de telefone" />
+                placeholder="colocar o seu nº de telemóvel" />
             </div>
             <div class="d-grid">
               <div class="btn-group" style="margin-bottom : 0.5rem">
@@ -79,11 +78,12 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref , inject} from "vue";
 import Modal from '@/components/global/modal.vue'
 import { useUsersStore } from '@/stores/users.js'
 import { useCustomerStore } from '@/stores/customer.js'
 
+const toast = inject("toast");
 const emit = defineEmits(['close'])
 
 const usersStore = useUsersStore()
@@ -117,10 +117,19 @@ let editingCustomer = ref(props.customer)
 });*/
 
 const save = async () => {
+  try {
+    if(editingCustomer.value.default_payment_reference == null)
+      throw("Dados em falta")
     const responseUserId = await usersStore.register(editingUser.value)
     const responseCustomer = await customersStore.register(editingCustomer.value, responseUserId)
-    if (responseCustomer)
+    if(responseCustomer instanceof Error)
+      throw new Error("Formulário inválido")
+    else if (responseCustomer)
           emit('close')
-    }
+  } catch (error) {
+    toast.error("dados em falta")
+    console.log(error)
+  }
+}
 </script>
 

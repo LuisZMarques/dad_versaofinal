@@ -36,7 +36,7 @@
     <nav class="sidebar-navegacao">
       <div class="sidebar-container-utilizadores">
         <router-link to="/menu" class="sidebar-navlink button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
-         v-if="usersStore.user?.type != 'EC' || usersStore.user?.type != 'ED' ">
+         v-if="usersStore.user?.type == null || usersStore.user?.type == 'C' || usersStore.user?.type == 'EM'  ">
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-nav">
             <path
               d="M224 0c-106.040 0-192 100.288-192 224 0 105.924 63.022 194.666 147.706 217.998l-31.788 518.124c-2.154 35.132 24.882 63.878 60.082 63.878h32c35.2 0 62.236-28.746 60.082-63.878l-31.788-518.124c84.684-23.332 147.706-112.074 147.706-217.998 0-123.712-85.96-224-192-224zM869.334 0l-53.334 320h-40l-26.666-320h-26.668l-26.666 320h-40l-53.334-320h-26.666v416c0 17.672 14.326 32 32 32h83.338l-31.42 512.122c-2.154 35.132 24.882 63.878 60.082 63.878h32c35.2 0 62.236-28.746 60.082-63.878l-31.42-512.122h83.338c17.674 0 32-14.328 32-32v-416h-26.666z">
