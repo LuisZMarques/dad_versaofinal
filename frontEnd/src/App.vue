@@ -6,7 +6,7 @@
 
       <div style="position:absolute; height: 100vh;width: 100vw;" v-if="loadingStore.isLoading">
         <!-- :style="{ 'margin-left': sidebarstate ? '8%' : 0  } " -->
-        <semipolar-spinner :animation-duration="2000" :size="200" color="#ff1d5e" v-if="loadingStore.isLoading" style="left: 50%;
+        <semipolar-spinner :animation-duration="2000" :size="200" color="white" v-if="loadingStore.isLoading" style="left: 50%;
             top: 50%;
             transform: translate(-50%,-50%);
             z-index: 3;" />
@@ -30,7 +30,7 @@ const socket = inject("socket");
 const loadingStore = useLoadingStore();
 
 
-const sidebarstate = ref(true)
+const sidebarstate = ref(false)
 
 const sideToggle = () => {
   sidebarstate.value = !sidebarstate.value

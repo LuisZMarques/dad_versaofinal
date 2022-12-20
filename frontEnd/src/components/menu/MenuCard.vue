@@ -17,7 +17,8 @@
           </svg>
           <span style="color: blue;">Editar</span>
         </button>
-        <button class="btn btn-sm btn-outline-primary" @click="cartStore.addToCart(product)">
+        <button class="btn btn-sm btn-outline-primary" @click="cartStore.addToCart(product)" 
+        v-if="usersStore.user?.type == null || usersStore.user?.type == 'C'">
           <svg viewBox="0 0 1024 1024" style="width: 15px;height: 15px;fill: blue; margin: 0.25rem;">
           <path
             d="M306 630q0 10 10 10h494v86h-512q-34 0-59-26t-25-60q0-20 10-40l58-106-154-324h-86v-84h140q40 84 80 170 10 18 46 95t56 119h300q150-272 164-300l74 42-164 298q-24 44-74 44h-318l-38 70zM726 768q34 0 59 26t25 60-25 59-59 25-60-25-26-59 26-60 60-26zM298 768q34 0 60 26t26 60-26 59-60 25-59-25-25-59 25-60 59-26zM470 384v-128h-128v-86h128v-128h84v128h128v86h-128v128h-84z"

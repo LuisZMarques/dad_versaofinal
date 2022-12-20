@@ -27,6 +27,13 @@ export const useUsersStore = defineStore("users", () => {
 
   let errors = ref([]);
 
+  const searchUser = ref("");
+
+  let usersList = computed(() => {
+    return users.value
+      .filter((usr) => usr.name.toLowerCase().includes(searchUser.value));
+  });
+
   function clearUsers() {
     users.value = [];
   }
@@ -195,5 +202,6 @@ export const useUsersStore = defineStore("users", () => {
     updateUser,
     errors,
     photoFullUrl,
+    usersList
   };
 });

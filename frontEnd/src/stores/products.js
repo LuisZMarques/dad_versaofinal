@@ -11,7 +11,6 @@ export const useProductsStore = defineStore("products", () => {
 
   const products = ref([]);
 
-  let isloading = ref(false)
 
   let searchProduct = ref("");
 
@@ -32,7 +31,6 @@ export const useProductsStore = defineStore("products", () => {
       const response = await axios.get("products");
       products.value = response.data.data;
       toast.success(`Produtos loaded com successo`);
-      isloading.value = false
       return products.value;
     } catch (error) {
       clearProducts();
@@ -102,7 +100,6 @@ export const useProductsStore = defineStore("products", () => {
     saveProduct,
     uploadImage,
     productsList,
-    searchProduct,
-    isloading
+    searchProduct
   };
 });
