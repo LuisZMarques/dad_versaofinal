@@ -45,7 +45,7 @@
 <script setup>
 
 import { useUsersStore } from '@/stores/users.js'
-import { ref, inject, computed, watch } from 'vue';
+import { ref, inject, onMounted, watch } from 'vue';
 import Modal from '@/components/global/modal.vue'
 
 const axios = inject('axios')
@@ -75,5 +75,8 @@ watch(
       loadUser(newValue)
   },
 )
+onMounted(() => {
+  loadUser(props.id)
+})
 
 </script>

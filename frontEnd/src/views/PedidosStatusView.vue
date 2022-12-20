@@ -13,11 +13,11 @@
 </script>
 
 <template>
-    <div style="width: 100%; height: 100vw; display: flex;background-color:#e92b2bff;justify-content: space-between;">
+    <div style="width: 100%; height: 80vw; display: flex;background-color:#e92b2bff;justify-content: space-between;">
             <table class="table text-center table-borderless" style="width: 45%; height: 100%; display: flex;background-color:#e92b2bff; justify-content: center;">
                 <thead>
                     <tr>
-                        <th style="color:white">PREPARING</th>
+                        <th style="color:white">Preparing</th>
                     </tr>
                 </thead>
                 <tbody>
