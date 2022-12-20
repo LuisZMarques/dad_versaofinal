@@ -1,6 +1,5 @@
 <template>
   <modal :show="props.show" :id="props.id">
-    {{ userEdit }}
     <div class="row justify-content-center">
       <div class="col-4">
         <div class="card text-white" style="background-color: rebeccapurple;max-width: 80%;padding: 1rem;">
@@ -64,7 +63,6 @@ let loadUser = (id) => {
   axios.get('users/' + id)
     .then((response) => {
       userEdit.value = response.data.data
-      console.log(response.data.data)
     })
     .catch((error) => {
       console.log(error)

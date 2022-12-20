@@ -95,7 +95,7 @@ class OrderController extends Controller
                 $order->customer_id = $request->validated("customer_id");
                 $order->total_price =  $request->validated("total_price");
                 $order->total_paid = $response["value"];
-                $order->total_paid_with_points = $request->validated("total_paid_with_points");
+                $order->total_paid_with_points = 0;
                 $order->points_gained = $request->validated("points_gained");
                 $order->points_used_to_pay = $request->validated("points_used_to_pay");
                 $order->payment_type = $request->validated("payment_type");
