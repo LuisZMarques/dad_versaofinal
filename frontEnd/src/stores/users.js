@@ -94,23 +94,6 @@ export const useUsersStore = defineStore("users", () => {
     }
   }
 
-/*   async function register(user) {
-    try {
-      user.photo_url = base64.value;
-      loadingStore.toggleLoading();
-      const response = await axios.post("users", user);
-      toast.success(`Utilizador criado com sucesso`);
-      base64.value = null;
-      users.value.push(response.data.data);
-      return response.data.data.id;
-    } catch (error) {
-      toast.error(`${error.response.data.message}`);
-      throw error;
-    }finally{
-      loadingStore.toggleLoading();
-    }
-  } */
-
   function clearUser() {
     delete axios.defaults.headers.common.Authorization;
     sessionStorage.removeItem("token");
@@ -141,18 +124,18 @@ export const useUsersStore = defineStore("users", () => {
     }
   }
 
-  async function updateUser(updateProduct) {
+  async function updateUser(updateUser) {
     try {
-      updateProduct.photo_url = base64.value;
+      updateUser.photo_url = base64.value;
       loadingStore.toggleLoading();
       const response = await axios.put(
-        "products/" + updateProduct.id,
-        updateProduct
+        "users/" + updateUser.id,
+        updateUser
       );
       socket.emit("updateUser", response.data.data);
-      toast.success(`Produto atualizado com sucesso`);
+      toast.success(`User atualizado com sucesso`);
       base64.value = null;
-
+      user.value = response.data.data
       return products.value;
     } catch (error) {
 
