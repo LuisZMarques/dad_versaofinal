@@ -35,8 +35,7 @@ onMounted(() => {
                         <td>
                           <ul>
                             <li v-for="product in order.products" :key="product" style="list-style-type: none;">
-                              {{ product.name }} - status
-                              {{ product.pivot.status }}
+                                {{ product.name }} : '{{ product.pivot.status }}'
                             </li>
                           </ul>
                         </td>
