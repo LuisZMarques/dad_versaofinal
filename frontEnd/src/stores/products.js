@@ -53,7 +53,7 @@ export const useProductsStore = defineStore("products", () => {
 
         return products.value;
       } catch (error) {
-
+        Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
       }finally{
         loadingStore.toggleLoading();
       }

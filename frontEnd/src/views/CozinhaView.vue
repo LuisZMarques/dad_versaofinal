@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, inject } from "vue";
+import { onMounted, inject, computed, ref } from "vue";
 import { useOrdersStore } from "@/stores/orders.js"
 
 const axios = inject("axios");
@@ -7,10 +7,12 @@ const toast = inject("toast");
 const socket = inject("socket");
 
 const ordersStore = useOrdersStore()
+const grid = ref(false)
 
 onMounted(() => {
     ordersStore.getOrderPreparingOrReady()
 })
+
 
 let productPreparing = (index) => {
     try {
@@ -37,6 +39,9 @@ let productReady = (index) => {
         if (isAllReadyForDelivering(orderId)) {
             orderPreparedToReady(orderId);
         }
+        computed(() => orderId, () => {
+            grid.value = !grid.value
+        })
         return response.data?.data;
     } catch (error) {
         console.log(error)
@@ -83,7 +88,7 @@ function isAllReadyForDelivering(orderId) {
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-12">
-                                <div class="table-responsive">
+                                <div class="table-responsive" ref="grid">
                                     <table class="table table-bordered text-center align-middle"
                                         style=" border-color: rebeccapurple">
                                         <thead style="background-color: transparent; color: white">

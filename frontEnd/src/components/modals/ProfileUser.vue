@@ -30,7 +30,7 @@
             </div>
             <div class="d-grid">
               <div class="btn-group" style="margin-bottom : 0.5rem">
-                <button class="btn btrn-sm btn-outline-danger" type="button" @click="$emit('close')">Cancel</button>
+                <button class="btn btrn-sm btn-outline-danger" type="button" @click="$emit('close')">Cancelar</button>
                 <button class="btn btrn-sm btn-outline-success" type="button"
                   @click="usersStore.updateUser(userEdit)">Modificar</button>
               </div>

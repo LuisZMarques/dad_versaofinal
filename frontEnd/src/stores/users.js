@@ -105,6 +105,7 @@ export const useUsersStore = defineStore("users", () => {
       ? serverBaseUrl + "/storage/fotos/" + user.value.photo_url
       : serverBaseUrl + "/storage/fotos/anonymos.jpg";
   });
+  
 
   async function logout() {
     try {
@@ -137,8 +138,9 @@ export const useUsersStore = defineStore("users", () => {
       base64.value = null;
       user.value = response.data.data
       return products.value;
-    } catch (error) {
 
+    } catch (error) {
+      Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
     }finally{
       loadingStore.toggleLoading();
     }
@@ -172,7 +174,7 @@ export const useUsersStore = defineStore("users", () => {
     restoreToken,
     uploadImage,
     loadUsers,
-    //register,
+    register,
     user,
     loginModalState,
     perfilModalState,

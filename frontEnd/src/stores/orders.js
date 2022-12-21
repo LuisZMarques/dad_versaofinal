@@ -74,7 +74,6 @@ export const useOrdersStore = defineStore("orders", () => {
       loadingStore.toggleLoading();
       const response = await axios.get("orders");
       allOrders.value = response.data.data;
-      isLoading.value = false;
     } catch (error) {
       clearOrders();
       throw error;
@@ -129,7 +128,7 @@ export const useOrdersStore = defineStore("orders", () => {
     let updatedOrder = ordersPreparingOrReady.value[orderIdx];
     updatedOrder.status = "D";
     updatedOrder.delivered_by = usersStore.user.id;
-    toast.success("Menssagem: Pedido entregue");
+    toast.success("Pedido entregue");
     try {
       const response = await axios.patch(
         "orders/" + orderId + "/updateEstadoDaOrder",
@@ -149,7 +148,7 @@ export const useOrdersStore = defineStore("orders", () => {
     try {
       loadingStore.toggleLoading();
       const response = await axios.post("orders", cartStore.cart);
-      toast.success("Menssagem: pagamento feito com sucesso");
+      toast.success("Pagamento feito com sucesso");
       socket.emit("newOrder", response.data.data);
       cartStore.paymentModal = false;
       cartStore.cartModalShow = false;
@@ -158,10 +157,9 @@ export const useOrdersStore = defineStore("orders", () => {
           socket.emit("pratoParaCozinhar", el.name);
       });
       cartStore.clearCart();
-      loadingStore.toggleLoading();
       return response.data.data;
     } catch (error) {
-      toast.error("Menssagem:" + error.response);
+      Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
     }finally{
       loadingStore.toggleLoading();
     }
@@ -178,10 +176,10 @@ export const useOrdersStore = defineStore("orders", () => {
         "orders/" + orderId + "/updateEstadoDaOrder",
         ordersPreparingOrReady.value[orderIdx]
       );
-      toast.success("Menssagem: pedido cancelado com com sucesso");
+      toast.success("Pedido cancelado com com sucesso");
       return response.data.data;
     } catch (error) {
-      toast.error("Menssagem:" + error.response.data.message);
+      Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
     }finally{
       loadingStore.toggleLoading();
     }
@@ -202,7 +200,7 @@ export const useOrdersStore = defineStore("orders", () => {
   });
 
   socket.on("pratoParaCozinhar", (product) => {
-    toast.success(`Existe um prato para cozinhar.`);
+    toast.informational(`Existe um prato para cozinhar.`);
   });
 
   return {
