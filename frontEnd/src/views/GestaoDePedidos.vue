@@ -17,7 +17,7 @@
                     <tbody style="background-color: #C9A2FF;" >
                       <tr v-for="order in ordersStore.orderNotCanceled" :key="order" >
                         <td class="texto">{{ order.ticket_number }}</td>
-                        <td class="texto">{{ order }}</td>
+                        <td class="texto">{{ orderItems(order.products) }}</td>
                         <td>
                           <div style="display:flex;flex-direction: row;align-items: center;justify-content: center;">
                             Cancelar pedido
@@ -56,6 +56,15 @@ const router = useRouter();
 
 const ordersStore = useOrdersStore();
 const userStore = useUsersStore();
+
+let orderProducts = ""
+
+let orderItems = (productsList) => {
+  productsList.forEach((product,idx,array) => {
+    orderProducts += idx==array.length-1 ? product['name'] + '.' : product['name'] + ', ';
+  })
+  return orderProducts;
+}
 
 onMounted(() => {
   userStore.loadUser();
