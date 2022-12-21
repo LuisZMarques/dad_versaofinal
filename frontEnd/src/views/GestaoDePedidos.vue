@@ -11,17 +11,21 @@
                     <thead style="background-color: transparent; color: white">
                       <tr>
                         <th scope="row">Nº Pedido:</th>
-                        <th scope="row" colspan="4">Acções</th>
+                        <th scope="row">Preço</th>
+                        <th scope="row">Pontos Usados</th>
+                        <th scope="row">Pontos Ganhos</th>
+                        <th scope="row">Acções</th>
                       </tr>
                     </thead>
                     <tbody style="background-color: #C9A2FF;" >
                       <tr v-for="order in ordersStore.orderNotCanceled" :key="order" >
                         <td class="texto">{{ order.ticket_number }}</td>
-                        <td class="texto">{{ order.name }}</td>
+                        <td class="texto">{{ order.total_paid}}</td>
+                        <td class="texto">{{ order.points_used_to_pay ? order.points_used_to_pay : 0}}</td>
+                        <td class="texto">{{ order.points_gained ? order.points_gained: 0 }}</td>
                         <td>
                           <div style="display:flex;flex-direction: row;align-items: center;justify-content: center;">
-                            Cancelar pedido
-                            <button class="btn btn-sm btn-outline-secondary" data-toggle="tooltip" title="Cancelar" @click="ordersStore.cancelOrder(order.id)">
+                            <button class="btn btn-sm btn-outline-secondary" data-toggle="tooltip" title="Refund" @click="ordersStore.cancelOrder(order.id)">
                               <svg viewBox="0 0 1024 1024" class="icons-listas">
                                 <path
                                   d="M512 170.667c-188.544 0-341.333 152.832-341.333 341.333s152.789 341.333 341.333 341.333 341.333-152.832 341.333-341.333-152.789-341.333-341.333-341.333zM670.165 609.835c16.683 16.683 16.683 43.648 0 60.331-8.32 8.32-19.243 12.501-30.165 12.501s-21.845-4.181-30.165-12.501l-97.835-97.835-97.835 97.835c-8.32 8.32-19.243 12.501-30.165 12.501s-21.845-4.181-30.165-12.501c-16.683-16.683-16.683-43.648 0-60.331l97.835-97.835-97.835-97.835c-16.683-16.683-16.683-43.648 0-60.331s43.648-16.683 60.331 0l97.835 97.835 97.835-97.835c16.683-16.683 43.648-16.683 60.331 0s16.683 43.648 0 60.331l-97.835 97.835 97.835 97.835z">
