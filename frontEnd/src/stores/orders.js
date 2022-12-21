@@ -129,7 +129,7 @@ export const useOrdersStore = defineStore("orders", () => {
     let updatedOrder = ordersPreparingOrReady.value[orderIdx];
     updatedOrder.status = "D";
     updatedOrder.delivered_by = usersStore.user.id;
-    toast.success("Menssagem: Pedido entregue");
+    toast.success("Pedido entregue");
     try {
       const response = await axios.patch(
         "orders/" + orderId + "/updateEstadoDaOrder",
