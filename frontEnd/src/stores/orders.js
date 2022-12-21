@@ -161,7 +161,7 @@ export const useOrdersStore = defineStore("orders", () => {
       loadingStore.toggleLoading();
       return response.data.data;
     } catch (error) {
-      toast.error("Menssagem:" + error.response);
+      Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
     }finally{
       loadingStore.toggleLoading();
     }
@@ -181,7 +181,7 @@ export const useOrdersStore = defineStore("orders", () => {
       toast.success("Menssagem: pedido cancelado com com sucesso");
       return response.data.data;
     } catch (error) {
-      toast.error("Menssagem:" + error.response.data.message);
+      Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
     }finally{
       loadingStore.toggleLoading();
     }
@@ -202,7 +202,7 @@ export const useOrdersStore = defineStore("orders", () => {
   });
 
   socket.on("pratoParaCozinhar", (product) => {
-    toast.success(`Existe um prato para cozinhar.`);
+    toast.informational(`Existe um prato para cozinhar.`);
   });
 
   return {

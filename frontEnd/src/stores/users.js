@@ -104,7 +104,7 @@ export const useUsersStore = defineStore("users", () => {
       users.value.push(response.data.data);
       return response.data.data.id;
     } catch (error) {
-      toast.error(`${error.response.data.message}`);
+      Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
       throw error;
     }finally{
       loadingStore.toggleLoading();
@@ -122,6 +122,7 @@ export const useUsersStore = defineStore("users", () => {
       ? serverBaseUrl + "/storage/fotos/" + user.value.photo_url
       : serverBaseUrl + "/storage/fotos/anonymos.jpg";
   });
+  
 
   async function logout() {
     try {
@@ -155,7 +156,7 @@ export const useUsersStore = defineStore("users", () => {
       users.value.push(response.data.data);
       return users.value;
     } catch (error) {
-
+      Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
     }finally{
       loadingStore.toggleLoading();
     }

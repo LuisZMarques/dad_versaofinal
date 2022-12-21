@@ -92,7 +92,7 @@ export const useCartStore = defineStore("cart", () => {
           cart.value.status = 'P'
       });
     } else {
-      toast.success("O carrinho está vazio");
+      toast.error("O carrinho está vazio");
     }
 
     
