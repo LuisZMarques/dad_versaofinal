@@ -104,7 +104,7 @@ export const useUsersStore = defineStore("users", () => {
       users.value.push(response.data.data);
       return response.data.data.id;
     } catch (error) {
-      toast.error(`Erro no registo do utilizador.`);
+      toast.error(`${error.response.data.message}`);
       throw error;
     }finally{
       loadingStore.toggleLoading();
@@ -141,19 +141,18 @@ export const useUsersStore = defineStore("users", () => {
     }
   }
 
-  async function updateUser(updateUser) {
+  async function updateUser(updateProduct) {
     try {
-      updateUser.photo_url = base64.value;
+      updateProduct.photo_url = base64.value;
       loadingStore.toggleLoading();
       const response = await axios.put(
-        "users/" + updateUser.id,
-        updateUser
+        "products/" + updateProduct.id,
+        updateProduct
       );
       socket.emit("updateUser", response.data.data);
-      toast.success(`User atualizado com sucesso`);
+      toast.success(`Produto atualizado com sucesso`);
       base64.value = null;
-      user.value = response.data.data
-      loginModal.value = false
+
       return products.value;
     } catch (error) {
 
