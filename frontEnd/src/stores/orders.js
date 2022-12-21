@@ -149,7 +149,7 @@ export const useOrdersStore = defineStore("orders", () => {
     try {
       loadingStore.toggleLoading();
       const response = await axios.post("orders", cartStore.cart);
-      toast.success("Menssagem: pagamento feito com sucesso");
+      toast.success("Pagamento feito com sucesso");
       socket.emit("newOrder", response.data.data);
       cartStore.paymentModal = false;
       cartStore.cartModalShow = false;
@@ -158,7 +158,6 @@ export const useOrdersStore = defineStore("orders", () => {
           socket.emit("pratoParaCozinhar", el.name);
       });
       cartStore.clearCart();
-      loadingStore.toggleLoading();
       return response.data.data;
     } catch (error) {
       Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
@@ -178,7 +177,7 @@ export const useOrdersStore = defineStore("orders", () => {
         "orders/" + orderId + "/updateEstadoDaOrder",
         ordersPreparingOrReady.value[orderIdx]
       );
-      toast.success("Menssagem: pedido cancelado com com sucesso");
+      toast.success("Pedido cancelado com com sucesso");
       return response.data.data;
     } catch (error) {
       Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
