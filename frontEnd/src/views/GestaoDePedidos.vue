@@ -17,7 +17,7 @@
                     <tbody style="background-color: #C9A2FF;" >
                       <tr v-for="order in ordersStore.orderNotCanceled" :key="order" >
                         <td class="texto">{{ order.ticket_number }}</td>
-                        <td class="texto">{{ orderItems(order.products) }}</td>
+                        <td class="texto">{{ order.name }}</td>
                         <td>
                           <div style="display:flex;flex-direction: row;align-items: center;justify-content: center;">
                             Cancelar pedido
