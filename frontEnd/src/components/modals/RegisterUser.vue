@@ -2,73 +2,168 @@
   <modal :show="props.show">
     <div class="row justify-content-center">
       <div class="col-4">
-        <div class="card text-white"
-          style="background-color: rebeccapurple;max-width: 80%;padding: 1rem;text-align: center;">
+        <div class="card" style="background-color: rebeccapurple">
           <div class="card-body">
             <h2 class="fw-bold mb-2 text-center">Registar</h2>
-            <div class="mb-3 margin-divs">
-              <p class="text-center margin-texts"><label for="email" class=" fw-bold">Nome:</label></p>
-              <input type="text" class="form-control form-control-sm" id="name" placeholder="name" v-model="createUser.name">
-            </div>
-            <div class=" mb-3 margin-divs">
-              <p class="text-center margin-texts"><label for="email" class="form-label fw-bold">Email:</label></p>
-              <input type="email" class="form-control form-control-sm" id="email" placeholder="name@example.com"
-                v-model="createUser.email">
-            </div>
+
             <div class="mb-3 margin-divs">
               <p class="text-center margin-texts">
-                <label for="password" class="form-label fw-bold">Password:</label>
+                <label for="email" class="fw-bold">Nome:</label>
               </p>
-              <input type="password" class="form-control form-control-sm" id="password" placeholder="*******"
-                v-model="createUser.password">
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                id="name"
+                placeholder="name"
+                v-model="user.name"
+              />
             </div>
-            <div class="md-3 margin-divs" >
+            <div class="mb-3 margin-divs">
               <p class="text-center margin-texts">
-                <label for="photo_do_user" class="form-label fw-bold">Foto:</label>
+                <label for="email" class="form-label fw-bold">Email:</label>
               </p>
-              <input class="form-control form-control-sm" id="photo_url" type="file"
-                @change="usersStore.uploadImage($event)">
+              <input
+                type="email"
+                class="form-control form-control-sm"
+                id="email"
+                placeholder="name@example.com"
+                v-model="user.email"
+              />
+            </div>
+            <div class="mb-3 margin-divs">
+              <p class="text-center margin-texts">
+                <label for="password" class="form-label fw-bold"
+                  >Password:</label
+                >
+              </p>
+              <input
+                type="password"
+                class="form-control form-control-sm"
+                id="password"
+                placeholder="*******"
+                v-model="user.password"
+              />
             </div>
             <div class="md-3 margin-divs">
               <p class="text-center margin-texts">
-                <label for="telemovel" class="form-label fw-bold">Nº Telemovel:</label>
+                <label for="photo_do_user" class="form-label fw-bold"
+                  >Foto:</label
+                >
               </p>
-              <input type="text" size="16" v-model="createCustomer.phone" class="form-control form-control-sm"
-                placeholder="colocar o seu numero de telemóvel" />
+              <input
+                class="form-control form-control-sm"
+                id="photo_url"
+                type="file"
+                @change="uploadImage($event)"
+              />
             </div>
             <div class="md-3 margin-divs">
-              <p class="text-center margin-texts"><label for="nif" class="form-label fw-bold">NIF:</label></p>
-              <input type="text" size="16" v-model="createCustomer.nif" class="form-control form-control-sm" placeholder="colocar o seu NIF" />
+              <p class="text-center margin-texts">
+                <label for="telemovel" class="form-label fw-bold"
+                  >Nº Telemovel:</label
+                >
+              </p>
+              <input
+                type="text"
+                size="16"
+                v-model="user.customer.phone"
+                class="form-control form-control-sm"
+                placeholder="colocar o seu numero de telemóvel"
+              />
             </div>
             <div class="md-3 margin-divs">
-              <p class="text-center margin-texts"><label for="tipoPagamento" class="form-label fw-bold">Tipo de Pagamento Preferencial:</label></p>
-              <select class="form-select form-select-sm" aria-label=".form-select-sm example"
-                v-model="createCustomer.default_payment_type">
-                <option selected>Selecionar</option>
+              <p class="text-center margin-texts">
+                <label for="nif" class="form-label fw-bold">NIF:</label>
+              </p>
+              <input
+                type="text"
+                size="16"
+                v-model="user.customer.nif"
+                class="form-control form-control-sm"
+                placeholder="colocar o seu NIF"
+              />
+            </div>
+            <div class="md-3 margin-divs">
+              <p class="text-center margin-texts">
+                <label for="tipoPagamento" class="form-label fw-bold"
+                  >Tipo de Pagamento Preferencial:</label
+                >
+              </p>
+              <select
+                class="form-select form-select-sm"
+                aria-label=".form-select-sm example"
+                v-model="user.customer.default_payment_type"
+              >
+                <option value="">Selecionar</option>
                 <option value="VISA">VISA</option>
                 <option value="PAYPAL">PAYPAL</option>
                 <option value="MBWAY">MBWAY</option>
               </select>
             </div>
-            <div class="md-3 margin-divs" v-if="createCustomer.default_payment_type == 'PAYPAL'">
-              <p class="text-center margin-texts"><label for="emailPaypal" class="form-label fw-bold">Email Paypal:</label></p>
-              <input type="email" v-model="createCustomer.default_payment_reference" class="form-control form-control-sm margin-inputs"
-                placeholder="colocar o seu email" />
+            <div
+              class="md-3 margin-divs"
+              v-if="user.customer.default_payment_type == 'PAYPAL'"
+            >
+              <p class="text-center margin-texts">
+                <label for="emailPaypal" class="form-label fw-bold"
+                  >Email Paypal:</label
+                >
+              </p>
+              <input
+                type="email"
+                v-model="user.customer.default_payment_reference"
+                class="form-control form-control-sm margin-inputs"
+                placeholder="colocar o seu email"
+              />
             </div>
-            <div class="md-3 margin-divs" v-if="createCustomer.default_payment_type == 'VISA'">
-              <p class="text-center margin-texts"><label for="visa" class="form-label fw-bold">Nº Cartão:</label></p>
-              <input type="text" size="16" v-model="createCustomer.default_payment_reference" class="form-control form-control-sm margin-inputs"
-                placeholder="colocar o seu numero de cartão" />
+            <div
+              class="md-3 margin-divs"
+              v-if="user.customer.default_payment_type == 'VISA'"
+            >
+              <p class="text-center margin-texts">
+                <label for="visa" class="form-label fw-bold">Nº Cartão:</label>
+              </p>
+              <input
+                type="text"
+                size="16"
+                v-model="user.customer.default_payment_reference"
+                class="form-control form-control-sm margin-inputs"
+                placeholder="colocar o seu numero de cartão"
+              />
             </div>
-            <div class="md-3 margin-divs" v-if="createCustomer.default_payment_type == 'MBWAY'">
-              <p class="text-center margin-texts"><label for="telemovelMbway" class="form-label fw-bold">Nº Telemovel:</label></p>
-              <input type="text" size="9" v-model="createCustomer.default_payment_reference" class="form-control form-control-sm margin-inputs"
-                placeholder="colocar o seu nº de telemóvel"  />
+            <div
+              class="md-3 margin-divs"
+              v-if="user.customer.default_payment_type == 'MBWAY'"
+            >
+              <p class="text-center margin-texts">
+                <label for="telemovelMbway" class="form-label fw-bold"
+                  >Nº Telemovel:</label
+                >
+              </p>
+              <input
+                type="text"
+                size="9"
+                v-model="user.customer.default_payment_reference"
+                class="form-control form-control-sm margin-inputs"
+                placeholder="colocar o seu nº de telemóvel"
+              />
             </div>
             <div class="d-grid">
-              <div class="btn-group" style="margin-bottom : 0.5rem">
-                <button class="btn btrn-sm btn-outline-danger" type="button" @click="$emit('close')">Cancelar</button>
-                <button class="btn btrn-sm btn-outline-success" type="button" @click="checkInputs">Registar</button>
+              <div class="btn-group" style="margin-bottom: 0.5rem">
+                <button
+                  class="btn btrn-sm btn-outline-danger"
+                  type="button"
+                  @click="$emit('close')"
+                >
+                  Cancelar
+                </button>
+                <button
+                  class="btn btrn-sm btn-outline-success"
+                  type="button"
+                  @click="createCostumer()"
+                >
+                  Registar
+                </button>
               </div>
             </div>
           </div>
@@ -80,100 +175,77 @@
 
 <script setup>
 import { ref, inject } from "vue";
-import Modal from '@/components/global/modal.vue'
-import { useUsersStore } from '@/stores/users.js'
-import { useCustomerStore } from '@/stores/customer.js'
+import Modal from "@/components/global/modal.vue";
+import { useUsersStore } from "@/stores/users.js";
 
+const axios = inject("axios");
 const toast = inject("toast");
-const emit = defineEmits(['close'])
+const socket = inject("socket");
+const emit = defineEmits(["close"]);
 
-const usersStore = useUsersStore()
-const customersStore = useCustomerStore()
+const usersStore = useUsersStore();
+
+const base64 = ref();
 
 let props = defineProps({
-  user: {
-    type: Object,
-    required: true
-  },
-  customer: {
-    type: Object,
-    required: true
-  },
   show: {
-    type: Boolean
-  }
-})
+    type: Boolean,
+  },
+});
 
-let createUser = ref(props.user)
-let createCustomer = ref(props.customer)
+let user = ref({
+  email: "",
+  name: "",
+  photo_url: "",
+  type: "C",
+  customer: {
+    phone: "",
+    nif: "",
+    default_payment_reference: "",
+    default_payment_type: "",
+  },
+});
 
-/* 
-const save = async () => {
+async function createCostumer() {
   try {
-    if(editingCustomer.value.default_payment_reference == null)
-      throw("Dados em falta")
-    const responseUserId = await usersStore.register(editingUser.value)
-    const responseCustomer = await customersStore.register(editingCustomer.value, responseUserId)
-    if(responseCustomer instanceof Error)
-      throw new Error("Formulário inválido")
-    else if (responseCustomer)
-          emit('close')
+    //loadingStore.toggleLoading();
+    //updateUser.photo_url = base64.value;
+    const response = await axios.post("customers/", user.value);
+    //socket.emit("updateUser", response.data.data);
+    toast.success(`Costumer criado com sucesso`);
+    //base64.value = null;
+    usersStore.credentials.username = user.value.email;
+    usersStore.credentials.password = user.value.password;
+    usersStore.login();
+    usersStore.user = response.data.data
+    return response.data.data;
   } catch (error) {
-    toast.error("dados em falta")
-    console.log(error)
+    toast.error(error.response.data.message);
+  } finally {
+    //loadingStore.toggleLoading();
   }
-} */
+}
 
+let uploadImage = (e) => {
+  createBase64Image(e.target.files[0]);
+};
 
-const checkInputs = async () => {
-  if (createUser.value.name == null) {
-    return toast.error("Nome em falta")
-  }
-  if (createUser.value.email == null) {
-    return toast.error("Email em falta")
-  }
-
-  if (createUser.value.password == null) {
-    return toast.error("Password em falta")
-  }
-  if (createCustomer.value.phone == null) {
-    return toast.error("Telemóvel em falta")
-  }
-  if (createCustomer.value.nif == null) {
-    return toast.error("NIF em falta")
-  }
-  if (createCustomer.value.default_payment_type == null) {
-    return toast.error("Tipo de pagamento em falta")
-  }
-  if (createCustomer.value.default_payment_reference == null) {
-    return toast.error("Referência de pagamento em falta")
-  }
-  //Registar user e receber ID
-  const responseUserId = await usersStore.register(createUser.value);
-
-  //Registar customer com ID do user
-  const responseCustomer = await usersStore.register(createCustomer.value);
-
-    if (responseCustomer instanceof Error)
-      throw new Error("Erro a criar customer")
-
-    if (responseUserId instanceof Error)
-      throw new Error("Erro a obter id do user")
-    
-
-  createUser.value = {}
-  createCustomer.value = {}
-return toast.sucess("Cliente" + createUser.value.name + "registado com sucesso com nº de Cliente :" + responseCustomer.value.id)
+function createBase64Image(FileObject) {
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    base64.value = event.target.result;
+  };
+  reader.readAsDataURL(FileObject);
 }
 </script>
-<style scoped>  
-.margin-divs{
+<style scoped>
+.margin-divs {
   margin-bottom: 0.5rem;
 }
-.margin-texts{
+.margin-texts {
   margin-bottom: 0;
 }
-.margin-inputs{
+.margin-inputs {
   margin-bottom: 2rem;
 }
 </style>
