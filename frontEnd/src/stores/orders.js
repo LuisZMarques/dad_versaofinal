@@ -74,7 +74,6 @@ export const useOrdersStore = defineStore("orders", () => {
       loadingStore.toggleLoading();
       const response = await axios.get("orders");
       allOrders.value = response.data.data;
-      isLoading.value = false;
     } catch (error) {
       clearOrders();
       throw error;
