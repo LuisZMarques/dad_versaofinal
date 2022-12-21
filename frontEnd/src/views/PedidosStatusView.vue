@@ -13,8 +13,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div style="width: 100%; height: auto; display: flex;background-color:#e92b2bff;">
-
+    <div style="width: 100%; height: 100vw; display: flex;background-color:#e92b2bff;">
         <div class="col text-center">
             <p style="color:white; font-size:xx-large"> Preparing </p>
             <div class="col" v-for="orderPreparing in ordersStore.ordersPreparing" :key="orderPreparing.id">

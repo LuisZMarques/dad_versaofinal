@@ -27,7 +27,7 @@ class StoreUserRequest extends FormRequest
             ],
             'type' => 'required|in:EM,EC,ED,C',
             'blocked' => 'required|integer|digits:1',
-            'photo_url' => 'required|string',
+            'photo_url' => 'nullable|string',
             'custom' => 'nullable|json',
         ];
     }

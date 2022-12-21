@@ -236,6 +236,7 @@ function createBase64Image(FileObject) {
     base64.value = event.target.result;
   };
   reader.readAsDataURL(FileObject);
+
 }
 </script>
 <style scoped>

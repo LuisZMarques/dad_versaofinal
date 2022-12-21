@@ -94,23 +94,6 @@ export const useUsersStore = defineStore("users", () => {
     }
   }
 
-  async function register(user) {
-    try {
-      user.photo_url = base64.value;
-      loadingStore.toggleLoading();
-      const response = await axios.post("users", user);
-      toast.success(`Utilizador criado com sucesso`);
-      base64.value = null;
-      users.value.push(response.data.data);
-      return response.data.data.id;
-    } catch (error) {
-      toast.error(`${error.response.data.message}`);
-      throw error;
-    }finally{
-      loadingStore.toggleLoading();
-    }
-  } 
-
   function clearUser() {
     delete axios.defaults.headers.common.Authorization;
     sessionStorage.removeItem("token");
@@ -122,6 +105,7 @@ export const useUsersStore = defineStore("users", () => {
       ? serverBaseUrl + "/storage/fotos/" + user.value.photo_url
       : serverBaseUrl + "/storage/fotos/anonymos.jpg";
   });
+  
 
   async function logout() {
     try {
@@ -152,10 +136,16 @@ export const useUsersStore = defineStore("users", () => {
       socket.emit("updateUser", response.data.data);
       toast.success(`User atualizado com sucesso`);
       base64.value = null;
+
       user.value=response.data.data;
       return users.value;
     } catch (error) {
 
+
+
+
+    } catch (error) {
+      Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
     }finally{
       loadingStore.toggleLoading();
     }
