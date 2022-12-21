@@ -152,7 +152,7 @@ const checkInputs = async () => {
   const responseUserId = await usersStore.register(createUser.value);
 
   //Registar customer com ID do user
-  const responseCustomer = await usersStore.register(createCustomer.value);
+  const responseCustomer = await customersStore.register(createCustomer.value,responseUserId);
 
     if (responseCustomer instanceof Error)
       throw new Error("Erro a criar customer")
@@ -163,7 +163,8 @@ const checkInputs = async () => {
 
   createUser.value = {}
   createCustomer.value = {}
-return toast.sucess("Cliente" + createUser.value.name + "registado com sucesso com nº de Cliente :" + responseCustomer.value.id)
+  emit('close')
+return toast.success("Cliente" + createUser.value.name + "registado com sucesso com nº de Cliente :" + responseCustomer.id)
 }
 </script>
 <style scoped>  
