@@ -6,41 +6,42 @@
           style="background-color: rebeccapurple;max-width: 80%;padding: 1rem;text-align: center;">
           <div class="card-body">
             <h2 class="fw-bold mb-2 text-center">Registar</h2>
-            <div class="mb-3">
-              <p class="text-center"><label for="email" class="form-label fw-bold">Nome:</label></p>
-              <input type="text" class="form-control" id="name" placeholder="name" v-model="createUser.name">
+            <div class="mb-3 margin-divs">
+              <p class="text-center margin-texts"><label for="email" class=" fw-bold">Nome:</label></p>
+              <input type="text" class="form-control form-control-sm" id="name" placeholder="name" v-model="createUser.name">
             </div>
-            <div class=" mb-3">
-              <p class="text-center"><label for="email" class="form-label fw-bold">Email:</label></p>
-              <p>message : {{ createUser.email }}</p>
-              <input type="email" class="form-control" id="email" placeholder="name@example.com"
+            <div class=" mb-3 margin-divs">
+              <p class="text-center margin-texts"><label for="email" class="form-label fw-bold">Email:</label></p>
+              <input type="email" class="form-control form-control-sm" id="email" placeholder="name@example.com"
                 v-model="createUser.email">
             </div>
-            <div class="mb-3">
-              <p class="text-center">
+            <div class="mb-3 margin-divs">
+              <p class="text-center margin-texts">
                 <label for="password" class="form-label fw-bold">Password:</label>
               </p>
-              <input type="password" class="form-control" id="password" placeholder="*******"
+              <input type="password" class="form-control form-control-sm" id="password" placeholder="*******"
                 v-model="createUser.password">
             </div>
-            <div class="md-3">
-              <p class="text-center">
+            <div class="md-3 margin-divs" >
+              <p class="text-center margin-texts">
                 <label for="photo_do_user" class="form-label fw-bold">Foto:</label>
               </p>
               <input class="form-control form-control-sm" id="photo_url" type="file"
                 @change="usersStore.uploadImage($event)">
             </div>
-            <div class="md-3">
-              <label class="labels-modals">Nº de Telemóvel:</label>
-              <input type="text" size="16" v-model="createCustomer.phone" class="input"
+            <div class="md-3 margin-divs">
+              <p class="text-center margin-texts">
+                <label for="telemovel" class="form-label fw-bold">Nº Telemovel:</label>
+              </p>
+              <input type="text" size="16" v-model="createCustomer.phone" class="form-control form-control-sm"
                 placeholder="colocar o seu numero de telemóvel" />
             </div>
-            <div class="md-3">
-              <label class="labels-modals">NIF(Número de Identificação Fiscal):</label>
-              <input type="text" size="16" v-model="createCustomer.nif" class="input" placeholder="colocar o seu NIF" />
+            <div class="md-3 margin-divs">
+              <p class="text-center margin-texts"><label for="nif" class="form-label fw-bold">NIF:</label></p>
+              <input type="text" size="16" v-model="createCustomer.nif" class="form-control form-control-sm" placeholder="colocar o seu NIF" />
             </div>
-            <div class="md-3">
-              <label for="tipo_de_producto text-center" class="form-label fw-bold">Tipo:</label>
+            <div class="md-3 margin-divs">
+              <p class="text-center margin-texts"><label for="tipoPagamento" class="form-label fw-bold">Tipo de Pagamento Preferencial:</label></p>
               <select class="form-select form-select-sm" aria-label=".form-select-sm example"
                 v-model="createCustomer.default_payment_type">
                 <option selected>Selecionar</option>
@@ -49,25 +50,24 @@
                 <option value="MBWAY">MBWAY</option>
               </select>
             </div>
-            <div class="md-3" v-if="createCustomer.default_payment_type == 'PAYPAL'">
-              <label class="labels-modals">Email do Paypal:</label>
-              <p>message : {{ createCustomer.default_payment_reference }}</p>
-              <input type="email" v-model="createCustomer.default_payment_reference" class="input"
+            <div class="md-3 margin-divs" v-if="createCustomer.default_payment_type == 'PAYPAL'">
+              <p class="text-center margin-texts"><label for="emailPaypal" class="form-label fw-bold">Email Paypal:</label></p>
+              <input type="email" v-model="createCustomer.default_payment_reference" class="form-control form-control-sm margin-inputs"
                 placeholder="colocar o seu email" />
             </div>
-            <div class="md-3" v-if="createCustomer.default_payment_type == 'VISA'">
-              <label class="labels-modals">Nº Cartão VISA:</label>
-              <input type="text" size="16" v-model="createCustomer.default_payment_reference" class="input"
+            <div class="md-3 margin-divs" v-if="createCustomer.default_payment_type == 'VISA'">
+              <p class="text-center margin-texts"><label for="visa" class="form-label fw-bold">Nº Cartão:</label></p>
+              <input type="text" size="16" v-model="createCustomer.default_payment_reference" class="form-control form-control-sm margin-inputs"
                 placeholder="colocar o seu numero de cartão" />
             </div>
-            <div class="md-3" v-if="createCustomer.default_payment_type == 'MBWAY'">
-              <label class="labels-modals">Nº Telemóvel:</label>
-              <input type="text" size="9" v-model="createCustomer.default_payment_reference" class="input"
-                placeholder="colocar o seu nº de telemóvel" />
+            <div class="md-3 margin-divs" v-if="createCustomer.default_payment_type == 'MBWAY'">
+              <p class="text-center margin-texts"><label for="telemovelMbway" class="form-label fw-bold">Nº Telemovel:</label></p>
+              <input type="text" size="9" v-model="createCustomer.default_payment_reference" class="form-control form-control-sm margin-inputs"
+                placeholder="colocar o seu nº de telemóvel"  />
             </div>
             <div class="d-grid">
               <div class="btn-group" style="margin-bottom : 0.5rem">
-                <button class="btn btrn-sm btn-outline-danger" type="button" @click="$emit('close')">Cancel</button>
+                <button class="btn btrn-sm btn-outline-danger" type="button" @click="$emit('close')">Cancelar</button>
                 <button class="btn btrn-sm btn-outline-success" type="button" @click="checkInputs">Registar</button>
               </div>
             </div>
@@ -154,14 +154,26 @@ const checkInputs = async () => {
   //Registar customer com ID do user
   const responseCustomer = await usersStore.register(createCustomer.value);
 
-  if (responseCustomer instanceof Error)
-    throw new Error("Erro a criar customer")
+    if (responseCustomer instanceof Error)
+      throw new Error("Erro a criar customer")
 
-  if (responseUserId instanceof Error)
-    throw new Error("Erro a obter id do user")
-  
-  
+    if (responseUserId instanceof Error)
+      throw new Error("Erro a obter id do user")
+    
+
+  createUser.value = {}
+  createCustomer.value = {}
 return toast.sucess("Cliente" + createUser.value.name + "registado com sucesso com nº de Cliente :" + responseCustomer.value.id)
 }
 </script>
-
+<style scoped>  
+.margin-divs{
+  margin-bottom: 0.5rem;
+}
+.margin-texts{
+  margin-bottom: 0;
+}
+.margin-inputs{
+  margin-bottom: 2rem;
+}
+</style>
