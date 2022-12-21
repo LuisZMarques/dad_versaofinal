@@ -25,14 +25,23 @@ class StoreCustomerRequest extends FormRequest
      */
     public function rules()
     {
+        /*         if ($this->customer['payment_type'] == "VISA")
+            $payment_reference = 'digits:16';
+        elseif ($this->customer['payment_type'] == "MBWAY")
+            $payment_reference = 'digits:9';
+        else
+            $payment_reference = 'email'; */
+
         return [
-            'user_id' => 'required|integer', 'unique:users,id',
-            'phone' => 'required|string|max:20',
-            'points' => 'required|integer',
-            'nif' => 'required|string|max:9',
-            'default_payment_type' => 'required|string|in:VISA,PAYPAL,MBWAY',
-            'default_payment_reference' => 'required|string|max:255',
-            'custom' => 'nullable|json',
+            'email' => ['required', 'email'],
+            'name' => ['required'],
+            'photo_url' => ['nullable'],
+            'type' => ['required'],
+            'password' => ['sometimes'],
+            'customer.phone' => ['required', 'digits:9'],
+            'customer.nif' => ['required', 'digits:9'],
+            'customer.default_payment_type' => ['required', 'string', 'in:VISA,PAYPAL,MBWAY'],
+            'customer.default_payment_reference' => ['required'],
         ];
     }
 }

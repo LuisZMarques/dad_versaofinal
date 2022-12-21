@@ -9,14 +9,12 @@ use App\Models\User;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 use App\Http\Resources\CustomerResource;
-use App\Services\CustomerService;
+use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class CustomerController extends Controller
 {
-   /* public function __construct(private CustomerService $customerService)
-    {
-    }*/
-
     public function index()
     {
         return CustomerResource::collection(Customer::all());
@@ -24,32 +22,44 @@ class CustomerController extends Controller
 
     public function store(StoreCustomerRequest $request)
     {
-        //$this->authorize('create', Customer::class);
 
-        //$customer = $this->customerService->store($request->validate());
-        $user = User::find($request->validated("user_id"));
+        $imageName = null;
 
-        $customer = $user->customer()->create([
-            'phone' => $request->phone,
-            'points' => $request->points,
-            'nif' => $request->nif,
-            'default_payment_type' => $request->default_payment_type,
-            'default_payment_reference' => $request->default_payment_reference
+        if ($request->photo_url) {
+            $image_64 = $request->photo_url;
+
+            $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];   // .jpg .png .pdf
+
+            $replace = substr($image_64, 0, strpos($image_64, ',') + 1);
+
+
+            $image = str_replace($replace, '', $image_64);
+
+            $image = str_replace(' ', '+', $image);
+
+            $imageName = Str::random(10) . '.' . $extension;
+
+            Storage::disk('public')->put('/fotos/' . $imageName, base64_decode($image));
+        }
+
+        $user = User::create([
+            'name' => $request->validated('name'),
+            'email' => $request->validated('email'),
+            'password' => bcrypt($request->validated('password')),
+            'type' => $request->validated('type'),
+            'blocked' => 0,
+            'photo_url' => $imageName,
         ]);
 
+        $user->customer()->create([
+            'phone' => $request->validated('customer.phone'),
+            'points' => 0,
+            'nif' => $request->validated('customer.nif'),
+            'default_payment_type' => $request->validated('customer.default_payment_type'),
+            'default_payment_reference' => $request->validated('customer.default_payment_reference')
+        ]);
 
-        /*$customer = new Customer();
-
-        $customer->user_id = $request->user_id;
-        $customer->phone = $request->phone;
-        $customer->points = $request->points;
-        $customer->nif = $request->nif;
-        $customer->default_payment_type = $request->default_payment_type;
-        $customer->default_payment_reference = $request->default_payment_reference;*/
-
-        $customer->save();
-
-        return new CustomerResource($customer);
+        return new UserResource($user);
     }
 
     public function show(Customer $customer)
@@ -64,16 +74,49 @@ class CustomerController extends Controller
     public function show_me(Request $request)
     {
 
-       return new CustomerResource($request->user()->customer);
+        return new CustomerResource($request->user()->customer);
         //return new Customer::where('user_id', $id)->first();
         //return new CustomerResource($request->customer());
     }
 
     public function update(UpdateCustomerRequest $request, Customer $customer)
     {
-        $this->authorize('update', Customer::class);
+        //$this->authorize('update', Customer::class);
 
-        $this->customerService->update($request->validate(), $customer);
+
+        $imageName = null;
+
+        if ($request->photo_url) {
+            $image_64 = $request->photo_url;
+
+            $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];   // .jpg .png .pdf
+
+            $replace = substr($image_64, 0, strpos($image_64, ',') + 1);
+
+
+            $image = str_replace($replace, '', $image_64);
+
+            $image = str_replace(' ', '+', $image);
+
+            $imageName = Str::random(10) . '.' . $extension;
+
+            Storage::disk('public')->put('/fotos/' . $imageName, base64_decode($image));
+        }
+
+        $customer->update([
+            'phone' => $request->validated('customer.phone'),
+            'nif' => $request->validated('customer.nif'),
+            'default_payment_type' => $request->validated('customer.default_payment_type'),
+            'default_payment_reference' => $request->validated('customer.default_payment_reference')
+        ]);
+
+        $customer->user()->update([
+            'name' => $request->validated('name'),
+            'email' => $request->validated('email'),
+            'type' => $request->validated('type'),
+            'blocked' => $request->validated('blocked'),
+            'photo_url' => $imageName,
+        ]);
 
         return new CustomerResource($customer);
     }

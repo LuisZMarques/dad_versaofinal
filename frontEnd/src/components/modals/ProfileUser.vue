@@ -69,12 +69,6 @@ let loadUser = (id) => {
     })
 }
 
-watch(
-  () => props.id,
-  (newValue) => {
-      loadUser(newValue)
-  },
-)
 onMounted(() => {
   loadUser(props.id)
 })

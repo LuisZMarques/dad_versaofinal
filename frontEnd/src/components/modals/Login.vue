@@ -37,7 +37,7 @@
         </div>
       </div>
 
-      <register-modal :show="registerModal" :user="newUser()" :customer="newCustomer()" @close="registerModal = false" />
+      <register-modal :show="registerModal" @close="registerModal = false" />
     </div>
   </modal>
 </template>
@@ -54,30 +54,6 @@ const props = defineProps(['show'])
 const registerModal = ref(false)
 
 const usersStore = useUsersStore()
-const newUser = () => {
-  return {
-  name: null,
-  email: null,
-  password: null,
-  type:'C',
-  blocked:0,
-  photo_url:"",
-  custom:null
-  };
-};
-
-const newCustomer = () => {
-  return {
-  user_id:null,
-  phone: null,
-  points: 0,
-  nif:null,
-  default_payment_type:null,
-  default_payment_reference:null,
-  custom:null
-  };
-};
-
 
 
 </script>

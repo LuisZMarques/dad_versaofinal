@@ -127,8 +127,8 @@ export const useUsersStore = defineStore("users", () => {
 
   async function updateUser(updateUser) {
     try {
-      updateUser.photo_url = base64.value;
       loadingStore.toggleLoading();
+      updateUser.photo_url = base64.value;
       const response = await axios.put(
         "users/" + updateUser.id,
         updateUser
@@ -136,8 +136,13 @@ export const useUsersStore = defineStore("users", () => {
       socket.emit("updateUser", response.data.data);
       toast.success(`User atualizado com sucesso`);
       base64.value = null;
-      user.value = response.data.data
-      return products.value;
+
+      user.value=response.data.data;
+      return users.value;
+    } catch (error) {
+
+
+
 
     } catch (error) {
       Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
