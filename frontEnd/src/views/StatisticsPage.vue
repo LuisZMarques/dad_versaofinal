@@ -1,27 +1,31 @@
 <template>
-    <div>
-        <div class="row" style="width: 100%;">
-            <canvas id="myChart"></canvas>
+    <div style="width:100%;height:100vw;background-color: rebeccapurple;">
+        <div style="display:block;width:900px;height:400px">
+            <canvas id="pieChart" ref="myChart"></canvas>
         </div>
     </div>
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref} from "vue";
 import Chart from 'chart.js/auto'
+
+
 const data = {
     labels: [
-        'Red',
-        'Blue',
-        'Yellow'
+        'Hot Dish',
+        'Cold Dish',
+        'Drink',
+        'Dessert'
     ],
     datasets: [{
-        label: 'My First Dataset',
-        data: [300, 50, 100],
+        label: 'Produtos Vendidos',
+        data: [300, 50, 100, 50],
         backgroundColor: [
             'rgb(255, 99, 132)',
             'rgb(54, 162, 235)',
-            'rgb(255, 205, 86)'
+            'rgb(255, 205, 86)',
+            'rgb(255, 0, 86)'
         ],
         hoverOffset: 4
     }]
@@ -31,10 +35,10 @@ const config = {
     data: data,
 };
 onMounted(() => {
-    const myChart = new Chart(
-        document.getElementById('myChart'),
-        config
-    );
+    let pieChart = new Chart(
+    document.getElementById('pieChart'),
+    config
+);
 })
 </script>
 
