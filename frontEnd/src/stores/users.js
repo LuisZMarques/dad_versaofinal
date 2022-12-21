@@ -14,6 +14,7 @@ export const useUsersStore = defineStore("users", () => {
   const users = ref([]);
   const user = ref();
   const base64 = ref();
+  
 
   const credentials = ref({
     username: "",
@@ -93,7 +94,7 @@ export const useUsersStore = defineStore("users", () => {
     }
   }
 
-  async function register(user) {
+/*   async function register(user) {
     try {
       user.photo_url = base64.value;
       loadingStore.toggleLoading();
@@ -108,7 +109,7 @@ export const useUsersStore = defineStore("users", () => {
     }finally{
       loadingStore.toggleLoading();
     }
-  }
+  } */
 
   function clearUser() {
     delete axios.defaults.headers.common.Authorization;
@@ -140,27 +141,24 @@ export const useUsersStore = defineStore("users", () => {
     }
   }
 
-  async function updateUser(updateUser) {
+  async function updateUser(updateProduct) {
     try {
-      updateUser.photo_url = base64.value;
+      updateProduct.photo_url = base64.value;
       loadingStore.toggleLoading();
       const response = await axios.put(
-        "users/" + updateUser.id,
-        updateUser
+        "products/" + updateProduct.id,
+        updateProduct
       );
       socket.emit("updateUser", response.data.data);
-      toast.success(`Dados da conta atualizados com sucesso`);
+      toast.success(`Produto atualizado com sucesso`);
       base64.value = null;
 
-      return users.value;
+      return products.value;
     } catch (error) {
 
     }finally{
       loadingStore.toggleLoading();
     }
-
-    //updateProjectOnArray(response.data.data)
-    //return response.data.data
   }
 
   async function restoreToken() {
@@ -191,7 +189,7 @@ export const useUsersStore = defineStore("users", () => {
     restoreToken,
     uploadImage,
     loadUsers,
-    register,
+    //register,
     user,
     loginModalState,
     perfilModalState,
