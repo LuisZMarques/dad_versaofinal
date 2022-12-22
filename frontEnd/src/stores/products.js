@@ -84,6 +84,29 @@ export const useProductsStore = defineStore("products", () => {
       }
   }
 
+  let deleteProduct = async (productId) => {
+    try {
+      loadingStore.toggleLoading();
+      const response = await axios.delete("products/" + productId);
+      toast.success("Produto eliminado com sucesso");
+      removeProductOnArray(response.data.data);
+      return response.data.data;
+    } catch (error) {
+      Object.values(error.response.data.errors).forEach((errorMessage) =>
+        toast.error(errorMessage.toString())
+      );
+    } finally {
+      loadingStore.toggleLoading();
+    }
+  };
+
+  function removeProductOnArray(product) {
+    let idx = products.value.findIndex((t) => t.id === product.id);
+    if (idx >= 0) {
+      products.value.splice(idx, 1);
+    }
+  }
+
   let uploadImage = (e) => {
     createBase64Image(e.target.files[0]);
   };
@@ -110,6 +133,7 @@ export const useProductsStore = defineStore("products", () => {
 
   return {
     products,
+    deleteProduct,
     loadProducts,
     saveProduct,
     uploadImage,
