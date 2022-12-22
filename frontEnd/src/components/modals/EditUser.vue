@@ -166,9 +166,9 @@ async function updateCostumer() {
       editUser.value
     );
     toast.success(`Costumer atualizado com sucesso`);
-    base64.value = null;
-    emit("close");
     updateUserOnArray(response.data.data)
+    base64.value = null;
+    emit("close");    
     return response.data.data;
   } catch (error) {
     Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));

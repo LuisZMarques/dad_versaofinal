@@ -36,7 +36,7 @@
                         </td>
                       </tr>
                       <tr v-if="ordersStore.orderNotCanceled.length == 0" >
-                        <td colspan="3">Sem pedidos para gerir</td>
+                        <td colspan="5">Sem pedidos para gerir</td>
                       </tr>
                     </tbody>
                   </table>

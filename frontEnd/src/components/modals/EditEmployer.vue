@@ -22,7 +22,7 @@
               <input type="password" class="form-control" id="password" placeholder="*******"
                 v-model="employer.password">
             </div>
-            <div class="md-3 margin-divs">
+            <div class="md-3 margin-divs" v-if="usersStore.user?.type =='EM'">
               <p class="text-cente margin-texts">
                 <label for="password" class="form-label fw-bold">Tipo de Funcionário:</label>
               </p>

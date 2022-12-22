@@ -13,6 +13,7 @@ import StatisticsPage from "@/views/StatisticsPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+
   routes: [
     {
       path: "/",
@@ -59,8 +60,11 @@ const router = createRouter({
       path: "/estatisticas",
       name: "statistics",
       component: StatisticsPage,
-    }
-
+    },
+    {
+      path: "/logout",
+      name: "logout",
+    },
   ],
 });
 
@@ -82,6 +86,11 @@ router.beforeEach(async (to, from, next) => {
     return;
   }
 
+  if (to.name == "logout") {
+    usersStore.logout();
+    next({ name: "home" });
+    return;
+  }
   if (to.name == "home") {
     next();
     return;

@@ -105,6 +105,9 @@ export const useUsersStore = defineStore("users", () => {
       : serverBaseUrl + "/storage/fotos/anonymos.jpg";
   });
   
+  let userName = computed(() => {
+    return user.value?.name ?? "anónimo";
+  });
 
   async function logout() {
     try {
@@ -116,7 +119,7 @@ export const useUsersStore = defineStore("users", () => {
       socket.emit('loggedOut', user)
       clearUser();
       delete axios.defaults.headers.common.Authorization;
-      location.reload();
+      //location.reload();
       return true;
     } catch (error) {
       return false;
@@ -186,6 +189,7 @@ export const useUsersStore = defineStore("users", () => {
     errors,
     photoFullUrl,
     usersList,
-    searchUser
+    searchUser,
+    userName
   };
 });

@@ -8,23 +8,23 @@
         height="100"
         :width="100"
       />
-      
+
       <span class="sidebar-nome-user-dinamico">{{
         usersStore.user?.name ?? "anónimo"
       }}</span>
       <div class="sidebar-container-acesso-login">
-        <button
-          class="botoes-com-border button botoes-sidebar-perfil"
-          v-if="usersStore.user"
-          @click="usersStore.logout"
+        <router-link
+        v-if="usersStore.user"
+          :to="{ name: 'logout' }"
+          class="btn btn-sm p-0 botoes-com-border button botoes-sidebar-perfil"
         >
           <svg viewBox="0 0 1024 1024" class="icons-sidebar-perfil">
             <path
               d="M768 640v-128h-320v-128h320v-128l192 192zM704 576v256h-320v192l-384-192v-832h704v320h-64v-256h-512l256 128v576h256v-192z"
             ></path>
           </svg>
-          <span class="texto-botoes-perfil-sidebar">Logout</span>
-        </button>
+          <span class="texto-botoes-perfil-sidebar">Logout</span></router-link
+        >
         <button
           class="botoes-com-border button botoes-sidebar-perfil"
           @click="perfilModal = true"
@@ -83,7 +83,10 @@
         <router-link
           :to="{ name: 'customer-orders-history' }"
           class="sidebar-navlink button botoes-sidebar-nav botoes-troca-cor-efeito-hover-sidebar"
-          v-if="usersStore.user && (usersStore.user?.type == null || usersStore.user?.type == 'C')"
+          v-if="
+            usersStore.user &&
+            (usersStore.user?.type == null || usersStore.user?.type == 'C')
+          "
         >
           <svg viewBox="0 0 877.7142857142857 1024" class="icons-sidebar-nav">
             <path
@@ -165,13 +168,13 @@
     :show="perfilModal"
     @close="perfilModal = false"
     :id="usersStore.user.id"
-    v-if="usersStore.user && usersStore.user.type=='C'"
+    v-if="usersStore.user && usersStore.user.type == 'C'"
   />
   <edit-employer
     :show="perfilModal"
     @close="perfilModal = false"
     :id="usersStore.user.id"
-    v-if="usersStore.user && usersStore.user.type!='C'"
+    v-if="usersStore.user && usersStore.user.type != 'C'"
   />
 </template>
 
