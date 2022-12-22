@@ -19,7 +19,7 @@
             </tr>
           </thead>
           <tbody>
-            <cart-card v-for="(item, index) in cartStore.cart.products" :key="index" :item="item" :index="index" />
+            <cart-card v-for="(item, index) in cartStore.cart.products" :item="item" :index="index" />
           </tbody>
         </table>
         <table class="table table-bordered" style="background-color: #e92b2bff; border-color: rebeccapurple">
@@ -35,8 +35,8 @@
               <td class="texto" colspan="3">
                 <select class="form-select" aria-label="Default select example"
                   v-model="cartStore.cart.total_paid_with_points">
-                  <option value="0" selected>Nenhum</option>
-                  <option :value="item.value" v-for="item in numberOfDiscounts()" :key="item">
+                  <option :value="0" selected>Nenhum</option>
+                  <option :value="item.value" v-for="(item) in numberOfDiscounts" :key="item">
                     {{ item.label }} pontos
                   </option>
                 </select>
@@ -63,18 +63,17 @@
       </div>
     </div>
 
-    <payment-modal :show="cartStore.paymentModal" @close="cartStore.paymentModal = false" :card="cartStore.card" />
+    <payment-modal :show="cartStore.paymentModal" @close="cartStore.paymentModal = false" :card="cartStore.cart" />
   </modal>
 </template>
 
 <script setup>
-import { ref, inject, watch, computed } from "vue";
+import { ref, inject, watch, computed, onMounted } from "vue";
 import CartCard from "@/components/modals/CartCard.vue";
 import Modal from "@/components/global/modal.vue";
 import PaymentModal from "@/components/modals/OrderPayment.vue";
 import { useCartStore } from "@/stores/cart.js";
 import { useUsersStore } from "@/stores/users.js";
-import { useCustomerStore } from "@/stores/customer.js";
 import { useOrdersStore } from "@/stores/orders.js";
 
 defineEmits(["close"]);
@@ -89,26 +88,26 @@ watch(
   }
 );
 
+onMounted(() => {
+  numberOfDiscounts.value;
+});
+
 const cartStore = useCartStore();
 
 const ordersStore = useOrdersStore();
 
 const usersStore = useUsersStore();
 
-const customerStore = useCustomerStore();
-
-const axios = inject("axios");
-
 const discount = ref([]);
 
-let numberOfDiscounts = () => {
+let numberOfDiscounts = computed(() => {
   //Substituir pelo valor recebido do endpoint do customer
 
-  for (let i = 1; i < usersStore.user.customer.points / 10; i++) {
+  for (let i = 1; i < usersStore.user?.customer.points / 10; i++) {
     discount.value[i - 1] = { label: 10 * i, value: 5 * i };
   }
   return discount.value;
-};
+});
 
 
 </script>
