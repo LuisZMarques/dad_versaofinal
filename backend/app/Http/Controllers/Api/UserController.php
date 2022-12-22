@@ -90,9 +90,12 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        if($user->type == "C"){
+            $user->customer()->delete();
+        }
         $user->delete();
 
-        return response(null, 204);
+        return new UserResource($user);
     }
 
     public function show_me(Request $request)

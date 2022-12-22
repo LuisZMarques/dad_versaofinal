@@ -129,10 +129,10 @@ class CustomerController extends Controller
 
     public function destroy(Customer $customer)
     {
-        $this->authorize('delete', Customer::class);
+        $customer->orders()->delete();
 
         $customer->delete();
 
-        return response(null, 204);
+        return new CustomerResource($customer);
     }
 }

@@ -185,9 +185,12 @@ class OrderController extends Controller
 
     public function destroy(Order $order)
     {
+       
+        $order->products()->delete();
+        
         $order->delete();
 
-        return response(null, 204);
+        return new OrderResource($order);
     }
 
     public function payments($data)
