@@ -38,7 +38,7 @@ let productReady = (index) => {
         );
         if (isAllReadyForDelivering(orderId)) {
             orderPreparedToReady(orderId);
-            socket.emit("pratoProntoDelivery", updatedOrder);
+            socket.emit("pratoProntoDelivery", orderId);
         }
         computed(() => orderId, () => {
             grid.value = !grid.value
@@ -77,6 +77,7 @@ function isAllReadyForDelivering(orderId) {
         if (el.pivot.status != "R") boolean = false;
     });
 
+    if (boolean) socket.emit("pratoProntoDelivery", orderId);
     return boolean;
 }
 
