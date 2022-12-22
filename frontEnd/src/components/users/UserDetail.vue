@@ -38,8 +38,9 @@
       </div>
     </td>
   </tr>
-  <edit-user :show="editModal" @close="editModal = false" :id="user.id" v-if="user.type=='C'" />
-  <edit-employer :show="editModal" @close="editModal = false" :id="user.id" v-if="user.type!='C'" />
+  <edit-user :show="editModal" @close="editModal = false" :id="user.id" v-if="editModal && user.type == 'C'" />
+  <edit-employer :show="editModal" @close="editModal = false" :id="user.id" v-if="editModal && user.type != 'C'" />
+  
 </template>
   
 <script setup>

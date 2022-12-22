@@ -82,13 +82,7 @@ const user = ref({
   custom: null
 });
 
-
-
-
-
 </script>
-
-
 
 <style scoped>
 @media(max-width: 570px) {
