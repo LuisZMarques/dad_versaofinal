@@ -37,7 +37,7 @@
                 <label for="photo_do_user" class="form-label fw-bold">Foto:</label>
               </p>
               <input class="form-control form-control-sm" id="photo_url" type="file"
-                @change="usersStore.uploadImage($event)">
+                @change="uploadImage($event)">
             </div>
             <div class="d-grid">
               <div class="btn-group" style="margin-top : 1rem">
@@ -90,6 +90,7 @@ async function createCostumer() {
     toast.success(`Costumer criado com sucesso`);
     base64.value = null;
     emit('close')
+    addUserOnArray(response.data.data)
     return response.data.data;
   } catch (error) {
     console.log(error)
@@ -101,23 +102,13 @@ async function createCostumer() {
   } 
 }
 
-async function updateCostumer() {
-  try {
-    props.user.photo_url = base64.value;
-    const response = await axios.post(
-      "users/",
-      props.user
-    );
-    toast.success(`Costumer atualizado com sucesso`);
-    base64.value = null;
-    emit("close");
-    return response.data.data;
-  } catch (error) {
-    Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
-  }
+function addUserOnArray(user) {
+  usersStore.users.push(user)
 }
+
 let uploadImage = (e) => {
   createBase64Image(e.target.files[0]);
+  alert()
 };
 
 function createBase64Image(FileObject) {
