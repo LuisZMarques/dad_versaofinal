@@ -103,6 +103,7 @@ router.beforeEach(async (to, from, next) => {
     next();
     return;
   }
+  
   if (to.name == "users") {
     if (usersStore.user && usersStore.user.type != "EM") {
       next({ name: "home" });

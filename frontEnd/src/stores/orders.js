@@ -161,7 +161,7 @@ export const useOrdersStore = defineStore("orders", () => {
       if(error.response.data.errors) {
         Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
       }else{
-        toast.error(error.message);
+        toast.error(error.response.data.message);
       }
     }finally{
       loadingStore.toggleLoading();
