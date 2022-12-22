@@ -93,7 +93,7 @@
                 <button
                   class="btn btrn-sm btn-outline-success"
                   type="button"
-                  @click="createCostumer()"
+                  @click="saveEmployee()"
                 >
                   Criar Funcionário
                 </button>
@@ -136,7 +136,7 @@ let createEmployee = ref({
   custome: null,
 });
 
-let clearCustomer = () => {
+let clearEmployee = () => {
   return {
     email: "",
     name: "",
@@ -148,16 +148,16 @@ let clearCustomer = () => {
   };
 };
 
-async function createCostumer() {
+async function saveEmployee() {
   try {
     createEmployee.value.photo_url = base64.value;
     const response = await axios.post("users", createEmployee.value);
     //socket.emit("updateUser", response.data.ata);
-    toast.success(`Costumer criado com sucesso`);
+    toast.success(`Empregado criado com sucesso`);
     base64.value = null;
     emit("close");
     addUserOnArray(response.data.data);
-    createCostumer.value = clearCustomer()
+    createEmployee.value = clearEmployee()
     return response.data.data;
   } catch (error) {
     console.log(error);
