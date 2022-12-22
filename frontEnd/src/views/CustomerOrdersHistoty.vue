@@ -6,7 +6,6 @@ import { useUsersStore } from "@/stores/users.js";
 const ordersStore = useOrdersStore()
 
 onMounted(() => {
-
     ordersStore.getOrdersCustomer()
 })
 
@@ -37,7 +36,7 @@ onMounted(() => {
                                                 <td>{{ order.date}}</td>
                                                 <td>
                                                     <ul>
-                                                        <li v-for="product in order.products">
+                                                        <li v-for="product in order.products" :key="product">
                                                             {{  product.name }} 
                                                         </li>
                                                     </ul>

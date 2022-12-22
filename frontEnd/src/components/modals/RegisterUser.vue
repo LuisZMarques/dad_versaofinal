@@ -208,8 +208,8 @@ let user = ref({
 
 async function createCostumer() {
   try {
-    updateUser.photo_url = base64.value;
-    const response = await axios.post("customers/", user.value);
+    user.value.photo_url = base64.value;
+    const response = await axios.post("customers", user.value);
     //socket.emit("updateUser", response.data.data);
     toast.success(`Costumer criado com sucesso`);
     base64.value = null;
@@ -219,7 +219,12 @@ async function createCostumer() {
     usersStore.user = response.data.data
     return response.data.data;
   } catch (error) {
-    Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
+    console.log(error)
+    if(error.response.data.errors) {
+      Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
+    }else{
+      toast.error(error.message);
+    }
   } 
 }
 

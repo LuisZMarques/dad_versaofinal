@@ -88,7 +88,6 @@ export const useUsersStore = defineStore("users", () => {
     } catch (error) {
       toast.error(`Credenciais erradas.`);
       clearUser();
-      throw error;
     }finally{
       loadingStore.toggleLoading();
     }

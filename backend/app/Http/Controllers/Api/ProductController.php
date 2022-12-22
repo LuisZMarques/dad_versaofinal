@@ -23,7 +23,7 @@ class ProductController extends Controller
         //$this->authorize('create', Product::class);
 
         $image_64 = $request->photo_url;
-
+        if($image_64 != null){
         $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];   // .jpg .png .pdf
 
         $replace = substr($image_64, 0, strpos($image_64, ',') + 1);
@@ -38,7 +38,7 @@ class ProductController extends Controller
         Storage::disk('public')->put('/products/' . $imageName, base64_decode($image));
 
         $request->photo_url = $imageName;
-
+        }
         $product = new Product();
 
         $product->name = $request->name;

@@ -43,7 +43,6 @@ export const useOrdersStore = defineStore("orders", () => {
         "/orders/ordersByCustomer/" + usersStore.user.id
       );
       ordersCustomer.value = response.data.data;
-      console.log(orders);
       isLoading.value = false;
     } catch (error) {
       clearOrders();
@@ -159,7 +158,11 @@ export const useOrdersStore = defineStore("orders", () => {
       cartStore.clearCart();
       return response.data.data;
     } catch (error) {
-      Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
+      if(error.response.data.errors) {
+        Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
+      }else{
+        toast.error(error.message);
+      }
     }finally{
       loadingStore.toggleLoading();
     }
@@ -179,7 +182,11 @@ export const useOrdersStore = defineStore("orders", () => {
       toast.success("Pedido cancelado com com sucesso");
       return response.data.data;
     } catch (error) {
-      Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
+      if(error.response.data.errors) {
+        Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
+      }else{
+        toast.error(error.message);
+      }
     }finally{
       loadingStore.toggleLoading();
     }

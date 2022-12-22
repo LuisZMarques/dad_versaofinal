@@ -26,7 +26,6 @@ export const useCustomerStore = defineStore("customer", () => {
       customer.value = response.data.data;
       console.log(customer.value);
     } catch (error) {
-      
       clearCustomer();
       throw error;
     }finally{
@@ -44,8 +43,11 @@ export const useCustomerStore = defineStore("customer", () => {
       customers.value.push(response.data.data);
       return response.data.data;
     } catch (error) {
-      toast.error(`${error.response.data.message}`);
-      throw error;
+        if(error.response.data.errors) {
+          Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
+        }else{
+          toast.error(error.message);
+        }
     }finally{
       loadingStore.toggleLoading();
     }
