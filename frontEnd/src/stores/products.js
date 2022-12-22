@@ -128,7 +128,7 @@ export const useProductsStore = defineStore("products", () => {
 
   socket.on("updateProduct", (product) => {
     updateProductOnArray(product);
-    toast.success(`O producto ${product.name} foi atualizado com sucesso.`);
+    toast.success(`O producto ${product.name} foi atualizado.`);
   });
 
   return {

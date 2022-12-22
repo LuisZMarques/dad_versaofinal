@@ -210,6 +210,16 @@ export const useUsersStore = defineStore("users", () => {
     reader.readAsDataURL(FileObject);
   }
 
+  // Broadcast from admin 
+  socket.on("broadcast", (msg) => {
+    toast.informational(`${msg}`);
+  });
+
+  // Personal Message from admin
+  socket.on("msg", (msg) => {
+    toast.success(`${msg}`);
+  });
+
   return {
     users,
     restoreToken,
