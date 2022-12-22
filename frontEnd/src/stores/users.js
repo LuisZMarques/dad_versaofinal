@@ -116,6 +116,7 @@ export const useUsersStore = defineStore("users", () => {
       socket.emit('loggedOut', user)
       clearUser();
       delete axios.defaults.headers.common.Authorization;
+      location.reload();
       return true;
     } catch (error) {
       return false;

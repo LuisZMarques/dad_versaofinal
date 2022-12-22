@@ -59,68 +59,80 @@ const router = createRouter({
       path: "/estatisticas",
       name: "statistics",
       component: StatisticsPage,
-    },
+    }
+
   ],
 });
 
-let handlingFirstRoute = true
+let handlingFirstRoute = true;
 
-router.beforeEach(async (to, from, next) => {  
-  const usersStore = useUsersStore()  
+router.beforeEach(async (to, from, next) => {
+  const usersStore = useUsersStore();
   if (handlingFirstRoute) {
-    handlingFirstRoute = false
-    await usersStore.restoreToken()
+    handlingFirstRoute = false;
+    await usersStore.restoreToken();
   }
-  if ((to.name == 'home')) {
-    next()
-    return
+
+  // redirect to login page if not logged in and trying to access a restricted page
+  const publicPages = ["/menu", "/", "/pedidos-em-curso"];
+  const authRequired = !publicPages.includes(to.path);
+
+  if (authRequired && !usersStore.user) {
+    next({ name: "home" });
+    return;
   }
-  if (to.name == 'customer-orders-history') {
+
+  if (to.name == "home") {
+    next();
+    return;
+  }
+  if (to.name == "customer-orders-history") {
     if (!usersStore.user) {
-      next({ name: 'home' })
-      return
+      next({ name: "home" });
+      return;
     }
-    next()
-    return
+    next();
+    return;
   }
-  if (to.name == 'users') {
-    if (usersStore.user && usersStore.user.type != 'EM') {
-      next({ name: 'home' })
-      return
+  if (to.name == "users") {
+    if (usersStore.user && usersStore.user.type != "EM") {
+      next({ name: "home" });
+      return;
     }
-    next()
-    return
+    next();
+    return;
   }
-  if (to.name == 'cozinha') {
-    if (usersStore.user && usersStore.user.type != 'EC') {
-      next({ name: 'home' })
-      return
+  if (to.name == "cozinha") {
+    if (usersStore.user && usersStore.user.type != "EC") {
+      next({ name: "home" });
+      return;
     }
-    next()
-    return
+    next();
+    return;
   }
-  if (to.name == 'pronto-a-entregar') {
-    if (usersStore.user && usersStore.user.type != 'ED') {
-      next({ name: 'home' })
-      return
+  if (to.name == "pronto-a-entregar") {
+    if (usersStore.user && usersStore.user.type != "ED") {
+      next({ name: "home" });
+      return;
     }
-    next()
-    return
-  }
-
-  if (to.name == 'menu') {
-    if (usersStore.user && (usersStore.user?.type != 'C') && (usersStore.user?.type != 'EM')) {
-      next({ name: 'home' })
-      return
-    }
-    next()
-    return
+    next();
+    return;
   }
 
+  if (to.name == "menu") {
+    if (
+      usersStore.user &&
+      usersStore.user?.type != "C" &&
+      usersStore.user?.type != "EM"
+    ) {
+      next({ name: "home" });
+      return;
+    }
+    next();
+    return;
+  }
 
-
-  
-  next()
-})
+  next();
+});
 
 export default router;

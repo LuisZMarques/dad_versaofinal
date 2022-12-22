@@ -26,15 +26,7 @@ app.provide(
     },
   })
 );
-app.provide(
-  "paymentGateway",
-  axios.create({
-    baseURL: "https://dad-202223-payments-api.vercel.app/api/",
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-);
+
 app.provide("serverBaseUrl", serverBaseUrl);
 
 app.use(Toaster, {
