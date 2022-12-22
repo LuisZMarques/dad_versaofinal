@@ -148,12 +148,12 @@ export const useOrdersStore = defineStore("orders", () => {
       loadingStore.toggleLoading();
       const response = await axios.post("orders", cartStore.cart);
       toast.success("Pagamento feito com sucesso");
-      socket.emit("newOrder", response.data.data);
+      socket.emit("newOrder", response.data.data, usersStore.user);
       cartStore.paymentModal = false;
       cartStore.cartModalShow = false;
       response.data.data.products.forEach((el) => {
         if (el.type == "hot dish")
-          socket.emit("pratoParaCozinhar", el.name);
+          socket.emit("pratoHot", el);
       });
       cartStore.clearCart();
       return response.data.data;
@@ -207,7 +207,15 @@ export const useOrdersStore = defineStore("orders", () => {
   });
 
   socket.on("pratoParaCozinhar", (product) => {
-    toast.informational(`Existe um prato para cozinhar.`);
+    toast.success(`Prato para cozinhar. ${product.name}`);
+  });
+
+  socket.on("Prato_Para_Entrega", (order) => {
+    toast.success(`Pedido ${order.id} está pronto para entrega.`);
+  });
+
+  socket.on("Prato_Pronto", (order) => {
+    toast.informational(`Pedido ${order.id} está pronto.`);
   });
 
   return {
