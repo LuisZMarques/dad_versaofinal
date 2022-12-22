@@ -21,8 +21,8 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request)
     {
-         $image_64 = $request->photo_url;
-        if($image_64 != null){
+        $image_64 = $request->photo_url;
+        if ($image_64 != null) {
             $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];   // .jpg .png .pdf
 
             $replace = substr($image_64, 0, strpos($image_64, ',') + 1);
@@ -35,7 +35,7 @@ class UserController extends Controller
             $imageName = Str::random(10) . '.' . $extension;
 
             Storage::disk('public')->put('/fotos/' . $imageName, base64_decode($image));
-        }else{
+        } else {
             $imageName = $image_64;
         }
         $request->photo_url = $imageName;
@@ -64,7 +64,7 @@ class UserController extends Controller
         $user->update($request->validated());
 
         $image_64 = $request->photo_url;
-        if($image_64 != null){
+        if ($image_64 != null) {
             $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];   // .jpg .png .pdf
 
             $replace = substr($image_64, 0, strpos($image_64, ',') + 1);
@@ -78,23 +78,30 @@ class UserController extends Controller
 
             Storage::disk('public')->put('/fotos/' . $imageName, base64_decode($image));
 
-            $user->photo_url=$imageName;
+            $user->photo_url = $imageName;
 
             $user->save();
-    
         }
 
-       
+
         return new UserResource($user);
     }
 
     public function destroy(User $user)
     {
-        if($user->type == "C"){
+        if ($user->type == "C") {
             $user->customer()->delete();
         }
         $user->delete();
 
+        return new UserResource($user);
+    }
+
+    public function blockUser(User $user)
+    {
+        $user->blocked = !$user->blocked;
+        $user->save();
+         
         return new UserResource($user);
     }
 

@@ -14,7 +14,6 @@ export const useUsersStore = defineStore("users", () => {
   const users = ref([]);
   const user = ref();
   const base64 = ref();
-  
 
   const credentials = ref({
     username: "",
@@ -28,12 +27,12 @@ export const useUsersStore = defineStore("users", () => {
 
   let errors = ref([]);
 
-  let searchUser = ref('');
-
+  let searchUser = ref("");
 
   let usersList = computed(() => {
-    return users.value
-      .filter((usr) => usr.name.toLowerCase().includes(searchUser.value));
+    return users.value.filter((usr) =>
+      usr.name.toLowerCase().includes(searchUser.value)
+    );
   });
 
   function clearUsers() {
@@ -53,7 +52,7 @@ export const useUsersStore = defineStore("users", () => {
     } catch (error) {
       clearUsers();
       throw error;
-    }finally{
+    } finally {
       loadingStore.toggleLoading();
     }
   }
@@ -62,12 +61,22 @@ export const useUsersStore = defineStore("users", () => {
     try {
       loadingStore.toggleLoading();
       const response = await axios.get("users/me");
-      user.value = response.data.data;
-      socket.emit('loggedIn', user.value)
+      if (response.data.data.blocked == 1) {
+        toast.warning(
+          response.data.data.name + ` bloqueado... contactar administrador.`
+        );
+        await axios.post("logout");
+        clearUser();
+        return false;
+      } else {
+        user.value = response.data.data;
+        socket.emit("loggedIn", user.value);
+        return true;
+      }
     } catch (error) {
       clearUser();
       throw error;
-    }finally{
+    } finally {
       loadingStore.toggleLoading();
     }
   }
@@ -79,16 +88,20 @@ export const useUsersStore = defineStore("users", () => {
       axios.defaults.headers.common.Authorization =
         "Bearer " + response.data.access_token;
       sessionStorage.setItem("token", response.data.access_token);
-      await loadUser();
-      toast.success(user.value.name + ` logado com sucesso.`);
-      credentials.value.password = "";
-      loginModal.value = false;
-      socket.emit('loggedIn', user.value)
-      return true;
+      const log = await loadUser();
+      if (log) {
+        toast.success(user.value.name + ` logado com sucesso.`);
+        credentials.value.password = "";
+        loginModal.value = false;
+        socket.emit("loggedIn", user.value);
+        return true;
+      }
+      return false
     } catch (error) {
+      console.log(error);
       toast.error(`Credenciais erradas.`);
       clearUser();
-    }finally{
+    } finally {
       loadingStore.toggleLoading();
     }
   }
@@ -104,7 +117,7 @@ export const useUsersStore = defineStore("users", () => {
       ? serverBaseUrl + "/storage/fotos/" + user.value.photo_url
       : serverBaseUrl + "/storage/fotos/anonymos.jpg";
   });
-  
+
   let userName = computed(() => {
     return user.value?.name ?? "anónimo";
   });
@@ -116,14 +129,13 @@ export const useUsersStore = defineStore("users", () => {
       toast.success(
         "User " + user.value.name + " has logged out of the application."
       );
-      socket.emit('loggedOut', user)
+      socket.emit("loggedOut", user);
       clearUser();
       delete axios.defaults.headers.common.Authorization;
-      //location.reload();
       return true;
     } catch (error) {
       return false;
-    }finally{
+    } finally {
       loadingStore.toggleLoading();
     }
   }
@@ -140,26 +152,52 @@ export const useUsersStore = defineStore("users", () => {
   }
 
   let deleteUser = async (userId) => {
-    let userIdx = users.value.findIndex(
-      (t) => t.id == userId
-    );
-      try {
-        loadingStore.toggleLoading();
-        const response = await axios.delete(
-          "users/" +
-          users.value[userIdx].id
-        );
-        toast.success("Utilizador eliminado com sucesso");
-        await loadUsers();
-        console.log(response)
-        return response.data.data;
-      } catch (error) {
-        Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
-      }finally{
-        loadingStore.toggleLoading();
-      }
+    try {
+      loadingStore.toggleLoading();
+      const response = await axios.delete("users/" + userId);
+      toast.success("Utilizador eliminado com sucesso");
+      removeUserOnArray(response.data.data);
+      return response.data.data;
+    } catch (error) {
+      Object.values(error.response.data.errors).forEach((errorMessage) =>
+        toast.error(errorMessage.toString())
+      );
+    } finally {
+      loadingStore.toggleLoading();
+    }
   };
 
+  let blockUser = async (userId) => {
+    try {
+      loadingStore.toggleLoading();
+      const response = await axios.patch("users/blockUser/" + userId);
+      if (response.data.data.blocked == true)
+        toast.success("Utilizador bloqueado com sucesso");
+      else toast.success("Utilizador desbloqueado com sucesso");
+      updateUserOnArray(response.data.data);
+      return response.data.data;
+    } catch (error) {
+      Object.values(error.response.data.errors).forEach((errorMessage) =>
+        toast.error(errorMessage.toString())
+      );
+    } finally {
+      loadingStore.toggleLoading();
+    }
+  };
+
+  function updateUserOnArray(user) {
+    let idx = users.value.findIndex((t) => t.id === user.id);
+    if (idx >= 0) {
+      users.value[idx] = user;
+    }
+  }
+
+  function removeUserOnArray(user) {
+    let idx = users.value.findIndex((t) => t.id === user.id);
+    if (idx >= 0) {
+      users.value.splice(idx, 1);
+    }
+  }
   let uploadImage = (e) => {
     createBase64Image(e.target.files[0]);
   };
@@ -190,6 +228,7 @@ export const useUsersStore = defineStore("users", () => {
     photoFullUrl,
     usersList,
     searchUser,
-    userName
+    userName,
+    blockUser,
   };
 });
