@@ -65,6 +65,7 @@ const props = defineProps({
 
 let showProduct = ref(false)
 
+// Modal de editar produto
 let toogleProductDetail = () => {
   showProduct.value = !showProduct.value
 }

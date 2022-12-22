@@ -35,13 +35,13 @@ export const useUsersStore = defineStore("users", () => {
     );
   });
 
+  
+  //Funçoes para todos os utilizadores
+
   function clearUsers() {
     users.value = [];
   }
 
-  function clearUser() {
-    user.value = null;
-  }
   async function loadUsers() {
     try {
       loadingStore.toggleLoading();
@@ -57,6 +57,17 @@ export const useUsersStore = defineStore("users", () => {
     }
   }
 
+
+  //Funçoes Utilizador Individual
+
+
+  function clearUser() {
+    delete axios.defaults.headers.common.Authorization;
+    sessionStorage.removeItem("token");
+    user.value = null;
+  }
+
+  
   async function loadUser() {
     try {
       loadingStore.toggleLoading();
@@ -80,6 +91,7 @@ export const useUsersStore = defineStore("users", () => {
       loadingStore.toggleLoading();
     }
   }
+
 
   async function login() {
     try {
@@ -106,11 +118,6 @@ export const useUsersStore = defineStore("users", () => {
     }
   }
 
-  function clearUser() {
-    delete axios.defaults.headers.common.Authorization;
-    sessionStorage.removeItem("token");
-    user.value = null;
-  }
 
   const photoFullUrl = computed(() => {
     return user.value?.photo_url

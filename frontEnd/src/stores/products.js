@@ -11,7 +11,6 @@ export const useProductsStore = defineStore("products", () => {
 
   const products = ref([]);
 
-
   let searchProduct = ref("");
 
   const base64 = ref();

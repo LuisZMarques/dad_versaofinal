@@ -36,7 +36,6 @@ import MenuCard from "@/components/menu/MenuCard.vue";
 import { useProductsStore } from "../stores/products";
 import { useUsersStore } from "@/stores/users.js";
 import ProductDetail from '@/components/modals/ProductDetail.vue';
-import LoadingBar from '../components/global/LoadingBar.vue'
 
 const productsStore = useProductsStore();
 const usersStore = useUsersStore();

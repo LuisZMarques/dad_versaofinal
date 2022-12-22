@@ -102,15 +102,18 @@ import { ref, inject, watch, onMounted } from "vue";
 import Modal from "@/components/global/modal.vue";
 import { useUsersStore } from "@/stores/users.js";
 
+//injects
 const axios = inject("axios");
 const toast = inject("toast");
 const socket = inject("socket");
+
+//emits
 const emit = defineEmits(["close"]);
 
+//stores
 const usersStore = useUsersStore();
 
-const base64 = ref();
-
+//props
 let props = defineProps({
   id: {
     type: Number,
@@ -121,6 +124,29 @@ let props = defineProps({
   },
 });
 
+//OnMounted
+
+onMounted(() => {
+  loadUser(props.id)
+})
+
+//Funções relaccionadas com imagem
+
+const base64 = ref();
+
+function createBase64Image(FileObject) {
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    base64.value = event.target.result;
+  };
+  reader.readAsDataURL(FileObject);
+}
+
+let uploadImage = (e) => {
+  createBase64Image(e.target.files[0]);
+};
+
+//Funções relaccionadas com user
 
 let newUser = () => {
   return {
@@ -150,10 +176,17 @@ let loadUser = async (id) => {
   }
 }
 
-onMounted(() => {
-  loadUser(props.id)
-})
+function updateUserOnArray(user) {
+  let idx = usersStore.users.findIndex((t) => t.id === user.id);
+  if (idx >= 0) {
+    usersStore.users[idx] = user;
+  }
+  if (usersStore.user.id == user.id)
+    usersStore.user = user
+}
 
+
+//Funções relaccionadas com customer
 
 async function updateCostumer() {
   try {
@@ -175,27 +208,8 @@ async function updateCostumer() {
   }
 }
 
-function updateUserOnArray(user) {
-  let idx = usersStore.users.findIndex((t) => t.id === user.id);
-  if (idx >= 0) {
-    usersStore.users[idx] = user;
-  }
-  if (usersStore.user.id == user.id)
-    usersStore.user = user
-}
-
-let uploadImage = (e) => {
-  createBase64Image(e.target.files[0]);
-};
-
-function createBase64Image(FileObject) {
-  const reader = new FileReader();
-  reader.onload = (event) => {
-    base64.value = event.target.result;
-  };
-  reader.readAsDataURL(FileObject);
-}
 </script>
+
 <style scoped>
 .margin-divs {
   margin-bottom: 0.5rem;

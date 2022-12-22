@@ -19,7 +19,7 @@
             </tr>
           </thead>
           <tbody>
-            <cart-card v-for="(item, index) in cartStore.cart.products" :index="index" :key="item"/>
+            <cart-card v-for="(item, index) in cartStore.cart.products" :index="index" :item="item"/>
           </tbody>
         </table>
         <table class="table table-bordered" style="background-color: #e92b2bff; border-color: rebeccapurple">

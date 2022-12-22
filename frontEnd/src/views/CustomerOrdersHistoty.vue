@@ -4,7 +4,7 @@ import { useOrdersStore } from "@/stores/orders.js"
 import { useUsersStore } from "@/stores/users.js";
 
 const ordersStore = useOrdersStore()
-
+// Popular 
 onMounted(() => {
     ordersStore.getOrdersCustomer()
 })

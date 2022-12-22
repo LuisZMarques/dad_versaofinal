@@ -5,7 +5,7 @@ import { useOrdersStore } from "@/stores/orders.js"
 const ordersStore = useOrdersStore()
 
 onMounted(() => {
-    ordersStore.getOrders()
+    ordersStore.loadOrders()
 })
 
 </script>

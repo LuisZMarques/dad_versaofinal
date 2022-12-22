@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import { ref, inject,} from "vue";
+import { ref, inject} from "vue";
 import CartModal from "@/components/modals/CartModal.vue";
 import { useUsersStore } from "@/stores/users.js";
 import { useCartStore } from "@/stores/cart.js";

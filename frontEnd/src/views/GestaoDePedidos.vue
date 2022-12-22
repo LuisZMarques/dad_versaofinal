@@ -72,13 +72,10 @@ let orderItems = (productsList) => {
 
 onMounted(() => {
   userStore.loadUser();
-})
-
-
-onMounted(() => {
   if (ordersStore.ordersPreparingOrReady.length == 0)
     ordersStore.getOrderPreparingOrReady();
 })
+
 
 </script>
 

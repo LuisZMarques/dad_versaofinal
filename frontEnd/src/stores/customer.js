@@ -10,10 +10,11 @@ export const useCustomerStore = defineStore("customer", () => {
   const loadingStore = useLoadingStore();
 
   const customer = ref();
-  const customers = ref([]);
-  const testePontosCliente = ref("50");
   const usersStore = useUsersStore();
-  //const userStore = useUsersStore();
+
+
+  // Funções de Customer
+  
   function clearCustomer() {
    customer.value = null;
   }
@@ -56,7 +57,6 @@ export const useCustomerStore = defineStore("customer", () => {
   return {
     loadCustomer,
     register,
-    customer,
-    testePontosCliente
+    customer
   };
 });

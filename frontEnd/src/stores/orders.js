@@ -22,6 +22,7 @@ export const useOrdersStore = defineStore("orders", () => {
   let isLoading = ref(false);
 
   // Devolve todos os pedidos
+
   async function loadOrders() {
     try {
       loadingStore.toggleLoading();
@@ -53,6 +54,7 @@ export const useOrdersStore = defineStore("orders", () => {
   }
 
   // Devolve todos os pedidos em preparação ou prontos
+
   async function getOrderPreparingOrReady() {
     try {
       loadingStore.toggleLoading();
@@ -60,19 +62,6 @@ export const useOrdersStore = defineStore("orders", () => {
       ordersPreparingOrReady.value = response.data.data;
       getHotDishs();
       isLoading.value = false;
-    } catch (error) {
-      clearOrders();
-      throw error;
-    }finally{
-      loadingStore.toggleLoading();
-    }
-  }
-
-  async function getOrders() {
-    try {
-      loadingStore.toggleLoading();
-      const response = await axios.get("orders");
-      allOrders.value = response.data.data;
     } catch (error) {
       clearOrders();
       throw error;
@@ -104,21 +93,6 @@ export const useOrdersStore = defineStore("orders", () => {
     });
   };
 
-  async function update(data) {
-    try {
-      loadingStore.toggleLoading();
-      const response = await axios.patch(
-        "orders/" + orderId + "/updateEstadoDaOrder",
-        ordersPreparingOrReady.value[orderIdx]
-      );
-      return response.data.data;
-    } catch (error) {
-
-    }finally{
-      loadingStore.toggleLoading();
-    }
-  }
-
   let orderReadyToDelivery = async (orderId) => {
     usersStore.loadUser();
     let orderIdx = ordersPreparingOrReady.value.findIndex(
@@ -141,7 +115,7 @@ export const useOrdersStore = defineStore("orders", () => {
     return ordersPreparingOrReady.value.filter((order) => order.status != "C");
   });
 
-  // fazer a compra
+  // Criar order no backend
 
   async function createOrder() {
     try {
@@ -167,6 +141,8 @@ export const useOrdersStore = defineStore("orders", () => {
       loadingStore.toggleLoading();
     }
   }
+
+  //Cancelar Order
 
   let cancelOrder = async (orderId) => {
     let orderIdx = ordersPreparingOrReady.value.findIndex(
