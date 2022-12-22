@@ -17,6 +17,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('customers/me/{customer}', [CustomerController::class, 'show_me']);
     Route::get('orders/ordersByCustomer/{user}', [OrderController::class, 'getOrdersByCustomer']);
+    Route::delete('users/{user}', [UserController::class, "destroy"]);
     Route::apiResource('users', UserController::class, ['names' => 'users']);
     Route::get('orders/delivered', [OrderController::class, 'deliveryHistory']);
 });

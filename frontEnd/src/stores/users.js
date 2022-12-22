@@ -135,6 +135,27 @@ export const useUsersStore = defineStore("users", () => {
     return false;
   }
 
+  let deleteUser = async (userId) => {
+    let userIdx = users.value.findIndex(
+      (t) => t.id == userId
+    );
+      try {
+        loadingStore.toggleLoading();
+        const response = await axios.delete(
+          "users/" +
+          users.value[userIdx].id
+        );
+        toast.success("Utilizador eliminado com sucesso");
+        await loadUsers();
+        console.log(response)
+        return response.data.data;
+      } catch (error) {
+        Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
+      }finally{
+        loadingStore.toggleLoading();
+      }
+  };
+
   let uploadImage = (e) => {
     createBase64Image(e.target.files[0]);
   };
@@ -151,6 +172,7 @@ export const useUsersStore = defineStore("users", () => {
     users,
     restoreToken,
     uploadImage,
+    deleteUser,
     loadUsers,
     user,
     loginModalState,
