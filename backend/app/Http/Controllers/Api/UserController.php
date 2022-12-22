@@ -21,9 +21,7 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request)
     {
-        //$user = User::created($request->validated());
-
-        $image_64 = $request->photo_url;
+         $image_64 = $request->photo_url;
         if($image_64 != null){
             $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];   // .jpg .png .pdf
 
@@ -63,8 +61,30 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, User $user)
     {
-        $user->update($request->safe()->except(['customer']));
+        $user->update($request->validated());
 
+        $image_64 = $request->photo_url;
+        if($image_64 != null){
+            $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];   // .jpg .png .pdf
+
+            $replace = substr($image_64, 0, strpos($image_64, ',') + 1);
+
+
+            $image = str_replace($replace, '', $image_64);
+
+            $image = str_replace(' ', '+', $image);
+
+            $imageName = Str::random(10) . '.' . $extension;
+
+            Storage::disk('public')->put('/fotos/' . $imageName, base64_decode($image));
+
+            $user->photo_url=$imageName;
+
+            $user->save();
+    
+        }
+
+       
         return new UserResource($user);
     }
 

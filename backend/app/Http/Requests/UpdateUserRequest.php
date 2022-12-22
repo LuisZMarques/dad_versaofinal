@@ -27,8 +27,7 @@ class UpdateUserRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email'],
             'type' => ['nullable'],
-            'blocked' => ['required', 'integer', 'digits:1'],
-            'custom' => ['nullable', 'json'],
+            'password'=>['sometimes']
         ];
     }
 }

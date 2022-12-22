@@ -46,7 +46,7 @@
       </div>
     </section>
   </div>
-  <register-modal :show="registerModal" :user="newUser()" @close="registerModal = false" />
+  <register-modal :show="registerModal" @close="registerModal = false" />
 </template>
 
 <script setup>
@@ -66,23 +66,25 @@ let toggleSearch = () => {
 }
 computed(() => usersStore.searchUser, () => {
   grid.value = !grid.value
-}) 
+})
 
 onMounted(() => {
   usersStore.loadUsers()
 })
 
-const newUser = () => {
-  return {
-    name: null,
-    email: null,
-    password: null,
-    type: null,
-    blocked: 0,
-    photo_url: "",
-    custom: null
-  };
-};
+const user = ref({
+  name: null,
+  email: null,
+  password: null,
+  type: null,
+  blocked: 0,
+  photo_url: "",
+  custom: null
+});
+
+
+
+
 
 </script>
 

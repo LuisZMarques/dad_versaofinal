@@ -8,6 +8,7 @@
         height="100"
         :width="100"
       />
+      
       <span class="sidebar-nome-user-dinamico">{{
         usersStore.user?.name ?? "anónimo"
       }}</span>
@@ -163,8 +164,14 @@
   <edit-user
     :show="perfilModal"
     @close="perfilModal = false"
-    :user="usersStore.user"
-    v-if="usersStore.user"
+    :id="usersStore.user.id"
+    v-if="usersStore.user && usersStore.user.type=='C'"
+  />
+  <edit-employer
+    :show="perfilModal"
+    @close="perfilModal = false"
+    :id="usersStore.user.id"
+    v-if="usersStore.user && usersStore.user.type!='C'"
   />
 </template>
 
@@ -172,6 +179,7 @@
 import { ref, onMounted } from "vue";
 import LoginModal from "@/components/modals/Login.vue";
 import EditUser from "../modals/EditUser.vue";
+import EditEmployer from "../modals/EditEmployer.vue";
 import { useUsersStore } from "@/stores/users.js";
 
 const usersStore = useUsersStore();

@@ -208,22 +208,19 @@ let user = ref({
 
 async function createCostumer() {
   try {
-    //loadingStore.toggleLoading();
-    //updateUser.photo_url = base64.value;
+    updateUser.photo_url = base64.value;
     const response = await axios.post("customers/", user.value);
     //socket.emit("updateUser", response.data.data);
     toast.success(`Costumer criado com sucesso`);
-    //base64.value = null;
+    base64.value = null;
     usersStore.credentials.username = user.value.email;
     usersStore.credentials.password = user.value.password;
     usersStore.login();
     usersStore.user = response.data.data
     return response.data.data;
   } catch (error) {
-    toast.error(error.response.data.message);
-  } finally {
-    //loadingStore.toggleLoading();
-  }
+    Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
+  } 
 }
 
 let uploadImage = (e) => {

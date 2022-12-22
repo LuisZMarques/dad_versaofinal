@@ -44,4 +44,17 @@ class StoreCustomerRequest extends FormRequest
             'customer.default_payment_reference' => ['required'],
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'email.required' => 'Email necessário.',
+            'name.required' => 'Nome necessário.',
+            'customer.nif.required' => 'NIF necessário.',
+            'customer.phone.digits' => 'Numero de telefone tem de ter 9 dígitos.',
+            'customer.phone.required' => 'Numero de telefone necessário.',
+            'customer.default_payment_type.required' => 'Tipo pagamento perferencial.',
+            'customer.default_payment_reference.required' => 'Referencia pagamento perferencial.',
+        ];
+    }
 }

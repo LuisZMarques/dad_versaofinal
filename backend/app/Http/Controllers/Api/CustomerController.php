@@ -71,18 +71,35 @@ class CustomerController extends Controller
         return new Customer::where('user_id', $id);
     }*/
 
-    public function show_me(Request $request)
+    public function show_me(Customer $customer)
     {
-
-        return new CustomerResource($request->user()->customer);
-        //return new Customer::where('user_id', $id)->first();
-        //return new CustomerResource($request->customer());
+        return new CustomerResource($customer);
     }
 
     public function update(UpdateCustomerRequest $request, Customer $customer)
     {
         //$this->authorize('update', Customer::class);
 
+        $customer->update([
+            'phone' => $request->validated('customer.phone'),
+            'nif' => $request->validated('customer.nif'),
+            'default_payment_type' => $request->validated('customer.default_payment_type'),
+            'default_payment_reference' => $request->validated('customer.default_payment_reference')
+        ]);
+
+        $customer->user()->update([
+            'name' => $request->validated('name'),
+            'email' => $request->validated('email'),
+            'type' => $request->validated('type'),
+            'blocked' => $request->validated('blocked'),
+        ]);
+
+        if ($request->validated('password')) {
+
+            $customer->user->password = bcrypt($request->validated('password'));
+
+            $customer->user->save();
+        }
 
         $imageName = null;
 
@@ -101,24 +118,13 @@ class CustomerController extends Controller
             $imageName = Str::random(10) . '.' . $extension;
 
             Storage::disk('public')->put('/fotos/' . $imageName, base64_decode($image));
+
+            $customer->user->photo_url = $imageName;
+
+            $customer->user->save();
         }
 
-        $customer->update([
-            'phone' => $request->validated('customer.phone'),
-            'nif' => $request->validated('customer.nif'),
-            'default_payment_type' => $request->validated('customer.default_payment_type'),
-            'default_payment_reference' => $request->validated('customer.default_payment_reference')
-        ]);
-
-        $customer->user()->update([
-            'name' => $request->validated('name'),
-            'email' => $request->validated('email'),
-            'type' => $request->validated('type'),
-            'blocked' => $request->validated('blocked'),
-            'photo_url' => $imageName,
-        ]);
-
-        return new CustomerResource($customer);
+        return new UserResource($customer->user);
     }
 
     public function destroy(Customer $customer)

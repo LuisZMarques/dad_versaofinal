@@ -10,158 +10,82 @@
               <p class="text-center margin-texts">
                 <label for="email" class="fw-bold">Nome:</label>
               </p>
-              <input
-                type="text"
-                class="form-control form-control-sm"
-                id="name"
-                placeholder="name"
-                v-model="user.name"
-              />
+              <input type="text" class="form-control form-control-sm" id="name" placeholder="name"
+                v-model="editUser.name" />
             </div>
             <div class="mb-3 margin-divs">
               <p class="text-center margin-texts">
                 <label for="email" class="form-label fw-bold">Email:</label>
               </p>
-              <input
-                type="email"
-                class="form-control form-control-sm"
-                id="email"
-                placeholder="name@example.com"
-                v-model="user.email"
-              />
+              <input type="email" class="form-control form-control-sm" id="email" placeholder="name@example.com"
+                v-model="editUser.email" />
             </div>
             <div class="mb-3 margin-divs">
               <p class="text-center margin-texts">
-                <label for="password" class="form-label fw-bold"
-                  >Password:</label
-                >
+                <label for="password" class="form-label fw-bold">Password:</label>
               </p>
-              <input
-                type="password"
-                class="form-control form-control-sm"
-                id="password"
-                placeholder="*******"
-                v-model="user.password"
-              />
+              <input type="password" class="form-control form-control-sm" id="password" placeholder="*******"
+                v-model="editUser.password" />
             </div>
             <div class="md-3 margin-divs">
               <p class="text-center margin-texts">
-                <label for="photo_do_user" class="form-label fw-bold"
-                  >Foto:</label
-                >
+                <label for="photo_do_user" class="form-label fw-bold">Foto:</label>
               </p>
-              <input
-                class="form-control form-control-sm"
-                id="photo_url"
-                type="file"
-                @change="uploadImage($event)"
-              />
+              <input class="form-control form-control-sm" id="photo_url" type="file" @change="uploadImage($event)" />
             </div>
             <div class="md-3 margin-divs">
               <p class="text-center margin-texts">
-                <label for="telemovel" class="form-label fw-bold"
-                  >Nº Telemovel:</label
-                >
+                <label for="telemovel" class="form-label fw-bold">Nº Telemovel:</label>
               </p>
-              <input
-                type="text"
-                size="16"
-                v-model="user.customer.phone"
-                class="form-control form-control-sm"
-                placeholder="colocar o seu numero de telemóvel"
-              />
+              <input type="text" size="16" v-model="editUser.customer.phone" class="form-control form-control-sm"
+                placeholder="colocar o seu numero de telemóvel" />
             </div>
             <div class="md-3 margin-divs">
               <p class="text-center margin-texts">
                 <label for="nif" class="form-label fw-bold">NIF:</label>
               </p>
-              <input
-                type="text"
-                size="16"
-                v-model="user.customer.nif"
-                class="form-control form-control-sm"
-                placeholder="colocar o seu NIF"
-              />
+              <input type="text" size="16" v-model="editUser.customer.nif" class="form-control form-control-sm"
+                placeholder="colocar o seu NIF" />
             </div>
             <div class="md-3 margin-divs">
               <p class="text-center margin-texts">
-                <label for="tipoPagamento" class="form-label fw-bold"
-                  >Tipo de Pagamento Preferencial:</label
-                >
+                <label for="tipoPagamento" class="form-label fw-bold">Tipo de Pagamento Preferencial:</label>
               </p>
-              <select
-                class="form-select form-select-sm"
-                aria-label=".form-select-sm example"
-                v-model="user.customer.default_payment_type"
-              >
+              <select class="form-select form-select-sm" aria-label=".form-select-sm example"
+                v-model="editUser.customer.default_payment_type">
                 <option selected>Selecionar</option>
                 <option value="VISA">VISA</option>
                 <option value="PAYPAL">PAYPAL</option>
                 <option value="MBWAY">MBWAY</option>
               </select>
             </div>
-            <div
-              class="md-3 margin-divs"
-              v-if="user.customer.default_payment_type == 'PAYPAL'"
-            >
+            <div class="md-3 margin-divs" v-if="editUser.customer.default_payment_type == 'PAYPAL'">
               <p class="text-center margin-texts">
-                <label for="emailPaypal" class="form-label fw-bold"
-                  >Email Paypal:</label
-                >
+                <label for="emailPaypal" class="form-label fw-bold">Email Paypal:</label>
               </p>
-              <input
-                type="email"
-                v-model="user.customer.default_payment_reference"
-                class="form-control form-control-sm margin-inputs"
-                placeholder="colocar o seu email"
-              />
+              <input type="email" v-model="editUser.customer.default_payment_reference"
+                class="form-control form-control-sm margin-inputs" placeholder="colocar o seu email" />
             </div>
-            <div
-              class="md-3 margin-divs"
-              v-if="user.customer.default_payment_type == 'VISA'"
-            >
+            <div class="md-3 margin-divs" v-if="editUser.customer.default_payment_type == 'VISA'">
               <p class="text-center margin-texts">
                 <label for="visa" class="form-label fw-bold">Nº Cartão:</label>
               </p>
-              <input
-                type="text"
-                size="16"
-                v-model="user.customer.default_payment_reference"
-                class="form-control form-control-sm margin-inputs"
-                placeholder="colocar o seu numero de cartão"
-              />
+              <input type="text" size="16" v-model="editUser.customer.default_payment_reference"
+                class="form-control form-control-sm margin-inputs" placeholder="colocar o seu numero de cartão" />
             </div>
-            <div
-              class="md-3 margin-divs"
-              v-if="user.customer.default_payment_type == 'MBWAY'"
-            >
+            <div class="md-3 margin-divs" v-if="editUser.customer.default_payment_type == 'MBWAY'">
               <p class="text-center margin-texts">
-                <label for="telemovelMbway" class="form-label fw-bold"
-                  >Nº Telemovel:</label
-                >
+                <label for="telemovelMbway" class="form-label fw-bold">Nº Telemovel:</label>
               </p>
-              <input
-                type="text"
-                size="9"
-                v-model="user.customer.default_payment_reference"
-                class="form-control form-control-sm margin-inputs"
-                placeholder="colocar o seu nº de telemóvel"
-              />
+              <input type="text" size="9" v-model="editUser.customer.default_payment_reference"
+                class="form-control form-control-sm margin-inputs" placeholder="colocar o seu nº de telemóvel" />
             </div>
             <div class="d-grid">
               <div class="btn-group" style="margin-bottom: 0.5rem">
-                <button
-                  class="btn btrn-sm btn-outline-danger"
-                  type="button"
-                  @click="$emit('close')"
-                >
+                <button class="btn btrn-sm btn-outline-danger" type="button" @click="$emit('close')">
                   Cancelar
                 </button>
-                <button
-                  class="btn btrn-sm btn-outline-success"
-                  type="button"
-                  @click="updateCostumer"
-                >
+                <button class="btn btrn-sm btn-outline-success" type="button" @click="updateCostumer">
                   Atualizar
                 </button>
               </div>
@@ -188,8 +112,8 @@ const usersStore = useUsersStore();
 const base64 = ref();
 
 let props = defineProps({
-  user: {
-    type: Object,
+  id: {
+    type: Number,
     required: true,
   },
   show: {
@@ -198,25 +122,68 @@ let props = defineProps({
 });
 
 
+let newUser = () => {
+  return {
+    email: "",
+    name: "",
+    photo_url: "",
+    type: "C",
+    customer: {
+      phone: "",
+      nif: "",
+      default_payment_reference: "",
+      default_payment_type: "",
+    },
+  }
+}
+
+let editUser = ref(newUser())
+
+let loadUser = async (id) => {
+  try {
+    const response = await axios.get(
+      "/users/" + id
+    );
+    editUser.value = response.data.data
+  } catch (error) {
+
+  }
+}
+
+onMounted(() => {
+  loadUser(props.id)
+})
+
+
 async function updateCostumer() {
   try {
-    //loadingStore.toggleLoading();
-    props.user.photo_url = base64.value;
+    if (base64.value)
+      editUser.value.photo_url = base64.value;
+    else
+      editUser.value.photo_url = null
     const response = await axios.put(
-      "customers/" + props.user.customer.id,
-      props.user
+      "customers/" + editUser.value.customer.id,
+      editUser.value
     );
-    //socket.emit("updateUser", response.data.data);
     toast.success(`Costumer atualizado com sucesso`);
     base64.value = null;
     emit("close");
+    updateUserOnArray(response.data.data)
     return response.data.data;
   } catch (error) {
-    console.log(error);
-  } finally {
-    //loadingStore.toggleLoading();
+    Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
   }
 }
+
+function updateUserOnArray(user) {
+  let idx = usersStore.users.findIndex((t) => t.id === user.id);
+  if (idx >= 0) {
+    usersStore.users[idx] = user;
+  }
+  if (usersStore.user.id == user.id)
+    usersStore.user = user
+}
+
 let uploadImage = (e) => {
   createBase64Image(e.target.files[0]);
 };
@@ -233,9 +200,11 @@ function createBase64Image(FileObject) {
 .margin-divs {
   margin-bottom: 0.5rem;
 }
+
 .margin-texts {
   margin-bottom: 0;
 }
+
 .margin-inputs {
   margin-bottom: 2rem;
 }

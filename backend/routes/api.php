@@ -15,7 +15,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::get('users/me', [UserController::class, 'show_me']);
 
-    Route::get('customers/me', [CustomerController::class, 'show_me']);
+    Route::get('customers/me/{customer}', [CustomerController::class, 'show_me']);
     Route::get('orders/ordersByCustomer/{user}', [OrderController::class, 'getOrdersByCustomer']);
     Route::apiResource('users', UserController::class, ['names' => 'users']);
     Route::get('orders/delivered', [OrderController::class, 'deliveryHistory']);

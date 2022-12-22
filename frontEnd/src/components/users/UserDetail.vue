@@ -38,12 +38,14 @@
       </div>
     </td>
   </tr>
-  <edit-user :show="editModal" @close="editModal = false" :user="user" />
+  <edit-user :show="editModal" @close="editModal = false" :id="user.id" v-if="user.type=='C'" />
+  <edit-employer :show="editModal" @close="editModal = false" :id="user.id" v-if="user.type!='C'" />
 </template>
   
 <script setup>
 import { inject, computed, ref } from 'vue';
 import EditUser from "@/components/modals/EditUser.vue"
+import EditEmployer from "@/components/modals/EditEmployer.vue"
 
 const serverBaseUrl = inject("serverBaseUrl");
 let editModal = ref(false)
@@ -54,6 +56,7 @@ const props = defineProps({
     required: true
   }
 })
+
 const photoFullUrl = computed(() => {
         return props.user.photo_url
             ? serverBaseUrl + "/storage/fotos/" + props.user.photo_url

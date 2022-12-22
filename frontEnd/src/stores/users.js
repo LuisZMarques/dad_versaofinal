@@ -125,32 +125,6 @@ export const useUsersStore = defineStore("users", () => {
     }
   }
 
-  async function updateUser(updateUser) {
-    try {
-      loadingStore.toggleLoading();
-      updateUser.photo_url = base64.value;
-      const response = await axios.put(
-        "users/" + updateUser.id,
-        updateUser
-      );
-      socket.emit("updateUser", response.data.data);
-      toast.success(`User atualizado com sucesso`);
-      base64.value = null;
-
-      user.value=response.data.data;
-      return users.value;
-    } catch (error) {
-
-
-
-
-    } catch (error) {
-      Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
-    }finally{
-      loadingStore.toggleLoading();
-    }
-  }
-
   async function restoreToken() {
     let storedToken = sessionStorage.getItem("token");
     if (storedToken) {
@@ -179,7 +153,6 @@ export const useUsersStore = defineStore("users", () => {
     restoreToken,
     uploadImage,
     loadUsers,
-    register,
     user,
     loginModalState,
     perfilModalState,
@@ -188,7 +161,6 @@ export const useUsersStore = defineStore("users", () => {
     logout,
     credentials,
     loginModal,
-    updateUser,
     errors,
     photoFullUrl,
     usersList,
