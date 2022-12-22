@@ -25,6 +25,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('orders/ordersByCustomer/{user}', [OrderController::class, 'getOrdersByCustomer']);
     Route::get('orders/delivered', [OrderController::class, 'deliveryHistory']);
 
+    Route::delete('products/{product}', [ProductController::class, "destroy"]);
 });
 
 Route::apiResource('products', ProductController::class, ['names' => 'products']);

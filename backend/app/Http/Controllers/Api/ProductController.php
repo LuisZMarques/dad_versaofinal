@@ -92,10 +92,10 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        $this->authorize('delete', Product::class);
+        $product->orders()->delete();
 
         $product->delete();
 
-        return response(null, 204);
+        return new ProductResource($product);
     }
 }

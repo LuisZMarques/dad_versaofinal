@@ -60,7 +60,6 @@ let toogleProductDetail = () => {
   showProduct.value = !showProduct.value
 }
 onMounted(() => {
-  if (productsStore.productsList.length == 0)
     productsStore.loadProducts();
 });
 </script>
