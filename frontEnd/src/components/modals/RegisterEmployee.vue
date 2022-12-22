@@ -42,7 +42,7 @@
             <div class="d-grid">
               <div class="btn-group" style="margin-top : 1rem">
                 <button class="btn btrn-sm btn-outline-danger" type="button" @click="$emit('close')">Cancelar</button>
-                <button class="btn btrn-sm btn-outline-success" type="button" @click="save">Criar Funcionário</button>
+                <button class="btn btrn-sm btn-outline-success" type="button" @click="createCostumer()">Criar Funcionário</button>
               </div>
             </div>
           </div>
@@ -58,10 +58,13 @@ import Modal from '@/components/global/modal.vue'
 import { useUsersStore } from '@/stores/users.js'
 
 const toast = inject('toast')
+const axios = inject("axios");
 
 const emit = defineEmits(['close'])
 
 const usersStore = useUsersStore()
+
+const base64 = ref();
 
 let props = defineProps({
   show: {
@@ -69,9 +72,34 @@ let props = defineProps({
   }
 })
 
-let user =ref({
-  
-})
+let createEmployee = ref({
+  email: "",
+  name: "",
+  password:"",
+  photo_url: "",
+  blocked:0,
+  type: "C",
+  custome: null
+});
+
+async function createCostumer() {
+  try {
+    createEmployee.value.photo_url = base64.value;
+    const response = await axios.post("users", createEmployee.value);
+    //socket.emit("updateUser", response.data.ata);
+    toast.success(`Costumer criado com sucesso`);
+    base64.value = null;
+    emit('close')
+    return response.data.data;
+  } catch (error) {
+    console.log(error)
+    if(error.response.data.errors) {
+      Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
+    }else{
+      toast.error(error.message);
+    }
+  } 
+}
 
 async function updateCostumer() {
   try {
