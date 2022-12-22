@@ -206,16 +206,19 @@ export const useOrdersStore = defineStore("orders", () => {
     toast.success(`Novo pedido foi criado com sucesso.`);
   });
 
+  // Evento Chefe
   socket.on("pratoParaCozinhar", (product) => {
     toast.success(`Prato para cozinhar. ${product.name}`);
   });
 
+  // Evento Empregado
   socket.on("Prato_Para_Entrega", (order) => {
-    toast.success(`Pedido ${order.id} está pronto para entrega.`);
+    toast.success(`Pedido pronto para entrega.`);
   });
 
+  // Evento Cliente
   socket.on("Prato_Pronto", (order) => {
-    toast.informational(`Pedido ${order.id} está pronto.`);
+    toast.success(`Pedido está pronto.`);
   });
 
   return {

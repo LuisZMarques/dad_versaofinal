@@ -38,6 +38,7 @@ let productReady = (index) => {
         );
         if (isAllReadyForDelivering(orderId)) {
             orderPreparedToReady(orderId);
+            socket.emit("pratoProntoDelivery", updatedOrder);
         }
         computed(() => orderId, () => {
             grid.value = !grid.value
@@ -60,7 +61,7 @@ let orderPreparedToReady = (orderId) => {
             updatedOrder
         );
         toast.success("Mesagem: Pedido pronto");
-        socket.emit("pratoProntoDelivery", updatedOrder);
+
         return response.data?.data;
     } catch (error) {
         console.log(error)

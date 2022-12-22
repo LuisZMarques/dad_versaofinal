@@ -40,7 +40,7 @@ io.on("connection", (socket) => {
     socket.in('chefs').emit('pratoParaCozinhar', product)
   });
   socket.on("pratoProntoDelivery", (product) => {  
-    socket.in('delivery').emit('Prato_Para_Entrega', product);
+    socket.in('delivery').emit('Prato_Para_Entrega');
     findCustomerToNotify(product,socket);
   });
   
@@ -51,7 +51,7 @@ io.on("connection", (socket) => {
 
   // Send message to user by id / Pode ser alterado para enviar do socket que chama o evento
   socket.on("msg", (userId,msg) => {
-    socket.to(userId).emit("msg","Personal message from user "+socket_origin.id+" : "+msg);
+    socket.in(userId).emit("msg","Personal message from user "+socket_origin.id+" : "+msg);
   });
   
   
@@ -62,7 +62,7 @@ function findCustomerToNotify(order,socket) {
   let pedido = arrayPedidosSockets.indexOf(order.id);
   if (pedido) {
     // Como o id do socket do pedido é guardado após o id do pedido, o pedido+1 é o socket do pedido
-    socket.to(arrayPedidosSockets[pedido].user.id).emit("Prato_Pronto",order); // Para Entrega , Ticket Number: "+order.ticketNumber);
+    socket.in(arrayPedidosSockets[pedido].user.id).emit("Prato_Pronto",order); // Para Entrega , Ticket Number: "+order.ticketNumber);
   }
 }
 
