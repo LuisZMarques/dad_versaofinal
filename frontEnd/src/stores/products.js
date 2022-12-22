@@ -62,16 +62,26 @@ export const useProductsStore = defineStore("products", () => {
         loadingStore.toggleLoading();
       }
     }
-    if (!product.id) {
-      product.photo_url = base64.value;
-      loadingStore.toggleLoading();
-      const response = await axios.post("products", product);
-      //socket.emit("updateProduct", response.data.data);
-      toast.success(`Produto adicionado com sucesso`);
-      base64.value = null;
-      products.value.push(response.data.data);
-      return products.value;
-    }
+      if (!product.id) {
+        try {
+            product.photo_url = base64.value;
+            loadingStore.toggleLoading();
+            const response = await axios.post("products", product);
+            //socket.emit("updateProduct", response.data.data);
+            toast.success(`Produto adicionado com sucesso`);
+            base64.value = null;
+            products.value.push(response.data.data);
+            return products.value;
+        } catch (error) {
+          if(error.response.data.errors) {
+            Object.values(error.response.data.errors).forEach(errorMessage => toast.error(errorMessage.toString()));
+          }else{
+            toast.error(error.message);
+          }
+        }finally{
+          loadingStore.toggleLoading();
+        } 
+      }
   }
 
   let uploadImage = (e) => {
